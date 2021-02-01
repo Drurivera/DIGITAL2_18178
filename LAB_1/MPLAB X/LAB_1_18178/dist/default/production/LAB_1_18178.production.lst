@@ -1,0 +1,1309 @@
+
+
+Microchip MPLAB XC8 Assembler V2.31 build 20201012212115 
+                                                                                               Sun Jan 31 23:59:17 2021
+
+Microchip MPLAB XC8 C Compiler v2.31 (Free license) build 20201012212115 Og1 
+     1                           	processor	16F887
+     2                           	pagewidth 120
+     3                           	opt	flic
+     4                           	psect	cinit,global,class=CODE,merge=1,delta=2
+     5                           	psect	bssCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     6                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     7                           	psect	maintext,global,class=CODE,split=1,delta=2
+     8                           	psect	text1,local,class=CODE,merge=1,delta=2
+     9                           	psect	text2,local,class=CODE,merge=1,delta=2
+    10                           	psect	text3,local,class=CODE,merge=1,delta=2
+    11                           	psect	text4,local,class=CODE,merge=1,delta=2
+    12                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+    13                           	dabs	1,0x7E,2
+    14  0000                     
+    15                           ; Version 2.20
+    16                           ; Generated 12/02/2020 GMT
+    17                           ; 
+    18                           ; Copyright © 2020, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    19                           ; All rights reserved.
+    20                           ; 
+    21                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    22                           ; 
+    23                           ; Redistribution and use in source and binary forms, with or without modification, are
+    24                           ; permitted provided that the following conditions are met:
+    25                           ; 
+    26                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    27                           ;        conditions and the following disclaimer.
+    28                           ; 
+    29                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    30                           ;        of conditions and the following disclaimer in the documentation and/or other
+    31                           ;        materials provided with the distribution.
+    32                           ; 
+    33                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    34                           ;        software without specific prior written permission.
+    35                           ; 
+    36                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    37                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    38                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    39                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    40                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    41                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    42                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    43                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    44                           ; 
+    45                           ; 
+    46                           ; Code-generator required, PIC16F887 Definitions
+    47                           ; 
+    48                           ; SFR Addresses
+    49  0000                     	;# 
+    50  0001                     	;# 
+    51  0002                     	;# 
+    52  0003                     	;# 
+    53  0004                     	;# 
+    54  0005                     	;# 
+    55  0006                     	;# 
+    56  0007                     	;# 
+    57  0008                     	;# 
+    58  0009                     	;# 
+    59  000A                     	;# 
+    60  000B                     	;# 
+    61  000C                     	;# 
+    62  000D                     	;# 
+    63  000E                     	;# 
+    64  000E                     	;# 
+    65  000F                     	;# 
+    66  0010                     	;# 
+    67  0011                     	;# 
+    68  0012                     	;# 
+    69  0013                     	;# 
+    70  0014                     	;# 
+    71  0015                     	;# 
+    72  0015                     	;# 
+    73  0016                     	;# 
+    74  0017                     	;# 
+    75  0018                     	;# 
+    76  0019                     	;# 
+    77  001A                     	;# 
+    78  001B                     	;# 
+    79  001B                     	;# 
+    80  001C                     	;# 
+    81  001D                     	;# 
+    82  001E                     	;# 
+    83  001F                     	;# 
+    84  0081                     	;# 
+    85  0085                     	;# 
+    86  0086                     	;# 
+    87  0087                     	;# 
+    88  0088                     	;# 
+    89  0089                     	;# 
+    90  008C                     	;# 
+    91  008D                     	;# 
+    92  008E                     	;# 
+    93  008F                     	;# 
+    94  0090                     	;# 
+    95  0091                     	;# 
+    96  0092                     	;# 
+    97  0093                     	;# 
+    98  0093                     	;# 
+    99  0093                     	;# 
+   100  0094                     	;# 
+   101  0095                     	;# 
+   102  0096                     	;# 
+   103  0097                     	;# 
+   104  0098                     	;# 
+   105  0099                     	;# 
+   106  009A                     	;# 
+   107  009B                     	;# 
+   108  009C                     	;# 
+   109  009D                     	;# 
+   110  009E                     	;# 
+   111  009F                     	;# 
+   112  0105                     	;# 
+   113  0107                     	;# 
+   114  0108                     	;# 
+   115  0109                     	;# 
+   116  010C                     	;# 
+   117  010C                     	;# 
+   118  010D                     	;# 
+   119  010E                     	;# 
+   120  010F                     	;# 
+   121  0185                     	;# 
+   122  0187                     	;# 
+   123  0188                     	;# 
+   124  0189                     	;# 
+   125  018C                     	;# 
+   126  018D                     	;# 
+   127  0000                     	;# 
+   128  0001                     	;# 
+   129  0002                     	;# 
+   130  0003                     	;# 
+   131  0004                     	;# 
+   132  0005                     	;# 
+   133  0006                     	;# 
+   134  0007                     	;# 
+   135  0008                     	;# 
+   136  0009                     	;# 
+   137  000A                     	;# 
+   138  000B                     	;# 
+   139  000C                     	;# 
+   140  000D                     	;# 
+   141  000E                     	;# 
+   142  000E                     	;# 
+   143  000F                     	;# 
+   144  0010                     	;# 
+   145  0011                     	;# 
+   146  0012                     	;# 
+   147  0013                     	;# 
+   148  0014                     	;# 
+   149  0015                     	;# 
+   150  0015                     	;# 
+   151  0016                     	;# 
+   152  0017                     	;# 
+   153  0018                     	;# 
+   154  0019                     	;# 
+   155  001A                     	;# 
+   156  001B                     	;# 
+   157  001B                     	;# 
+   158  001C                     	;# 
+   159  001D                     	;# 
+   160  001E                     	;# 
+   161  001F                     	;# 
+   162  0081                     	;# 
+   163  0085                     	;# 
+   164  0086                     	;# 
+   165  0087                     	;# 
+   166  0088                     	;# 
+   167  0089                     	;# 
+   168  008C                     	;# 
+   169  008D                     	;# 
+   170  008E                     	;# 
+   171  008F                     	;# 
+   172  0090                     	;# 
+   173  0091                     	;# 
+   174  0092                     	;# 
+   175  0093                     	;# 
+   176  0093                     	;# 
+   177  0093                     	;# 
+   178  0094                     	;# 
+   179  0095                     	;# 
+   180  0096                     	;# 
+   181  0097                     	;# 
+   182  0098                     	;# 
+   183  0099                     	;# 
+   184  009A                     	;# 
+   185  009B                     	;# 
+   186  009C                     	;# 
+   187  009D                     	;# 
+   188  009E                     	;# 
+   189  009F                     	;# 
+   190  0105                     	;# 
+   191  0107                     	;# 
+   192  0108                     	;# 
+   193  0109                     	;# 
+   194  010C                     	;# 
+   195  010C                     	;# 
+   196  010D                     	;# 
+   197  010E                     	;# 
+   198  010F                     	;# 
+   199  0185                     	;# 
+   200  0187                     	;# 
+   201  0188                     	;# 
+   202  0189                     	;# 
+   203  018C                     	;# 
+   204  018D                     	;# 
+   205  0005                     _PORTAbits	set	5
+   206  0009                     _PORTE	set	9
+   207  0008                     _PORTD	set	8
+   208  0007                     _PORTC	set	7
+   209  0006                     _PORTB	set	6
+   210  0005                     _PORTA	set	5
+   211  0009                     _PORTEbits	set	9
+   212  0006                     _PORTBbits	set	6
+   213  0089                     _TRISE	set	137
+   214  0088                     _TRISD	set	136
+   215  0087                     _TRISC	set	135
+   216  0086                     _TRISB	set	134
+   217  0085                     _TRISA	set	133
+   218  0189                     _ANSELH	set	393
+   219  0188                     _ANSEL	set	392
+   220                           
+   221                           	psect	cinit
+   222  07F3                     start_initialization:	
+   223                           ; #config settings
+   224                           
+   225  07F3                     __initialization:
+   226                           
+   227                           ; Clear objects allocated to COMMON
+   228  07F3  01F0               	clrf	__pbssCOMMON& (0+127)
+   229  07F4  01F1               	clrf	(__pbssCOMMON+1)& (0+127)
+   230  07F5  01F2               	clrf	(__pbssCOMMON+2)& (0+127)
+   231  07F6  01F3               	clrf	(__pbssCOMMON+3)& (0+127)
+   232  07F7  01F4               	clrf	(__pbssCOMMON+4)& (0+127)
+   233  07F8  01F5               	clrf	(__pbssCOMMON+5)& (0+127)
+   234  07F9  01F6               	clrf	(__pbssCOMMON+6)& (0+127)
+   235  07FA  01F7               	clrf	(__pbssCOMMON+7)& (0+127)
+   236  07FB  01F8               	clrf	(__pbssCOMMON+8)& (0+127)
+   237  07FC                     end_of_initialization:	
+   238                           ;End of C runtime variable initialization code
+   239                           
+   240  07FC                     __end_of__initialization:
+   241  07FC  0183               	clrf	3
+   242  07FD  120A  118A  2EB5   	ljmp	_main	;jump to C main() function
+   243                           
+   244                           	psect	bssCOMMON
+   245  0070                     __pbssCOMMON:
+   246  0070                     _res:
+   247  0070                     	ds	1
+   248  0071                     _led_g:
+   249  0071                     	ds	1
+   250  0072                     _led_d:
+   251  0072                     	ds	1
+   252  0073                     _counter:
+   253  0073                     	ds	1
+   254  0074                     _debounce:
+   255  0074                     	ds	1
+   256  0075                     _antirebote_J2:
+   257  0075                     	ds	1
+   258  0076                     _antirebote_J1:
+   259  0076                     	ds	1
+   260  0077                     _counter_J2:
+   261  0077                     	ds	1
+   262  0078                     _counter_J1:
+   263  0078                     	ds	1
+   264                           
+   265                           	psect	cstackCOMMON
+   266  0079                     __pcstackCOMMON:
+   267  0079                     ?_setup:
+   268  0079                     ??_setup:	
+   269                           ; 1 bytes @ 0x0
+   270                           
+   271  0079                     ?_semaforo:	
+   272                           ; 1 bytes @ 0x0
+   273                           
+   274  0079                     ?_Contador_1:	
+   275                           ; 1 bytes @ 0x0
+   276                           
+   277  0079                     ?_LED:	
+   278                           ; 1 bytes @ 0x0
+   279                           
+   280  0079                     ??_LED:	
+   281                           ; 1 bytes @ 0x0
+   282                           
+   283  0079                     ?_main:	
+   284                           ; 1 bytes @ 0x0
+   285                           
+   286                           
+   287                           ; 1 bytes @ 0x0
+   288  0079                     	ds	1
+   289  007A                     ??_Contador_1:
+   290                           
+   291                           ; 1 bytes @ 0x1
+   292  007A                     	ds	1
+   293  007B                     ??_semaforo:
+   294                           
+   295                           ; 1 bytes @ 0x2
+   296  007B                     	ds	3
+   297  007E                     ??_main:
+   298                           
+   299                           	psect	maintext
+   300  06B5                     __pmaintext:	
+   301                           ; 1 bytes @ 0x5
+   302 ;;
+   303 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   304 ;;
+   305 ;; *************** function _main *****************
+   306 ;; Defined at:
+   307 ;;		line 70 in file "main.c"
+   308 ;; Parameters:    Size  Location     Type
+   309 ;;		None
+   310 ;; Auto vars:     Size  Location     Type
+   311 ;;		None
+   312 ;; Return value:  Size  Location     Type
+   313 ;;                  1    wreg      void 
+   314 ;; Registers used:
+   315 ;;		wreg, status,2, status,0, pclath, cstack
+   316 ;; Tracked objects:
+   317 ;;		On entry : B00/0
+   318 ;;		On exit  : 0/0
+   319 ;;		Unchanged: 0/0
+   320 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   321 ;;      Params:         0       0       0       0       0
+   322 ;;      Locals:         0       0       0       0       0
+   323 ;;      Temps:          0       0       0       0       0
+   324 ;;      Totals:         0       0       0       0       0
+   325 ;;Total ram usage:        0 bytes
+   326 ;; Hardware stack levels required when called:    3
+   327 ;; This function calls:
+   328 ;;		_semaforo
+   329 ;;		_setup
+   330 ;; This function is called by:
+   331 ;;		Startup code after reset
+   332 ;; This function uses a non-reentrant model
+   333 ;;
+   334                           
+   335                           
+   336                           ;psect for function _main
+   337  06B5                     _main:
+   338  06B5                     l832:	
+   339                           ;incstack = 0
+   340                           ; Regs used in _main: [wreg+status,2+status,0+pclath+cstack]
+   341                           
+   342                           
+   343                           ;main.c: 72:     setup();
+   344  06B5  120A  118A  26D3  120A  118A  	fcall	_setup
+   345  06BA                     l834:
+   346                           
+   347                           ;main.c: 79:         if (PORTBbits.RB0 == 0) {
+   348  06BA  1283               	bcf	3,5	;RP0=0, select bank0
+   349  06BB  1303               	bcf	3,6	;RP1=0, select bank0
+   350  06BC  1806               	btfsc	6,0	;volatile
+   351  06BD  2EBF               	goto	u201
+   352  06BE  2EC0               	goto	u200
+   353  06BF                     u201:
+   354  06BF  2EBA               	goto	l834
+   355  06C0                     u200:
+   356  06C0  2EC2               	goto	l65
+   357  06C1                     l66:
+   358                           
+   359                           ;main.c: 81:                 PORTEbits.RE0 = 1;
+   360  06C1  1409               	bsf	9,0	;volatile
+   361  06C2                     l65:	
+   362                           ;main.c: 82:             }
+   363                           
+   364                           
+   365                           ;main.c: 80:             while (PORTBbits.RB0 == 0) {
+   366  06C2  1C06               	btfss	6,0	;volatile
+   367  06C3  2EC5               	goto	u211
+   368  06C4  2EC6               	goto	u210
+   369  06C5                     u211:
+   370  06C5  2EC1               	goto	l66
+   371  06C6                     u210:
+   372  06C6                     l67:
+   373                           
+   374                           ;main.c: 83:             if (PORTBbits.RB0 == 1) {
+   375  06C6  1C06               	btfss	6,0	;volatile
+   376  06C7  2EC9               	goto	u221
+   377  06C8  2ECA               	goto	u220
+   378  06C9                     u221:
+   379  06C9  2EBA               	goto	l834
+   380  06CA                     u220:
+   381  06CA                     l838:
+   382                           
+   383                           ;main.c: 84:                 semaforo();
+   384  06CA  120A  118A  26F7  120A  118A  	fcall	_semaforo
+   385  06CF  2EBA               	goto	l834
+   386  06D0  120A  118A  2800   	ljmp	start
+   387  06D3                     __end_of_main:
+   388                           
+   389                           	psect	text1
+   390  06D3                     __ptext1:	
+   391 ;; *************** function _setup *****************
+   392 ;; Defined at:
+   393 ;;		line 94 in file "main.c"
+   394 ;; Parameters:    Size  Location     Type
+   395 ;;		None
+   396 ;; Auto vars:     Size  Location     Type
+   397 ;;		None
+   398 ;; Return value:  Size  Location     Type
+   399 ;;                  1    wreg      void 
+   400 ;; Registers used:
+   401 ;;		wreg, status,2
+   402 ;; Tracked objects:
+   403 ;;		On entry : 0/0
+   404 ;;		On exit  : 0/0
+   405 ;;		Unchanged: 0/0
+   406 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   407 ;;      Params:         0       0       0       0       0
+   408 ;;      Locals:         0       0       0       0       0
+   409 ;;      Temps:          0       0       0       0       0
+   410 ;;      Totals:         0       0       0       0       0
+   411 ;;Total ram usage:        0 bytes
+   412 ;; Hardware stack levels used:    1
+   413 ;; This function calls:
+   414 ;;		Nothing
+   415 ;; This function is called by:
+   416 ;;		_main
+   417 ;; This function uses a non-reentrant model
+   418 ;;
+   419                           
+   420                           
+   421                           ;psect for function _setup
+   422  06D3                     _setup:
+   423  06D3                     l790:	
+   424                           ;incstack = 0
+   425                           ; Regs used in _setup: [wreg+status,2]
+   426                           
+   427                           
+   428                           ;main.c: 95:     ANSEL = 0;
+   429  06D3  1683               	bsf	3,5	;RP0=1, select bank3
+   430  06D4  1703               	bsf	3,6	;RP1=1, select bank3
+   431  06D5  0188               	clrf	8	;volatile
+   432                           
+   433                           ;main.c: 96:     ANSELH = 0;
+   434  06D6  0189               	clrf	9	;volatile
+   435                           
+   436                           ;main.c: 97:     TRISA = 0;
+   437  06D7  1683               	bsf	3,5	;RP0=1, select bank1
+   438  06D8  1303               	bcf	3,6	;RP1=0, select bank1
+   439  06D9  0185               	clrf	5	;volatile
+   440                           
+   441                           ;main.c: 98:     PORTA = 0;
+   442  06DA  1283               	bcf	3,5	;RP0=0, select bank0
+   443  06DB  1303               	bcf	3,6	;RP1=0, select bank0
+   444  06DC  0185               	clrf	5	;volatile
+   445  06DD                     l792:
+   446                           
+   447                           ;main.c: 99:     TRISB = 0b00000111;
+   448  06DD  3007               	movlw	7
+   449  06DE  1683               	bsf	3,5	;RP0=1, select bank1
+   450  06DF  1303               	bcf	3,6	;RP1=0, select bank1
+   451  06E0  0086               	movwf	6	;volatile
+   452  06E1                     l794:
+   453                           
+   454                           ;main.c: 100:     PORTB = 0;
+   455  06E1  1283               	bcf	3,5	;RP0=0, select bank0
+   456  06E2  1303               	bcf	3,6	;RP1=0, select bank0
+   457  06E3  0186               	clrf	6	;volatile
+   458  06E4                     l796:
+   459                           
+   460                           ;main.c: 101:     TRISC = 0;
+   461  06E4  1683               	bsf	3,5	;RP0=1, select bank1
+   462  06E5  1303               	bcf	3,6	;RP1=0, select bank1
+   463  06E6  0187               	clrf	7	;volatile
+   464  06E7                     l798:
+   465                           
+   466                           ;main.c: 102:     PORTC = 0;
+   467  06E7  1283               	bcf	3,5	;RP0=0, select bank0
+   468  06E8  1303               	bcf	3,6	;RP1=0, select bank0
+   469  06E9  0187               	clrf	7	;volatile
+   470  06EA                     l800:
+   471                           
+   472                           ;main.c: 103:     TRISD = 0;
+   473  06EA  1683               	bsf	3,5	;RP0=1, select bank1
+   474  06EB  1303               	bcf	3,6	;RP1=0, select bank1
+   475  06EC  0188               	clrf	8	;volatile
+   476  06ED                     l802:
+   477                           
+   478                           ;main.c: 104:     PORTD = 0;
+   479  06ED  1283               	bcf	3,5	;RP0=0, select bank0
+   480  06EE  1303               	bcf	3,6	;RP1=0, select bank0
+   481  06EF  0188               	clrf	8	;volatile
+   482  06F0                     l804:
+   483                           
+   484                           ;main.c: 105:     TRISE = 0;
+   485  06F0  1683               	bsf	3,5	;RP0=1, select bank1
+   486  06F1  1303               	bcf	3,6	;RP1=0, select bank1
+   487  06F2  0189               	clrf	9	;volatile
+   488  06F3                     l806:
+   489                           
+   490                           ;main.c: 106:     PORTE = 0;
+   491  06F3  1283               	bcf	3,5	;RP0=0, select bank0
+   492  06F4  1303               	bcf	3,6	;RP1=0, select bank0
+   493  06F5  0189               	clrf	9	;volatile
+   494  06F6                     l74:
+   495  06F6  0008               	return
+   496  06F7                     __end_of_setup:
+   497                           
+   498                           	psect	text2
+   499  06F7                     __ptext2:	
+   500 ;; *************** function _semaforo *****************
+   501 ;; Defined at:
+   502 ;;		line 113 in file "main.c"
+   503 ;; Parameters:    Size  Location     Type
+   504 ;;		None
+   505 ;; Auto vars:     Size  Location     Type
+   506 ;;		None
+   507 ;; Return value:  Size  Location     Type
+   508 ;;                  1    wreg      void 
+   509 ;; Registers used:
+   510 ;;		wreg, status,2, status,0, pclath, cstack
+   511 ;; Tracked objects:
+   512 ;;		On entry : 0/0
+   513 ;;		On exit  : 0/0
+   514 ;;		Unchanged: 0/0
+   515 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   516 ;;      Params:         0       0       0       0       0
+   517 ;;      Locals:         0       0       0       0       0
+   518 ;;      Temps:          3       0       0       0       0
+   519 ;;      Totals:         3       0       0       0       0
+   520 ;;Total ram usage:        3 bytes
+   521 ;; Hardware stack levels used:    1
+   522 ;; Hardware stack levels required when called:    2
+   523 ;; This function calls:
+   524 ;;		_Contador_1
+   525 ;; This function is called by:
+   526 ;;		_main
+   527 ;; This function uses a non-reentrant model
+   528 ;;
+   529                           
+   530                           
+   531                           ;psect for function _semaforo
+   532  06F7                     _semaforo:
+   533  06F7                     l808:	
+   534                           ;incstack = 0
+   535                           ; Regs used in _semaforo: [wreg+status,2+status,0+pclath+cstack]
+   536                           
+   537                           
+   538                           ;main.c: 114:     PORTEbits.RE0 = 1;
+   539  06F7  1283               	bcf	3,5	;RP0=0, select bank0
+   540  06F8  1303               	bcf	3,6	;RP1=0, select bank0
+   541  06F9  1409               	bsf	9,0	;volatile
+   542  06FA                     l810:
+   543                           
+   544                           ;main.c: 115:     PORTA = 0;
+   545  06FA  0185               	clrf	5	;volatile
+   546  06FB                     l812:
+   547                           
+   548                           ;main.c: 116:     _delay((unsigned long)((700)*(8000000/4000.0)));
+   549  06FB  3008               	movlw	8
+   550  06FC  00FD               	movwf	??_semaforo+2
+   551  06FD  301B               	movlw	27
+   552  06FE  00FC               	movwf	??_semaforo+1
+   553  06FF  3027               	movlw	39
+   554  0700  00FB               	movwf	??_semaforo
+   555  0701                     u237:
+   556  0701  0BFB               	decfsz	??_semaforo,f
+   557  0702  2F01               	goto	u237
+   558  0703  0BFC               	decfsz	??_semaforo+1,f
+   559  0704  2F01               	goto	u237
+   560  0705  0BFD               	decfsz	??_semaforo+2,f
+   561  0706  2F01               	goto	u237
+   562  0707                     l814:
+   563                           
+   564                           ;main.c: 117:     PORTEbits.RE0 = 0;
+   565  0707  1283               	bcf	3,5	;RP0=0, select bank0
+   566  0708  1303               	bcf	3,6	;RP1=0, select bank0
+   567  0709  1009               	bcf	9,0	;volatile
+   568  070A                     l816:
+   569                           
+   570                           ;main.c: 118:     PORTEbits.RE1 = 1;
+   571  070A  1489               	bsf	9,1	;volatile
+   572  070B                     l818:
+   573                           
+   574                           ;main.c: 119:     _delay((unsigned long)((600)*(8000000/4000.0)));
+   575  070B  3007               	movlw	7
+   576  070C  00FD               	movwf	??_semaforo+2
+   577  070D  3017               	movlw	23
+   578  070E  00FC               	movwf	??_semaforo+1
+   579  070F  306A               	movlw	106
+   580  0710  00FB               	movwf	??_semaforo
+   581  0711                     u247:
+   582  0711  0BFB               	decfsz	??_semaforo,f
+   583  0712  2F11               	goto	u247
+   584  0713  0BFC               	decfsz	??_semaforo+1,f
+   585  0714  2F11               	goto	u247
+   586  0715  0BFD               	decfsz	??_semaforo+2,f
+   587  0716  2F11               	goto	u247
+   588  0717  0000               	nop
+   589  0718                     l820:
+   590                           
+   591                           ;main.c: 120:     PORTEbits.RE1 = 0;
+   592  0718  1283               	bcf	3,5	;RP0=0, select bank0
+   593  0719  1303               	bcf	3,6	;RP1=0, select bank0
+   594  071A  1089               	bcf	9,1	;volatile
+   595  071B                     l822:
+   596                           
+   597                           ;main.c: 121:     PORTEbits.RE2 = 1;
+   598  071B  1509               	bsf	9,2	;volatile
+   599  071C                     l824:
+   600                           
+   601                           ;main.c: 122:     _delay((unsigned long)((500)*(8000000/4000.0)));
+   602  071C  3006               	movlw	6
+   603  071D  00FD               	movwf	??_semaforo+2
+   604  071E  3013               	movlw	19
+   605  071F  00FC               	movwf	??_semaforo+1
+   606  0720  30AD               	movlw	173
+   607  0721  00FB               	movwf	??_semaforo
+   608  0722                     u257:
+   609  0722  0BFB               	decfsz	??_semaforo,f
+   610  0723  2F22               	goto	u257
+   611  0724  0BFC               	decfsz	??_semaforo+1,f
+   612  0725  2F22               	goto	u257
+   613  0726  0BFD               	decfsz	??_semaforo+2,f
+   614  0727  2F22               	goto	u257
+   615  0728  2F29               	nop2
+   616  0729                     l826:
+   617                           
+   618                           ;main.c: 123:     PORTEbits.RE2 = 0;
+   619  0729  1283               	bcf	3,5	;RP0=0, select bank0
+   620  072A  1303               	bcf	3,6	;RP1=0, select bank0
+   621  072B  1109               	bcf	9,2	;volatile
+   622  072C                     l828:
+   623                           
+   624                           ;main.c: 124:     res=0;
+   625  072C  01F0               	clrf	_res
+   626  072D                     l830:
+   627                           
+   628                           ;main.c: 125:     Contador_1();
+   629  072D  120A  118A  2790  120A  118A  	fcall	_Contador_1
+   630  0732                     l77:
+   631  0732  0008               	return
+   632  0733                     __end_of_semaforo:
+   633                           
+   634                           	psect	text3
+   635  0790                     __ptext3:	
+   636 ;; *************** function _Contador_1 *****************
+   637 ;; Defined at:
+   638 ;;		line 128 in file "main.c"
+   639 ;; Parameters:    Size  Location     Type
+   640 ;;		None
+   641 ;; Auto vars:     Size  Location     Type
+   642 ;;		None
+   643 ;; Return value:  Size  Location     Type
+   644 ;;                  1    wreg      void 
+   645 ;; Registers used:
+   646 ;;		wreg, status,2, status,0, pclath, cstack
+   647 ;; Tracked objects:
+   648 ;;		On entry : 0/0
+   649 ;;		On exit  : 0/0
+   650 ;;		Unchanged: 0/0
+   651 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   652 ;;      Params:         0       0       0       0       0
+   653 ;;      Locals:         0       0       0       0       0
+   654 ;;      Temps:          1       0       0       0       0
+   655 ;;      Totals:         1       0       0       0       0
+   656 ;;Total ram usage:        1 bytes
+   657 ;; Hardware stack levels used:    1
+   658 ;; Hardware stack levels required when called:    1
+   659 ;; This function calls:
+   660 ;;		_LED
+   661 ;; This function is called by:
+   662 ;;		_semaforo
+   663 ;; This function uses a non-reentrant model
+   664 ;;
+   665                           
+   666                           
+   667                           ;psect for function _Contador_1
+   668  0790                     _Contador_1:
+   669  0790                     l742:	
+   670                           ;incstack = 0
+   671                           ; Regs used in _Contador_1: [wreg+status,2+status,0+pclath+cstack]
+   672                           
+   673                           
+   674                           ;main.c: 129:     while (res==0) {
+   675  0790  2FE9               	goto	l786
+   676  0791                     l81:
+   677                           
+   678                           ;main.c: 130:         if (PORTBbits.RB1 == 0) {
+   679  0791  1283               	bcf	3,5	;RP0=0, select bank0
+   680  0792  1303               	bcf	3,6	;RP1=0, select bank0
+   681  0793  1886               	btfsc	6,1	;volatile
+   682  0794  2F96               	goto	u111
+   683  0795  2F97               	goto	u110
+   684  0796                     u111:
+   685  0796  2FBE               	goto	l764
+   686  0797                     u110:
+   687  0797  2F99               	goto	l748
+   688  0798                     l746:
+   689                           
+   690                           ;main.c: 132:                 debounce = 0;
+   691  0798  01F4               	clrf	_debounce
+   692  0799                     l748:
+   693                           
+   694                           ;main.c: 131:             while (PORTBbits.RB1 == 0) {
+   695  0799  1C86               	btfss	6,1	;volatile
+   696  079A  2F9C               	goto	u121
+   697  079B  2F9D               	goto	u120
+   698  079C                     u121:
+   699  079C  2F98               	goto	l746
+   700  079D                     u120:
+   701  079D                     l85:
+   702                           
+   703                           ;main.c: 135:             if (PORTBbits.RB1 == 1) {
+   704  079D  1C86               	btfss	6,1	;volatile
+   705  079E  2FA0               	goto	u131
+   706  079F  2FA1               	goto	u130
+   707  07A0                     u131:
+   708  07A0  2FBE               	goto	l764
+   709  07A1                     u130:
+   710  07A1                     l750:
+   711                           
+   712                           ;main.c: 136:                 counter_J1 = counter_J1 + 1;
+   713  07A1  0878               	movf	_counter_J1,w
+   714  07A2  3E01               	addlw	1
+   715  07A3  00FA               	movwf	??_Contador_1
+   716  07A4  087A               	movf	??_Contador_1,w
+   717  07A5  00F8               	movwf	_counter_J1
+   718  07A6                     l752:
+   719                           
+   720                           ;main.c: 137:                 counter = counter_J1;
+   721  07A6  0878               	movf	_counter_J1,w
+   722  07A7  00FA               	movwf	??_Contador_1
+   723  07A8  087A               	movf	??_Contador_1,w
+   724  07A9  00F3               	movwf	_counter
+   725  07AA                     l754:
+   726                           
+   727                           ;main.c: 138:                 LED();
+   728  07AA  120A  118A  2733  120A  118A  	fcall	_LED
+   729  07AF                     l756:
+   730                           
+   731                           ;main.c: 139:                 PORTC = led_d;
+   732  07AF  0872               	movf	_led_d,w
+   733  07B0  1283               	bcf	3,5	;RP0=0, select bank0
+   734  07B1  1303               	bcf	3,6	;RP1=0, select bank0
+   735  07B2  0087               	movwf	7	;volatile
+   736  07B3                     l758:
+   737                           
+   738                           ;main.c: 140:                 if(led_g==1){
+   739  07B3  0371               	decf	_led_g,w
+   740  07B4  1D03               	btfss	3,2
+   741  07B5  2FB7               	goto	u141
+   742  07B6  2FB8               	goto	u140
+   743  07B7                     u141:
+   744  07B7  2FBE               	goto	l764
+   745  07B8                     u140:
+   746  07B8                     l760:
+   747                           
+   748                           ;main.c: 141:                     PORTAbits.RA0=1;
+   749  07B8  1405               	bsf	5,0	;volatile
+   750                           
+   751                           ;main.c: 142:                     res=1;
+   752  07B9  01F0               	clrf	_res
+   753  07BA  0AF0               	incf	_res,f
+   754  07BB                     l762:
+   755                           
+   756                           ;main.c: 143:                     counter_J1=0;
+   757  07BB  01F8               	clrf	_counter_J1
+   758                           
+   759                           ;main.c: 144:                     counter_J2=0;
+   760  07BC  01F7               	clrf	_counter_J2
+   761                           
+   762                           ;main.c: 145:                     led_g =0;
+   763  07BD  01F1               	clrf	_led_g
+   764  07BE                     l764:
+   765                           
+   766                           ;main.c: 149:         if (PORTBbits.RB2 == 0) {
+   767  07BE  1906               	btfsc	6,2	;volatile
+   768  07BF  2FC1               	goto	u151
+   769  07C0  2FC2               	goto	u150
+   770  07C1                     u151:
+   771  07C1  2FE9               	goto	l786
+   772  07C2                     u150:
+   773  07C2  2FC4               	goto	l770
+   774  07C3                     l768:
+   775                           
+   776                           ;main.c: 151:                 debounce = 0;
+   777  07C3  01F4               	clrf	_debounce
+   778  07C4                     l770:
+   779                           
+   780                           ;main.c: 150:             while (PORTBbits.RB2 == 0) {
+   781  07C4  1D06               	btfss	6,2	;volatile
+   782  07C5  2FC7               	goto	u161
+   783  07C6  2FC8               	goto	u160
+   784  07C7                     u161:
+   785  07C7  2FC3               	goto	l768
+   786  07C8                     u160:
+   787  07C8                     l91:
+   788                           
+   789                           ;main.c: 154:             if (PORTBbits.RB2 == 1) {
+   790  07C8  1D06               	btfss	6,2	;volatile
+   791  07C9  2FCB               	goto	u171
+   792  07CA  2FCC               	goto	u170
+   793  07CB                     u171:
+   794  07CB  2FE9               	goto	l786
+   795  07CC                     u170:
+   796  07CC                     l772:
+   797                           
+   798                           ;main.c: 155:                 counter_J2 = counter_J2 + 1;
+   799  07CC  0877               	movf	_counter_J2,w
+   800  07CD  3E01               	addlw	1
+   801  07CE  00FA               	movwf	??_Contador_1
+   802  07CF  087A               	movf	??_Contador_1,w
+   803  07D0  00F7               	movwf	_counter_J2
+   804  07D1                     l774:
+   805                           
+   806                           ;main.c: 156:                 counter = counter_J2;
+   807  07D1  0877               	movf	_counter_J2,w
+   808  07D2  00FA               	movwf	??_Contador_1
+   809  07D3  087A               	movf	??_Contador_1,w
+   810  07D4  00F3               	movwf	_counter
+   811  07D5                     l776:
+   812                           
+   813                           ;main.c: 157:                 LED();
+   814  07D5  120A  118A  2733  120A  118A  	fcall	_LED
+   815  07DA                     l778:
+   816                           
+   817                           ;main.c: 158:                 PORTD = led_d;
+   818  07DA  0872               	movf	_led_d,w
+   819  07DB  1283               	bcf	3,5	;RP0=0, select bank0
+   820  07DC  1303               	bcf	3,6	;RP1=0, select bank0
+   821  07DD  0088               	movwf	8	;volatile
+   822  07DE                     l780:
+   823                           
+   824                           ;main.c: 159:                 if(led_g==1){
+   825  07DE  0371               	decf	_led_g,w
+   826  07DF  1D03               	btfss	3,2
+   827  07E0  2FE2               	goto	u181
+   828  07E1  2FE3               	goto	u180
+   829  07E2                     u181:
+   830  07E2  2F90               	goto	l742
+   831  07E3                     u180:
+   832  07E3                     l782:
+   833                           
+   834                           ;main.c: 160:                     PORTAbits.RA1=1;
+   835  07E3  1485               	bsf	5,1	;volatile
+   836                           
+   837                           ;main.c: 161:                     res=1;
+   838  07E4  01F0               	clrf	_res
+   839  07E5  0AF0               	incf	_res,f
+   840  07E6                     l784:
+   841                           
+   842                           ;main.c: 162:                     counter_J2=0;
+   843  07E6  01F7               	clrf	_counter_J2
+   844                           
+   845                           ;main.c: 163:                     counter_J1=0;
+   846  07E7  01F8               	clrf	_counter_J1
+   847                           
+   848                           ;main.c: 164:                     led_g =0;
+   849  07E8  01F1               	clrf	_led_g
+   850  07E9                     l786:
+   851                           
+   852                           ;main.c: 129:     while (res==0) {
+   853  07E9  0870               	movf	_res,w
+   854  07EA  1903               	btfsc	3,2
+   855  07EB  2FED               	goto	u191
+   856  07EC  2FEE               	goto	u190
+   857  07ED                     u191:
+   858  07ED  2F91               	goto	l81
+   859  07EE                     u190:
+   860  07EE                     l788:
+   861                           
+   862                           ;main.c: 169:         PORTD = 0;
+   863  07EE  1283               	bcf	3,5	;RP0=0, select bank0
+   864  07EF  1303               	bcf	3,6	;RP1=0, select bank0
+   865  07F0  0188               	clrf	8	;volatile
+   866                           
+   867                           ;main.c: 170:         PORTC = 0;
+   868  07F1  0187               	clrf	7	;volatile
+   869  07F2                     l95:
+   870  07F2  0008               	return
+   871  07F3                     __end_of_Contador_1:
+   872                           
+   873                           	psect	text4
+   874  0733                     __ptext4:	
+   875 ;; *************** function _LED *****************
+   876 ;; Defined at:
+   877 ;;		line 173 in file "main.c"
+   878 ;; Parameters:    Size  Location     Type
+   879 ;;		None
+   880 ;; Auto vars:     Size  Location     Type
+   881 ;;		None
+   882 ;; Return value:  Size  Location     Type
+   883 ;;                  1    wreg      void 
+   884 ;; Registers used:
+   885 ;;		wreg, status,2, status,0
+   886 ;; Tracked objects:
+   887 ;;		On entry : 0/0
+   888 ;;		On exit  : 0/0
+   889 ;;		Unchanged: 0/0
+   890 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   891 ;;      Params:         0       0       0       0       0
+   892 ;;      Locals:         0       0       0       0       0
+   893 ;;      Temps:          1       0       0       0       0
+   894 ;;      Totals:         1       0       0       0       0
+   895 ;;Total ram usage:        1 bytes
+   896 ;; Hardware stack levels used:    1
+   897 ;; This function calls:
+   898 ;;		Nothing
+   899 ;; This function is called by:
+   900 ;;		_Contador_1
+   901 ;; This function uses a non-reentrant model
+   902 ;;
+   903                           
+   904                           
+   905                           ;psect for function _LED
+   906  0733                     _LED:
+   907  0733                     l700:	
+   908                           ;incstack = 0
+   909                           ; Regs used in _LED: [wreg+status,2+status,0]
+   910                           
+   911                           
+   912                           ;main.c: 174:     if (counter == 0) {
+   913  0733  0873               	movf	_counter,w
+   914  0734  1D03               	btfss	3,2
+   915  0735  2F37               	goto	u11
+   916  0736  2F38               	goto	u10
+   917  0737                     u11:
+   918  0737  2F39               	goto	l704
+   919  0738                     u10:
+   920  0738                     l702:
+   921                           
+   922                           ;main.c: 175:         led_d = 0b00000000;
+   923  0738  01F2               	clrf	_led_d
+   924  0739                     l704:
+   925                           
+   926                           ;main.c: 177:     if (counter == 1) {
+   927  0739  0373               	decf	_counter,w
+   928  073A  1D03               	btfss	3,2
+   929  073B  2F3D               	goto	u21
+   930  073C  2F3E               	goto	u20
+   931  073D                     u21:
+   932  073D  2F40               	goto	l708
+   933  073E                     u20:
+   934  073E                     l706:
+   935                           
+   936                           ;main.c: 178:         led_d = 0b00000001;
+   937  073E  01F2               	clrf	_led_d
+   938  073F  0AF2               	incf	_led_d,f
+   939  0740                     l708:
+   940                           
+   941                           ;main.c: 180:     if (counter == 2) {
+   942  0740  3002               	movlw	2
+   943  0741  0673               	xorwf	_counter,w
+   944  0742  1D03               	btfss	3,2
+   945  0743  2F45               	goto	u31
+   946  0744  2F46               	goto	u30
+   947  0745                     u31:
+   948  0745  2F4A               	goto	l712
+   949  0746                     u30:
+   950  0746                     l710:
+   951                           
+   952                           ;main.c: 181:         led_d = 0b00000010;
+   953  0746  3002               	movlw	2
+   954  0747  00F9               	movwf	??_LED
+   955  0748  0879               	movf	??_LED,w
+   956  0749  00F2               	movwf	_led_d
+   957  074A                     l712:
+   958                           
+   959                           ;main.c: 183:     if (counter == 3) {
+   960  074A  3003               	movlw	3
+   961  074B  0673               	xorwf	_counter,w
+   962  074C  1D03               	btfss	3,2
+   963  074D  2F4F               	goto	u41
+   964  074E  2F50               	goto	u40
+   965  074F                     u41:
+   966  074F  2F54               	goto	l716
+   967  0750                     u40:
+   968  0750                     l714:
+   969                           
+   970                           ;main.c: 184:         led_d = 0b00000100;
+   971  0750  3004               	movlw	4
+   972  0751  00F9               	movwf	??_LED
+   973  0752  0879               	movf	??_LED,w
+   974  0753  00F2               	movwf	_led_d
+   975  0754                     l716:
+   976                           
+   977                           ;main.c: 186:     if (counter == 4) {
+   978  0754  3004               	movlw	4
+   979  0755  0673               	xorwf	_counter,w
+   980  0756  1D03               	btfss	3,2
+   981  0757  2F59               	goto	u51
+   982  0758  2F5A               	goto	u50
+   983  0759                     u51:
+   984  0759  2F5E               	goto	l720
+   985  075A                     u50:
+   986  075A                     l718:
+   987                           
+   988                           ;main.c: 187:         led_d = 0b00001000;
+   989  075A  3008               	movlw	8
+   990  075B  00F9               	movwf	??_LED
+   991  075C  0879               	movf	??_LED,w
+   992  075D  00F2               	movwf	_led_d
+   993  075E                     l720:
+   994                           
+   995                           ;main.c: 189:     if (counter == 5) {
+   996  075E  3005               	movlw	5
+   997  075F  0673               	xorwf	_counter,w
+   998  0760  1D03               	btfss	3,2
+   999  0761  2F63               	goto	u61
+  1000  0762  2F64               	goto	u60
+  1001  0763                     u61:
+  1002  0763  2F68               	goto	l724
+  1003  0764                     u60:
+  1004  0764                     l722:
+  1005                           
+  1006                           ;main.c: 190:         led_d = 0b00010000;
+  1007  0764  3010               	movlw	16
+  1008  0765  00F9               	movwf	??_LED
+  1009  0766  0879               	movf	??_LED,w
+  1010  0767  00F2               	movwf	_led_d
+  1011  0768                     l724:
+  1012                           
+  1013                           ;main.c: 192:     if (counter == 6) {
+  1014  0768  3006               	movlw	6
+  1015  0769  0673               	xorwf	_counter,w
+  1016  076A  1D03               	btfss	3,2
+  1017  076B  2F6D               	goto	u71
+  1018  076C  2F6E               	goto	u70
+  1019  076D                     u71:
+  1020  076D  2F72               	goto	l728
+  1021  076E                     u70:
+  1022  076E                     l726:
+  1023                           
+  1024                           ;main.c: 193:         led_d = 0b00100000;
+  1025  076E  3020               	movlw	32
+  1026  076F  00F9               	movwf	??_LED
+  1027  0770  0879               	movf	??_LED,w
+  1028  0771  00F2               	movwf	_led_d
+  1029  0772                     l728:
+  1030                           
+  1031                           ;main.c: 195:     if (counter == 7) {
+  1032  0772  3007               	movlw	7
+  1033  0773  0673               	xorwf	_counter,w
+  1034  0774  1D03               	btfss	3,2
+  1035  0775  2F77               	goto	u81
+  1036  0776  2F78               	goto	u80
+  1037  0777                     u81:
+  1038  0777  2F7C               	goto	l732
+  1039  0778                     u80:
+  1040  0778                     l730:
+  1041                           
+  1042                           ;main.c: 196:         led_d = 0b01000000;
+  1043  0778  3040               	movlw	64
+  1044  0779  00F9               	movwf	??_LED
+  1045  077A  0879               	movf	??_LED,w
+  1046  077B  00F2               	movwf	_led_d
+  1047  077C                     l732:
+  1048                           
+  1049                           ;main.c: 198:     if (counter == 8) {
+  1050  077C  3008               	movlw	8
+  1051  077D  0673               	xorwf	_counter,w
+  1052  077E  1D03               	btfss	3,2
+  1053  077F  2F81               	goto	u91
+  1054  0780  2F82               	goto	u90
+  1055  0781                     u91:
+  1056  0781  2F86               	goto	l736
+  1057  0782                     u90:
+  1058  0782                     l734:
+  1059                           
+  1060                           ;main.c: 199:         led_d = 0b10000000;
+  1061  0782  3080               	movlw	128
+  1062  0783  00F9               	movwf	??_LED
+  1063  0784  0879               	movf	??_LED,w
+  1064  0785  00F2               	movwf	_led_d
+  1065  0786                     l736:
+  1066                           
+  1067                           ;main.c: 201:     if (counter == 9) {
+  1068  0786  3009               	movlw	9
+  1069  0787  0673               	xorwf	_counter,w
+  1070  0788  1D03               	btfss	3,2
+  1071  0789  2F8B               	goto	u101
+  1072  078A  2F8C               	goto	u100
+  1073  078B                     u101:
+  1074  078B  2F8F               	goto	l108
+  1075  078C                     u100:
+  1076  078C                     l738:
+  1077                           
+  1078                           ;main.c: 202:         led_d = 0b00000000;
+  1079  078C  01F2               	clrf	_led_d
+  1080  078D                     l740:
+  1081                           
+  1082                           ;main.c: 203:         led_g = 1;
+  1083  078D  01F1               	clrf	_led_g
+  1084  078E  0AF1               	incf	_led_g,f
+  1085  078F                     l108:
+  1086  078F  0008               	return
+  1087  0790                     __end_of_LED:
+  1088  007E                     btemp	set	126	;btemp
+  1089  007E                     wtemp0	set	126
+  1090                           
+  1091                           	psect	config
+  1092                           
+  1093                           ;Config register CONFIG1 @ 0x2007
+  1094                           ;	Oscillator Selection bits
+  1095                           ;	FOSC = XT, XT oscillator: Crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1/CLKIN
+  1096                           ;	Watchdog Timer Enable bit
+  1097                           ;	WDTE = OFF, WDT disabled and can be enabled by SWDTEN bit of the WDTCON register
+  1098                           ;	Power-up Timer Enable bit
+  1099                           ;	PWRTE = OFF, PWRT disabled
+  1100                           ;	RE3/MCLR pin function select bit
+  1101                           ;	MCLRE = OFF, RE3/MCLR pin function is digital input, MCLR internally tied to VDD
+  1102                           ;	Code Protection bit
+  1103                           ;	CP = OFF, Program memory code protection is disabled
+  1104                           ;	Data Code Protection bit
+  1105                           ;	CPD = OFF, Data memory code protection is disabled
+  1106                           ;	Brown Out Reset Selection bits
+  1107                           ;	BOREN = OFF, BOR disabled
+  1108                           ;	Internal External Switchover bit
+  1109                           ;	IESO = OFF, Internal/External Switchover mode is disabled
+  1110                           ;	Fail-Safe Clock Monitor Enabled bit
+  1111                           ;	FCMEN = OFF, Fail-Safe Clock Monitor is disabled
+  1112                           ;	Low Voltage Programming Enable bit
+  1113                           ;	LVP = OFF, RB3 pin has digital I/O, HV on MCLR must be used for programming
+  1114                           ;	In-Circuit Debugger Mode bit
+  1115                           ;	DEBUG = 0x1, unprogrammed default
+  1116  2007                     	org	8199
+  1117  2007  20D1               	dw	8401
+  1118                           
+  1119                           ;Config register CONFIG2 @ 0x2008
+  1120                           ;	Brown-out Reset Selection bit
+  1121                           ;	BOR4V = BOR40V, Brown-out Reset set to 4.0V
+  1122                           ;	Flash Program Memory Self Write Enable bits
+  1123                           ;	WRT = OFF, Write protection off
+  1124  2008                     	org	8200
+  1125  2008  3FFF               	dw	16383
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         9
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON           14      5      14
+    BANK0            80      0       0
+    BANK1            80      0       0
+    BANK3            96      0       0
+    BANK2            96      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMMON
+
+    _main->_semaforo
+    _semaforo->_Contador_1
+    _Contador_1->_LED
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 0     0      0       0
+                           _semaforo
+                              _setup
+ ---------------------------------------------------------------------------------
+ (1) _setup                                                0     0      0       0
+ ---------------------------------------------------------------------------------
+ (1) _semaforo                                             3     3      0       0
+                                              2 COMMON     3     3      0
+                         _Contador_1
+ ---------------------------------------------------------------------------------
+ (2) _Contador_1                                           1     1      0       0
+                                              1 COMMON     1     1      0
+                                _LED
+ ---------------------------------------------------------------------------------
+ (3) _LED                                                  1     1      0       0
+                                              0 COMMON     1     1      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 3
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _semaforo
+     _Contador_1
+       _LED
+   _setup
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BITCOMMON            E      0       0       0        0.0%
+EEDATA             100      0       0       0        0.0%
+NULL                 0      0       0       0        0.0%
+CODE                 0      0       0       0        0.0%
+COMMON               E      5       E       1      100.0%
+BITSFR0              0      0       0       1        0.0%
+SFR0                 0      0       0       1        0.0%
+BITSFR1              0      0       0       2        0.0%
+SFR1                 0      0       0       2        0.0%
+STACK                0      0       0       2        0.0%
+ABS                  0      0       E       3        0.0%
+BITBANK0            50      0       0       4        0.0%
+BITSFR3              0      0       0       4        0.0%
+SFR3                 0      0       0       4        0.0%
+BANK0               50      0       0       5        0.0%
+BITSFR2              0      0       0       5        0.0%
+SFR2                 0      0       0       5        0.0%
+BITBANK1            50      0       0       6        0.0%
+BANK1               50      0       0       7        0.0%
+BITBANK3            60      0       0       8        0.0%
+BANK3               60      0       0       9        0.0%
+BITBANK2            60      0       0      10        0.0%
+BANK2               60      0       0      11        0.0%
+DATA                 0      0       E      12        0.0%
+
+
+Microchip Technology PIC Macro Assembler V2.31 build 20201012212115 
+Symbol Table                                                                                   Sun Jan 31 23:59:17 2021
+
+                     l81 0791                       l65 06C2                       l74 06F6  
+                     l66 06C1                       l91 07C8                       l67 06C6  
+                     l85 079D                       l77 0732                       l95 07F2  
+                     u10 0738                       u11 0737                       u20 073E  
+                     u21 073D                       u30 0746                       u31 0745  
+                     u40 0750                       u41 074F                       u50 075A  
+                     u51 0759                       u60 0764                       u61 0763  
+                     u70 076E                       u71 076D                       u80 0778  
+                     u81 0777                       u90 0782                       u91 0781  
+                    l108 078F                      l700 0733                      l710 0746  
+                    l702 0738                      l720 075E                      l712 074A  
+                    l704 0739                      l800 06EA                      l730 0778  
+                    l722 0764                      l714 0750                      l706 073E  
+                    l810 06FA                      l802 06ED                      l740 078D  
+                    l732 077C                      l724 0768                      l716 0754  
+                    l708 0740                      l820 0718                      l812 06FB  
+                    l804 06F0                      l734 0782                      l726 076E  
+                    l718 075A                      l750 07A1                      l742 0790  
+                    l830 072D                      l822 071B                      l814 0707  
+                    l806 06F3                      l736 0786                      l728 0772  
+                    l760 07B8                      l752 07A6                      l824 071C  
+                    l816 070A                      l808 06F7                      l832 06B5  
+                    l738 078C                      l770 07C4                      l762 07BB  
+                    l754 07AA                      l746 0798                      l826 0729  
+                    l818 070B                      l834 06BA                      l780 07DE  
+                    l772 07CC                      l756 07AF                      l748 0799  
+                    l764 07BE                      l828 072C                      l782 07E3  
+                    l774 07D1                      l758 07B3                      l790 06D3  
+                    l838 06CA                      l784 07E6                      l776 07D5  
+                    l768 07C3                      l792 06DD                      l778 07DA  
+                    l786 07E9                      l794 06E1                      l788 07EE  
+                    l796 06E4                      l798 06E7                      _LED 0733  
+                    u100 078C                      u101 078B                      u110 0797  
+                    u111 0796                      u120 079D                      u200 06C0  
+                    u121 079C                      u201 06BF                      u130 07A1  
+                    u210 06C6                      u131 07A0                      u211 06C5  
+                    u140 07B8                      u220 06CA                      u141 07B7  
+                    u221 06C9                      u150 07C2                      u151 07C1  
+                    u160 07C8                      u161 07C7                      u170 07CC  
+                    u171 07CB                      u180 07E3                      u181 07E2  
+                    u237 0701                      u190 07EE                      u191 07ED  
+                    u247 0711                      u257 0722                      _res 0070  
+                   ?_LED 0079                     _main 06B5                     btemp 007E  
+                   start 0000                    ??_LED 0079                    ?_main 0079  
+                  _ANSEL 0188                    _PORTA 0005                    _PORTB 0006  
+                  _PORTC 0007                    _PORTD 0008                    _PORTE 0009  
+                  _TRISA 0085                    _TRISB 0086                    _TRISC 0087  
+                  _TRISD 0088                    _TRISE 0089                    _led_d 0072  
+                  _led_g 0071               _Contador_1 0790                    _setup 06D3  
+                  status 0003                    wtemp0 007E          __initialization 07F3  
+           __end_of_main 06D3                   ??_main 007E                   ?_setup 0079  
+                 _ANSELH 0189         __end_of_semaforo 0733              ?_Contador_1 0079  
+__end_of__initialization 07FC           __pcstackCOMMON 0079            __end_of_setup 06F7  
+                ??_setup 0079               __pmaintext 06B5      __size_of_Contador_1 0063  
+             _counter_J1 0078               _counter_J2 0077                ?_semaforo 0079  
+                __ptext1 06D3                  __ptext2 06F7                  __ptext3 0790  
+                __ptext4 0733             __size_of_LED 005D                  _counter 0073  
+   end_of_initialization 07FC               ??_semaforo 007B                _PORTAbits 0005  
+              _PORTBbits 0006                _PORTEbits 0009             ??_Contador_1 007A  
+     __end_of_Contador_1 07F3      start_initialization 07F3              __end_of_LED 0790  
+            __pbssCOMMON 0070                ___latbits 0002        __size_of_semaforo 003C  
+         __size_of_setup 0024                 _debounce 0074            __size_of_main 001E  
+               _semaforo 06F7            _antirebote_J1 0076            _antirebote_J2 0075  

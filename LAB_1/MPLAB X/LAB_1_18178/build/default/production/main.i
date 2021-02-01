@@ -2510,15 +2510,24 @@ extern __bank0 __bit __timeout;
 
 #pragma config BOR4V = BOR40V
 #pragma config WRT = OFF
-# 47 "main.c"
-char counter_J1 = 0;
-char counter_J2 = 0;
+# 48 "main.c"
+unsigned char counter_J1 = 0;
+unsigned char counter_J2 = 0;
+unsigned char antirebote_J1 = 0;
+unsigned char antirebote_J2 = 0;
+unsigned char debounce = 0;
+unsigned char counter = 0;
+unsigned char led_d = 0;
+unsigned char led_g = 0;
+unsigned char res = 0;
 
 
 
 
 void setup(void);
 void semaforo(void);
+void Contador_1(void);
+void LED(void) ;
 
 
 
@@ -2531,11 +2540,16 @@ void main(void) {
 
 
 
-
     while (1) {
-        if (PORTBbits.RB0 == 0)
-            semaforo();
 
+        if (PORTBbits.RB0 == 0) {
+            while (PORTBbits.RB0 == 0) {
+                PORTEbits.RE0 = 1;
+            }
+            if (PORTBbits.RB0 == 1) {
+                semaforo();
+            }
+        }
     }
 }
 
@@ -2547,7 +2561,7 @@ void setup(void) {
     ANSEL = 0;
     ANSELH = 0;
     TRISA = 0;
-    PORTA= 0;
+    PORTA = 0;
     TRISB = 0b00000111;
     PORTB = 0;
     TRISC = 0;
@@ -2564,12 +2578,95 @@ void setup(void) {
 
 void semaforo(void) {
     PORTEbits.RE0 = 1;
+    PORTA = 0;
     _delay((unsigned long)((700)*(8000000/4000.0)));
     PORTEbits.RE0 = 0;
     PORTEbits.RE1 = 1;
-    _delay((unsigned long)((750)*(8000000/4000.0)));
+    _delay((unsigned long)((600)*(8000000/4000.0)));
     PORTEbits.RE1 = 0;
     PORTEbits.RE2 = 1;
-    _delay((unsigned long)((600)*(8000000/4000.0)));
+    _delay((unsigned long)((500)*(8000000/4000.0)));
     PORTEbits.RE2 = 0;
+    res=0;
+    Contador_1();
+}
+
+void Contador_1(void) {
+    while (res==0) {
+        if (PORTBbits.RB1 == 0) {
+            while (PORTBbits.RB1 == 0) {
+                debounce = 0;
+            }
+
+            if (PORTBbits.RB1 == 1) {
+                counter_J1 = counter_J1 + 1;
+                counter = counter_J1;
+                LED();
+                PORTC = led_d;
+                if(led_g==1){
+                    PORTAbits.RA0=1;
+                    res=1;
+                    counter_J1=0;
+                    counter_J2=0;
+                    led_g =0;
+                }
+            }
+        }
+        if (PORTBbits.RB2 == 0) {
+            while (PORTBbits.RB2 == 0) {
+                debounce = 0;
+            }
+
+            if (PORTBbits.RB2 == 1) {
+                counter_J2 = counter_J2 + 1;
+                counter = counter_J2;
+                LED();
+                PORTD = led_d;
+                if(led_g==1){
+                    PORTAbits.RA1=1;
+                    res=1;
+                    counter_J2=0;
+                    counter_J1=0;
+                    led_g =0;
+                }
+            }
+        }
+    }
+        PORTD = 0;
+        PORTC = 0;
+}
+
+void LED(void) {
+    if (counter == 0) {
+        led_d = 0b00000000;
+    }
+    if (counter == 1) {
+        led_d = 0b00000001;
+    }
+    if (counter == 2) {
+        led_d = 0b00000010;
+    }
+    if (counter == 3) {
+        led_d = 0b00000100;
+    }
+    if (counter == 4) {
+        led_d = 0b00001000;
+    }
+    if (counter == 5) {
+        led_d = 0b00010000;
+    }
+    if (counter == 6) {
+        led_d = 0b00100000;
+    }
+    if (counter == 7) {
+        led_d = 0b01000000;
+    }
+    if (counter == 8) {
+        led_d = 0b10000000;
+    }
+    if (counter == 9) {
+        led_d = 0b00000000;
+        led_g = 1;
+    }
+
 }
