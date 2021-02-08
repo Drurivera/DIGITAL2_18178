@@ -46,6 +46,7 @@ char counter = 0;
 // Prototipos de funciones
 //**************************
 void setup(void);
+void __interrupt() ISR() ;
 
 //**************************
 // Ciclo principal
@@ -71,20 +72,26 @@ void main(void) {
 //**************************
 
 void setup(void) {
-//CONFIGURACION DE LAS INTERRUPCIONES DEL PUERTO B
-   initosc(7);
+    //Configuracion del Oscilador con libreria.
+    initosc(7);
     OSCCONbits.OSTS = 0;
-    OSCCONbits.HTS =  0;
-    OSCCONbits.LTS =  0;
-    INTCONbits.GIE =  1;
+    OSCCONbits.HTS = 0;
+    OSCCONbits.LTS = 0;
+    INTCONbits.GIE = 1;
     INTCONbits.PEIE = 1;
     INTCONbits.RBIE = 1;
     INTCONbits.T0IE = 1;
-    INTCONbits.T0IF = 0;
-    INTCONbits.RBIF = 0;
-    IOCBbits.IOCB0 =  1;
-    IOCBbits.IOCB1 =  1;
-//CONFIGURACION DE LOS PUERTOS
+    INTCONbits.INTE = 1;
+    PIE1bits.ADIE = 1;
+    //Limpieza de FLAGS.
+    INTCONbits.T0IF = 0; //Bandera de Timer 0
+    INTCONbits.RBIF = 0; //Bandera de IOC
+    PIR1bits.ADIF = 0; //Bandera del ADC
+    //habilita los  bits de IOC del Puerto B en RB0 y RB1 para los PushButton.
+    IOCBbits.IOCB0 = 1;
+    IOCBbits.IOCB1 = 1;
+    IOCBbits.IOCB2 = 1;
+    //Configuracion de Puertos y limpieza de los mismos.
     ANSEL = 0;
     ANSELH = 0b00000001;
     TRISA = 0;
@@ -104,12 +111,6 @@ void setup(void) {
 // Funciones
 //**************************
 
-void contadores_LED (void) {
-    
-
-
-
-}
 //**********
 // Interrupciones
 //**********

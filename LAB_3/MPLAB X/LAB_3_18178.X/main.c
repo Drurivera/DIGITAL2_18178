@@ -58,7 +58,7 @@ char counter = 0;
 // Interrupciones
 //**********
 
-void interrupt ISR()
+void __interrupt() ISR()
 {
  //esto se activara si la interrupcion viene del receptor en el UART
     if (PIR1bits.RCIF == 1)
@@ -75,7 +75,7 @@ void interrupt ISR()
 //**************************
 void setup(void);
 void UART_Init(void);
-void _interrupt ISR();
+void __interrupt() ISR();
 
 //**************************
 // Ciclo principal

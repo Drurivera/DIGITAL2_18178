@@ -1,4 +1,4 @@
-# 1 "main_LAB_2.c"
+# 1 "LCD.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,8 +6,17 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "main_LAB_2.c" 2
-# 13 "main_LAB_2.c"
+# 1 "LCD.c" 2
+
+
+
+
+
+
+
+
+# 1 "./LCD.h" 1
+# 62 "./LCD.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2492,259 +2501,53 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
-# 13 "main_LAB_2.c" 2
-
-# 1 "./oscilador.h" 1
-# 17 "./oscilador.h"
-# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
-# 13 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef signed char int8_t;
-
-
-
-
-
-
-typedef signed int int16_t;
-
-
-
-
-
-
-
-typedef __int24 int24_t;
-
-
-
-
-
-
-
-typedef signed long int int32_t;
-# 52 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef unsigned char uint8_t;
-
-
-
-
-
-typedef unsigned int uint16_t;
-
-
-
-
-
-
-typedef __uint24 uint24_t;
-
-
-
-
-
-
-typedef unsigned long int uint32_t;
-# 88 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef signed char int_least8_t;
-
-
-
-
-
-
-
-typedef signed int int_least16_t;
-# 109 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef __int24 int_least24_t;
-# 118 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef signed long int int_least32_t;
-# 136 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef unsigned char uint_least8_t;
-
-
-
-
-
-
-typedef unsigned int uint_least16_t;
-# 154 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef __uint24 uint_least24_t;
-
-
-
-
-
-
-
-typedef unsigned long int uint_least32_t;
-# 181 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef signed char int_fast8_t;
-
-
-
-
-
-
-typedef signed int int_fast16_t;
-# 200 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef __int24 int_fast24_t;
-
-
-
-
-
-
-
-typedef signed long int int_fast32_t;
-# 224 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef unsigned char uint_fast8_t;
-
-
-
-
-
-typedef unsigned int uint_fast16_t;
-# 240 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef __uint24 uint_fast24_t;
-
-
-
-
-
-
-typedef unsigned long int uint_fast32_t;
-# 268 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef int32_t intmax_t;
-# 282 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
-typedef uint32_t uintmax_t;
-
-
-
-
-
-
-typedef int16_t intptr_t;
-
-
-
-
-typedef uint16_t uintptr_t;
-# 17 "./oscilador.h" 2
-
-
-
-
-
-void initosc(uint8_t IRCF);
-# 14 "main_LAB_2.c" 2
-
-
-
-
-
-
-
-#pragma config FOSC = XT
-#pragma config WDTE = OFF
-#pragma config PWRTE = OFF
-#pragma config MCLRE = OFF
-#pragma config CP = OFF
-#pragma config CPD = OFF
-#pragma config BOREN = OFF
-#pragma config IESO = OFF
-#pragma config FCMEN = OFF
-#pragma config LVP = OFF
-
-
-#pragma config BOR4V = BOR40V
-#pragma config WRT = OFF
-
-
-
-
-
-
-
-
-char counter = 0;
-
-
-
-
-void setup(void);
-void __attribute__((picinterrupt(("")))) ISR() ;
-
-
-
-
-
-void main(void) {
-
-    setup();
-
-
-
-
-
-    while (1) {
-
-
-    }
+# 62 "./LCD.h" 2
+
+
+void Lcd_Port (char a);
+void Lcd_Cmd (char a);
+void Lcd_Clear (char a);
+void Lcd_Set_Cursor (char a, char b);
+void Lcd_Init (void);
+void Lcd_Write_Char (char a);
+void Lcd_Write_String (char *a);
+void Lcd_Shift_Right (void);
+void Lcd_Shift_Left (void);
+# 9 "LCD.c" 2
+
+
+void Lcd_Port(char a) {
+    if (a & 1)
+        PORTDbits.RD4 = 1;
+    return;
+}
+
+void Lcd_Cmd(char a) {
+    PORTAbits.RA0 = 0;
+    Lcd_Port (a);
+    PORTAbits.RA2 = 1;
+    _delay((unsigned long)((4)*(8000000/4000.0)));
+    PORTAbits.RA2 = 0;
+}
+
+void Lcd_Clear(void) {
+    Lcd_Cmd(0);
 
 }
 
+void Lcd_Init(void) {
+    Lcd_Port(0x00);
+    _delay((unsigned long)((30)*(8000000/4000.0)));
+    Lcd_Cmd (0x30);
+    _delay((unsigned long)((6)*(8000000/4000.0)));
+    Lcd_Cmd (0x30);
+    _delay((unsigned long)((15)*(8000000/4000.0)));
+    Lcd_Cmd (0x30);
 
 
 
 
-void setup(void) {
 
-    initosc(7);
-    OSCCONbits.OSTS = 0;
-    OSCCONbits.HTS = 0;
-    OSCCONbits.LTS = 0;
-    INTCONbits.GIE = 1;
-    INTCONbits.PEIE = 1;
-    INTCONbits.RBIE = 1;
-    INTCONbits.T0IE = 1;
-    INTCONbits.INTE = 1;
-    PIE1bits.ADIE = 1;
 
-    INTCONbits.T0IF = 0;
-    INTCONbits.RBIF = 0;
-    PIR1bits.ADIF = 0;
 
-    IOCBbits.IOCB0 = 1;
-    IOCBbits.IOCB1 = 1;
-    IOCBbits.IOCB2 = 1;
-
-    ANSEL = 0;
-    ANSELH = 0b00000001;
-    TRISA = 0;
-    PORTA = 0;
-    TRISB = 0b00000111;
-    PORTB = 0;
-    TRISC = 0;
-    PORTC = 0;
-    TRISD = 0;
-    PORTD = 0;
-    TRISE = 0;
-    PORTE = 0;
-
-}
-# 118 "main_LAB_2.c"
-void __attribute__((picinterrupt(("")))) ISR() {
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB0 == 0) {
-        PORTC = PORTC + 1;
-        INTCONbits.RBIF = 0;
-    }
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB1 == 0) {
-        PORTC = PORTC - 1;
-        INTCONbits.RBIF = 0;
-    }
-    if (PIR1bits.ADIF == 1) {
-        PIR1bits.ADIF = 0;
-        INTCONbits.RBIF = 0;
-        PORTC = ADRESH;
-    }
 }

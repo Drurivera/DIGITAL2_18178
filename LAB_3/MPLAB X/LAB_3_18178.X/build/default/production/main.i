@@ -1,4 +1,4 @@
-# 1 "main_LAB_2.c"
+# 1 "main.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,8 +6,8 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "main_LAB_2.c" 2
-# 13 "main_LAB_2.c"
+# 1 "main.c" 2
+# 13 "main.c"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2492,10 +2492,8 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
-# 13 "main_LAB_2.c" 2
+# 13 "main.c" 2
 
-# 1 "./oscilador.h" 1
-# 17 "./oscilador.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
 # 13 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
 typedef signed char int8_t;
@@ -2629,14 +2627,20 @@ typedef int16_t intptr_t;
 
 
 typedef uint16_t uintptr_t;
-# 17 "./oscilador.h" 2
+# 14 "main.c" 2
 
-
-
-
-
-void initosc(uint8_t IRCF);
-# 14 "main_LAB_2.c" 2
+# 1 "./LCD.h" 1
+# 64 "./LCD.h"
+void Lcd_Port (char a);
+void Lcd_Cmd (char a);
+void Lcd_Clear (char a);
+void Lcd_Set_Cursor (char a, char b);
+void Lcd_Init (void);
+void Lcd_Write_Char (char a);
+void Lcd_Write_String (char *a);
+void Lcd_Shift_Right (void);
+void Lcd_Shift_Left (void);
+# 15 "main.c" 2
 
 
 
@@ -2658,21 +2662,31 @@ void initosc(uint8_t IRCF);
 
 #pragma config BOR4V = BOR40V
 #pragma config WRT = OFF
-
-
-
-
-
-
-
-
+# 55 "main.c"
 char counter = 0;
 
 
 
 
+
+void __attribute__((picinterrupt(("")))) ISR()
+{
+
+    if (PIR1bits.RCIF == 1)
+    {
+
+        PIR1bits.RCIF == 0;
+        TXREG = (RCREG + 1);
+        while (TXSTAbits.TRMT == 0);
+
+    }
+}
+
+
+
 void setup(void);
-void __attribute__((picinterrupt(("")))) ISR() ;
+void UART_Init(void);
+void __attribute__((picinterrupt(("")))) ISR();
 
 
 
@@ -2681,42 +2695,18 @@ void __attribute__((picinterrupt(("")))) ISR() ;
 void main(void) {
 
     setup();
+    UART_Init();
 
 
 
-
-
-    while (1) {
-
-
-    }
-
+    while (1);
+    return;
 }
 
 
 
 
-
 void setup(void) {
-
-    initosc(7);
-    OSCCONbits.OSTS = 0;
-    OSCCONbits.HTS = 0;
-    OSCCONbits.LTS = 0;
-    INTCONbits.GIE = 1;
-    INTCONbits.PEIE = 1;
-    INTCONbits.RBIE = 1;
-    INTCONbits.T0IE = 1;
-    INTCONbits.INTE = 1;
-    PIE1bits.ADIE = 1;
-
-    INTCONbits.T0IF = 0;
-    INTCONbits.RBIF = 0;
-    PIR1bits.ADIF = 0;
-
-    IOCBbits.IOCB0 = 1;
-    IOCBbits.IOCB1 = 1;
-    IOCBbits.IOCB2 = 1;
 
     ANSEL = 0;
     ANSELH = 0b00000001;
@@ -2724,27 +2714,41 @@ void setup(void) {
     PORTA = 0;
     TRISB = 0b00000111;
     PORTB = 0;
-    TRISC = 0;
-    PORTC = 0;
     TRISD = 0;
     PORTD = 0;
     TRISE = 0;
     PORTE = 0;
 
 }
-# 118 "main_LAB_2.c"
-void __attribute__((picinterrupt(("")))) ISR() {
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB0 == 0) {
-        PORTC = PORTC + 1;
-        INTCONbits.RBIF = 0;
-    }
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB1 == 0) {
-        PORTC = PORTC - 1;
-        INTCONbits.RBIF = 0;
-    }
-    if (PIR1bits.ADIF == 1) {
-        PIR1bits.ADIF = 0;
-        INTCONbits.RBIF = 0;
-        PORTC = ADRESH;
-    }
+
+
+
+
+void UART_Init()
+{
+
+    TXSTAbits.TX9 = 0;
+
+    TXSTAbits.TXEN = 1;
+
+    TXSTAbits.SYNC = 0;
+
+    TXSTAbits.BRGH = 0;
+
+    RCSTAbits.SPEN = 1;
+
+    RCSTAbits.CREN = 1;
+
+
+    SPBRG = 11;
+
+
+    INTCONbits.GIE = 1;
+
+    INTCONbits.PEIE = 1;
+
+
+    PIE1bits.RCIE = 1;
+
+    PIR1bits.RCIF = 0;
 }

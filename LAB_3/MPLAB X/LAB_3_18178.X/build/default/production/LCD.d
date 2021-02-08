@@ -1,1 +1,1 @@
-build/default/production\LCD.i: LCD.c LCD.h
+build/default/production\LCD.p1: LCD.c LCD.h
