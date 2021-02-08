@@ -2663,12 +2663,6 @@ void initosc(uint8_t IRCF);
 
 
 
-INTERRUPT_GlobalInterruptEnable();
-
-
-INTERRUPT_PeripheralInterruptEnable();
-
-
 
 
 
@@ -2746,14 +2740,18 @@ void contadores_LED (void) {
 
 
 
-void __attribute__((picinterrupt(("")))) ISR(void){
-    if (INTCONbits.RBIF = 1 && PORTBbits.RB0==0){
-        if (PORTBbits.RB0==0){
-            if (PORTBbits.RB0==1) {
-                PORTD = PORTD -1;
-                INTCONbits. RBIF = 0;
-            }
-        }
-}
-
+void __attribute__((picinterrupt(("")))) ISR() {
+    if (INTCONbits.RBIF == 1 && PORTBbits.RB0 == 0) {
+        PORTC = PORTC + 1;
+        INTCONbits.RBIF = 0;
+    }
+    if (INTCONbits.RBIF == 1 && PORTBbits.RB1 == 0) {
+        PORTC = PORTC - 1;
+        INTCONbits.RBIF = 0;
+    }
+    if (PIR1bits.ADIF == 1) {
+        PIR1bits.ADIF = 0;
+        INTCONbits.RBIF = 0;
+        PORTC = ADRESH;
+    }
 }

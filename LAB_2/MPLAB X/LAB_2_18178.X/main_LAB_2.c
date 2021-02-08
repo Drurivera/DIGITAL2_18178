@@ -36,12 +36,6 @@
 
 #define _XTAL_FREQ 8000000
 
-// Enable the Global Interrupts
-INTERRUPT_GlobalInterruptEnable();
-
-// Enable the Peripheral Interrupts
-INTERRUPT_PeripheralInterruptEnable();
-
 //**************************
 // Variables
 //**************************
@@ -120,14 +114,18 @@ void contadores_LED (void) {
 // Interrupciones
 //**********
 
-void __interrupt() ISR(void){
-    if (INTCONbits.RBIF = 1 && PORTBbits.RB0==0){
-        if  (PORTBbits.RB0==0){
-            if (PORTBbits.RB0==1) {
-                PORTD = PORTD -1;
-                INTCONbits. RBIF = 0;
-            }
-        }
-}
-
+void __interrupt() ISR() {
+    if (INTCONbits.RBIF == 1 && PORTBbits.RB0 == 0) {
+        PORTC = PORTC + 1;
+        INTCONbits.RBIF = 0;
+    }
+    if (INTCONbits.RBIF == 1 && PORTBbits.RB1 == 0) {
+        PORTC = PORTC - 1;
+        INTCONbits.RBIF = 0;
+    }
+    if (PIR1bits.ADIF == 1) {
+        PIR1bits.ADIF = 0;
+        INTCONbits.RBIF = 0;
+        PORTC = ADRESH;
+    }
 }
