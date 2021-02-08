@@ -1,14 +1,7 @@
-/*******************************************************************************
- *
- * Author: Mariandree Rivera
- * Carnet: 18178
- *  //Oscilador.c
- *  //Funcion Para seleccionar la Frecuencia del oscilador Interno del Pic.
- * 
- * Created on February 07, 2021,
-/*******************************************************************************
-*/
-
+//Jorge Rafael Hurtado Garcia
+//18052
+//Oscilador.c
+//Funcion Para seleccionar la Frecuencia del oscilador Interno del Pic.
 
 #include "oscilador.h"
 

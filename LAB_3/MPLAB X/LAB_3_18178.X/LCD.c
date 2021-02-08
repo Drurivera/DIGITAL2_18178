@@ -78,19 +78,13 @@ void Lcd_Init(void) {
     Lcd_Cmd (0x06); 
 }
 void Lcd_Set_Cursor(char a, char b) {
-    char temp, z, y;
+    char temp;
     if (a == 1) {
         temp = 0x80 + b - 1;
-        z = temp >> 4;
-        y = temp & 0x0F;
-        Lcd_Cmd(z);
-        Lcd_Cmd (y);
+        Lcd_Cmd (temp);
     }else if (a == 2) {
         temp = 0xC0 + b - 1;
-        z = temp >> 4;
-        y = temp & 0x0F;
-        Lcd_Cmd(z);
-        Lcd_Cmd (y);
+        Lcd_Cmd (temp);
     }
 }
 

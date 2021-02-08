@@ -7,9 +7,13 @@
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "oscilador.c" 2
-# 13 "oscilador.c"
+
+
+
+
+
 # 1 "./oscilador.h" 1
-# 16 "./oscilador.h"
+# 13 "./oscilador.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2494,7 +2498,7 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
-# 16 "./oscilador.h" 2
+# 13 "./oscilador.h" 2
 
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
 # 13 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
@@ -2629,14 +2633,14 @@ typedef int16_t intptr_t;
 
 
 typedef uint16_t uintptr_t;
-# 17 "./oscilador.h" 2
+# 14 "./oscilador.h" 2
 
 
 
 
 
 void initosc(uint8_t IRCF);
-# 13 "oscilador.c" 2
+# 6 "oscilador.c" 2
 
 
 void initosc(uint8_t IRCF){
