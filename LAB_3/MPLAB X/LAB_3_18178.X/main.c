@@ -4,14 +4,13 @@
  * Carnet: 18178
  * Archivo template 
  * 
- * Created on February 07, 2021,
+ * Created on February 08, 2021,
 /*******************************************************************************
 */
 //**************************
 // Importacion de librerias
 //**************************
 #include <xc.h>
-#include "oscilador.h"
 
 //**************************
 // Palabra de configuracion
@@ -77,20 +76,16 @@ void main(void) {
 //**************************
 
 void setup(void) {
-//CONFIGURACION DE LAS INTERRUPCIONES DEL PUERTO B
-   initosc(7);
+
     OSCCONbits.OSTS = 0;
     OSCCONbits.HTS =  0;
     OSCCONbits.LTS =  0;
     INTCONbits.GIE =  1;
     INTCONbits.PEIE = 1;
-    INTCONbits.RBIE = 1;
-    INTCONbits.T0IE = 1;
-    INTCONbits.T0IF = 0;
-    INTCONbits.RBIF = 0;
-    IOCBbits.IOCB0 =  1;
-    IOCBbits.IOCB1 =  1;
-//CONFIGURACION DE LOS PUERTOS
+    PIE1bits.RCIE = 1;
+    PIR1bits.RCIF = 0;
+
+    
     ANSEL = 0;
     ANSELH = 0b00000001;
     TRISA = 0;
@@ -129,5 +124,4 @@ void __interrupt() ISR(void){
             }
         }
 }
-
 }
