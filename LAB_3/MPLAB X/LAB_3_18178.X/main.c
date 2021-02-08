@@ -64,7 +64,7 @@ void __interrupt() ISR()
     if (PIR1bits.RCIF == 1)
     {
         //esto nos limpiara la interrupcion
-        PIR1bits.RCIF == 0;
+        PIR1bits.RCIF = 0;
         TXREG = (RCREG + 1);
         while (TXSTAbits.TRMT == 0);
         
@@ -82,15 +82,57 @@ void __interrupt() ISR();
 //**************************
 
 void main(void) {
-
+    unsigned int a;
     setup();
+    void Lcd_Init(void);
     UART_Init();
     //**************************
     // Loop principal
     //**************************
-    while (1);
-    return;
+    while (1) {
+
+        Lcd_Clear();
+        //        if (PORTCbits.RC7 == 0) {
+        Lcd_Set_Cursor(1, 1);
+        Lcd_Write_String("Hola Mundo");
+        //        }
+        //        if (PORTCbits.RC7 == 0) {
+        Lcd_Set_Cursor(2, 1);
+        Lcd_Write_String("Adios Mundo");
+        __delay_ms(2000);
+        Lcd_Clear();
+        //        }
+        //        if (PORTCbits.RC7 == 0) {
+        Lcd_Set_Cursor(1, 1);
+        Lcd_Write_String("Developed By");
+        Lcd_Set_Cursor(2, 1);
+        Lcd_Write_String("electroSome");
+        __delay_ms(2000);
+        Lcd_Clear();
+        //        }
+
+
+        //        Lcd_Set_Cursor(1, 1);
+        //        Lcd_Write_String("www.electroSome.com");
+
+        for (a = 0; a < 15; a++) {
+            __delay_ms(300);
+            Lcd_Shift_Left();
+        }
+
+        for (a = 0; a < 15; a++) {
+            __delay_ms(300);
+            Lcd_Shift_Right();
+        }
+
+        Lcd_Clear();
+        Lcd_Set_Cursor(2, 1);
+        Lcd_Write_Char('M');
+        Lcd_Write_Char('S');
+        __delay_ms(2000);
+    }
 }
+
 //**************************
 // Configuracion
 //**************************
