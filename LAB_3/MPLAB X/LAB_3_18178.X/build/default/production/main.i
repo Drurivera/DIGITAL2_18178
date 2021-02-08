@@ -2687,7 +2687,7 @@ void __attribute__((picinterrupt(("")))) ISR()
 void setup(void);
 void UART_Init(void);
 void __attribute__((picinterrupt(("")))) ISR();
-
+void Lcd_Init(void);
 
 
 

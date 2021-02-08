@@ -12,6 +12,7 @@
 //**************************
 #include <xc.h>
 #include "oscilador.h"
+#include "adc.h"
 
 //**************************
 // Palabra de configuracion
@@ -40,12 +41,35 @@
 // Variables
 //**************************
 
-char counter = 0;
+char x = 0;
+char y = 0;
+char toggle = 0;
+char tog = 0;
+
+uint8_t 7_seg[] = {
+    0b00111111,
+    0b00000110,
+    0b01011011,
+    0b01001111,
+    0b01100110,
+    0b01101101,
+    0b01111101,
+    0b00000111,
+    0b01111111,
+    0b01101111,
+    0b01110111,
+    0b01111100,
+    0b00111001,
+    0b01011110,
+    0b01111001,
+    0b01110001
+};
 
 //**************************
 // Prototipos de funciones
 //**************************
 void setup(void);
+void toggle(void);
 void __interrupt() ISR() ;
 
 //**************************
@@ -59,14 +83,32 @@ void main(void) {
     //**************************
     // Loop principal
     //**************************
-
     while (1) {
+        conversion(1000);
+        ADCON0bits.ADON = 1;
+        __delay_ms(10);
+        ADCON0bits.GO_DONE = 1;
+        while (ADCON0bits.GO_DONE == 1);
+        if (tog == 0) {
+            PORTEbits.RA0 = 1;
+            PORTEbits.RA1 = 0;
+            PORTD = 7_seg[y];
+            tog=1;
+        }
+        if (tog == 1) {
+            PORTEbits.RA0 = 0;
+            PORTEbits.RA1 = 1;
+            PORTD = 7_seg[x];
+            tog=0;
 
+        }
+        if (toggle>=PORTC){
+            PORTBbits.RB2 =1;
+        }
+        PORTBbits.RB2 =0;
 
     }
-
 }
-
 //**************************
 // Configuracion
 //**************************
@@ -92,6 +134,14 @@ void setup(void) {
     IOCBbits.IOCB1 = 1;
     IOCBbits.IOCB2 = 1;
     //Configuracion de Puertos y limpieza de los mismos.
+        //timer 0 configuration bits
+    OPTION_REGbits.nRBPU = 1;
+    OPTION_REGbits.INTEDG = 0;
+    OPTION_REGbits.T0CS = 0;
+    OPTION_REGbits.T0SE = 0;
+    OPTION_REGbits.PSA = 0;
+    OPTION_REGbits.PS = 0b000; // 1:2 tmr0 rate 
+    TMR0 = 2;
     ANSEL = 0;
     ANSELH = 0b00000001;
     TRISA = 0;
@@ -106,10 +156,6 @@ void setup(void) {
     PORTE = 0;
     
 }
-
-//**************************
-// Funciones
-//**************************
 
 //**********
 // Interrupciones
@@ -128,5 +174,17 @@ void __interrupt() ISR() {
         PIR1bits.ADIF = 0;
         INTCONbits.RBIF = 0;
         PORTC = ADRESH;
+        y = toggle;
+        x = toggle & 0x0F;
+        y = ((toggle & 0xF0) >> 4);
+        
+    }
+}
+void toggle(void) {
+    if (tog == 0) {
+        tog = 1;
+    }
+    if (tog == 1) {
+        tog = 0;
     }
 }

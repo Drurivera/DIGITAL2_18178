@@ -76,7 +76,7 @@ void __interrupt() ISR()
 void setup(void);
 void UART_Init(void);
 void __interrupt() ISR();
-
+void Lcd_Init(void);
 //**************************
 // Ciclo principal
 //**************************
