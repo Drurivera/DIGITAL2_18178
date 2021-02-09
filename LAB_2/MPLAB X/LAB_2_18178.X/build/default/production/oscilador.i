@@ -11,7 +11,6 @@
 
 
 
-
 # 1 "./oscilador.h" 1
 # 13 "./oscilador.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 1 3
@@ -2640,7 +2639,7 @@ typedef uint16_t uintptr_t;
 
 
 void initosc(uint8_t IRCF);
-# 6 "oscilador.c" 2
+# 5 "oscilador.c" 2
 
 
 void initosc(uint8_t IRCF){

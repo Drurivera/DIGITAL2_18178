@@ -3,7 +3,7 @@
 
 /* 
  * File:   Template Digital 2
- * Author: Jorge Rafael Hurtado Garcia 18052
+ * Author: Mariandree Rivera 18178
  * 
  * Libreria para ADC
  * 
@@ -14,7 +14,7 @@
 
 
 
-void conversion(int channel){
+void convertor(int channel){
     INTCONbits.GIE = 1;
     INTCONbits.PEIE = 1;
     PIE1bits.ADIE = 1;
@@ -22,6 +22,7 @@ void conversion(int channel){
     ADCON0=0b01000000;//Fosc/8 Selected. Channel AN0 is set as default.GoDone
     //Cleared. ADC Enable Bit set to 0 waiting further instructions.
     ADCON1=0b00000000;//Right Justified default. Voltage ref. Vdd et Vss.
-    ADCON0bits.CHS=channel;
+    ADCON0bits.CHS= channel;
     PIR1bits.ADIF = 0;//Bandera del ADC
+    
 }

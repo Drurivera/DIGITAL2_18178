@@ -1,4 +1,4 @@
-# 1 "main_LAB_2.c"
+# 1 "adc.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,8 +6,9 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "main_LAB_2.c" 2
-# 13 "main_LAB_2.c"
+# 1 "adc.c" 2
+# 1 "./adc.h" 1
+# 12 "./adc.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2492,10 +2493,8 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
-# 13 "main_LAB_2.c" 2
+# 12 "./adc.h" 2
 
-# 1 "./oscilador.h" 1
-# 14 "./oscilador.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
 # 13 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
 typedef signed char int8_t;
@@ -2629,196 +2628,21 @@ typedef int16_t intptr_t;
 
 
 typedef uint16_t uintptr_t;
-# 14 "./oscilador.h" 2
-
-
-
-
-
-void initosc(uint8_t IRCF);
-# 14 "main_LAB_2.c" 2
-
-# 1 "./adc.h" 1
-# 13 "./adc.h"
-# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
 # 13 "./adc.h" 2
 
 
 void conversion(int channel);
-# 15 "main_LAB_2.c" 2
-
-
-
-
-
-
-
-#pragma config FOSC = XT
-#pragma config WDTE = OFF
-#pragma config PWRTE = OFF
-#pragma config MCLRE = OFF
-#pragma config CP = OFF
-#pragma config CPD = OFF
-#pragma config BOREN = OFF
-#pragma config IESO = OFF
-#pragma config FCMEN = OFF
-#pragma config LVP = OFF
-
-
-#pragma config BOR4V = BOR40V
-#pragma config WRT = OFF
-
-
-
-
-
-
-
-
-char x = 0;
-char y = 0;
-char arc = 0;
-char tog = 0;
-
-uint8_t seg7[] = {
-    0b00111111,
-    0b00000110,
-    0b01011011,
-    0b01001111,
-    0b01100110,
-    0b01101101,
-    0b01111101,
-    0b00000111,
-    0b01111111,
-    0b01101111,
-    0b01110111,
-    0b01111100,
-    0b00111001,
-    0b01011110,
-    0b01111001,
-    0b01110001 };
-
-
-
-
-void setup(void);
-void toggle(void);
-void convertor(int );
-void __attribute__((picinterrupt(("")))) ISR() ;
-
-
-
-
-
-void main(void) {
-
-    setup();
-
-
-
-
-    while (1) {
-        convertor(1000);
-        ADCON0bits.ADON = 1;
-        _delay((unsigned long)((15)*(8000000/4000.0)));
-        ADCON0bits.GO_DONE = 1;
-        while (ADCON0bits.GO_DONE == 1);
-        if (tog == 0) {
-            PORTAbits.RA0 = 1;
-            PORTAbits.RA1 = 0;
-            PORTD = seg7[y];
-            tog=1;
-        }
-        if (tog == 1) {
-            PORTAbits.RA0 = 0;
-            PORTAbits.RA1 = 1;
-            PORTD = seg7[x];
-            tog=0;
-
-        }
-        if (arc>=PORTD){
-            PORTBbits.RB2 =1;
-        }
-        PORTBbits.RB2 =0;
-
-    }
-}
-
-
-
-
-void setup(void) {
-
-    initosc(7);
-    OSCCONbits.OSTS = 0;
-    OSCCONbits.HTS = 0;
-    OSCCONbits.LTS = 0;
+# 1 "adc.c" 2
+# 17 "adc.c"
+void convertor(int channel){
     INTCONbits.GIE = 1;
     INTCONbits.PEIE = 1;
-    INTCONbits.RBIE = 1;
-    INTCONbits.T0IE = 1;
-    INTCONbits.INTE = 1;
     PIE1bits.ADIE = 1;
+    PIR1bits.ADIF = 0;
+    ADCON0=0b01000000;
 
-    INTCONbits.T0IF = 0;
-    INTCONbits.RBIF = 0;
+    ADCON1=0b00000000;
+    ADCON0bits.CHS= channel;
     PIR1bits.ADIF = 0;
 
-    IOCBbits.IOCB0 = 1;
-    IOCBbits.IOCB1 = 1;
-    IOCBbits.IOCB2 = 1;
-
-
-    OPTION_REGbits.nRBPU = 1;
-    OPTION_REGbits.INTEDG = 0;
-    OPTION_REGbits.T0CS = 0;
-    OPTION_REGbits.T0SE = 0;
-    OPTION_REGbits.PSA = 0;
-    OPTION_REGbits.PS = 0b000;
-    TMR0 = 2;
-    ANSEL = 0;
-    ANSELH = 0b00000001;
-    TRISA = 0;
-    PORTA = 0;
-    TRISB = 0b00000111;
-    PORTB = 0;
-    TRISC = 0;
-    PORTC = 0;
-    TRISD = 0;
-    PORTD = 0;
-    TRISE = 0;
-    PORTE = 0;
-
-}
-
-
-
-
-
-void __attribute__((picinterrupt(("")))) ISR() {
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB0 == 0) {
-        PORTC = PORTC + 1;
-        INTCONbits.RBIF = 0;
-    }
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB1 == 0) {
-        PORTC = PORTC - 1;
-        INTCONbits.RBIF = 0;
-    }
-    if (PIR1bits.ADIF == 1) {
-
-        arc = ADRESH;
-        y = arc ;
-        x = arc & 0x0F;
-        y = ((arc & 0xF0) >> 4);
-        PORTDbits.RD3 = 1;
-        PIR1bits.ADIF = 0;
-    }
-}
-void toggle(void) {
-    if (tog == 0) {
-        tog = 1;
-    }
-    if (tog == 1) {
-        tog = 0;
-    }
 }

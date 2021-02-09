@@ -1,7 +1,6 @@
 /* 
  * File: Oscilador.h  
- * Author: Jorge Hurtado
- * Comments: .h File to config. Oscilator.
+ * Author: Mariandree Rivera
  * Revision history: 
  */
 
@@ -16,3 +15,4 @@
 void conversion(int channel);
 
 #endif	/* OSCILADOR_H */
+

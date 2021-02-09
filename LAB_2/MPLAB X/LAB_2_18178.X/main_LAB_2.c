@@ -43,10 +43,10 @@
 
 char x = 0;
 char y = 0;
-char toggle = 0;
+char arc = 0;
 char tog = 0;
 
-uint8_t 7_seg[] = {
+uint8_t seg7[] = {
     0b00111111,
     0b00000110,
     0b01011011,
@@ -62,14 +62,14 @@ uint8_t 7_seg[] = {
     0b00111001,
     0b01011110,
     0b01111001,
-    0b01110001
-};
+    0b01110001 };
 
 //**************************
 // Prototipos de funciones
 //**************************
 void setup(void);
 void toggle(void);
+void convertor(int );
 void __interrupt() ISR() ;
 
 //**************************
@@ -84,25 +84,25 @@ void main(void) {
     // Loop principal
     //**************************
     while (1) {
-        conversion(1000);
+        convertor(1000);
         ADCON0bits.ADON = 1;
-        __delay_ms(10);
+        __delay_ms(15);
         ADCON0bits.GO_DONE = 1;
         while (ADCON0bits.GO_DONE == 1);
         if (tog == 0) {
-            PORTEbits.RA0 = 1;
-            PORTEbits.RA1 = 0;
-            PORTD = 7_seg[y];
+            PORTAbits.RA0 = 1;
+            PORTAbits.RA1 = 0;
+            PORTD = seg7[y];
             tog=1;
         }
         if (tog == 1) {
-            PORTEbits.RA0 = 0;
-            PORTEbits.RA1 = 1;
-            PORTD = 7_seg[x];
+            PORTAbits.RA0 = 0;
+            PORTAbits.RA1 = 1;
+            PORTD = seg7[x];
             tog=0;
 
         }
-        if (toggle>=PORTC){
+        if (arc>=PORTD){
             PORTBbits.RB2 =1;
         }
         PORTBbits.RB2 =0;
@@ -171,13 +171,13 @@ void __interrupt() ISR() {
         INTCONbits.RBIF = 0;
     }
     if (PIR1bits.ADIF == 1) {
-        PIR1bits.ADIF = 0;
-        INTCONbits.RBIF = 0;
-        PORTC = ADRESH;
-        y = toggle;
-        x = toggle & 0x0F;
-        y = ((toggle & 0xF0) >> 4);
-        
+//        INTCONbits.RBIF = 0;
+        arc = ADRESH;
+        y = arc ;
+        x = arc  & 0x0F;
+        y = ((arc & 0xF0) >> 4);
+        PORTDbits.RD3 = 1;
+        PIR1bits.ADIF = 0;        
     }
 }
 void toggle(void) {

@@ -1,5 +1,4 @@
-//Jorge Rafael Hurtado Garcia
-//18052
+//mariandree rivera
 //Oscilador.c
 //Funcion Para seleccionar la Frecuencia del oscilador Interno del Pic.
 
