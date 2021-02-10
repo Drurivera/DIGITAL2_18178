@@ -2494,8 +2494,6 @@ extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
 # 13 "main_LAB_2.c" 2
 
-# 1 "./oscilador.h" 1
-# 14 "./oscilador.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
 # 13 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 3
 typedef signed char int8_t;
@@ -2629,13 +2627,6 @@ typedef int16_t intptr_t;
 
 
 typedef uint16_t uintptr_t;
-# 14 "./oscilador.h" 2
-
-
-
-
-
-void initosc(uint8_t IRCF);
 # 14 "main_LAB_2.c" 2
 
 # 1 "./adc.h" 1
@@ -2677,8 +2668,11 @@ void conversion(int channel);
 
 char x = 0;
 char y = 0;
-char arc = 0;
+uint8_t arc = 0;
 char tog = 0;
+int leds = 0;
+char AR1=0;
+char AR2=0;
 
 uint8_t seg7[] = {
     0b00111111,
@@ -2702,10 +2696,10 @@ uint8_t seg7[] = {
 
 
 void setup(void);
-void toggle(void);
 void convertor(int );
 void __attribute__((picinterrupt(("")))) ISR() ;
-
+void toggle (void);
+void pushs (void);
 
 
 
@@ -2718,7 +2712,7 @@ void main(void) {
 
 
     while (1) {
-        convertor(1000);
+        convertor(8);
         ADCON0bits.ADON = 1;
         _delay((unsigned long)((15)*(8000000/4000.0)));
         ADCON0bits.GO_DONE = 1;
@@ -2727,20 +2721,20 @@ void main(void) {
             PORTAbits.RA0 = 1;
             PORTAbits.RA1 = 0;
             PORTD = seg7[y];
-            tog=1;
+
         }
         if (tog == 1) {
             PORTAbits.RA0 = 0;
             PORTAbits.RA1 = 1;
             PORTD = seg7[x];
-            tog=0;
 
         }
-        if (arc>=PORTD){
-            PORTBbits.RB2 =1;
+        if (arc>=leds){
+            PORTAbits.RA2 =1;
         }
-        PORTBbits.RB2 =0;
-
+       if (arc<=leds){
+         PORTAbits.RA2 =0;
+       }
     }
 }
 
@@ -2748,34 +2742,13 @@ void main(void) {
 
 
 void setup(void) {
+    INTCON = 0b11101000;
+    PIE1 = 0b01000000;
 
-    initosc(7);
-    OSCCONbits.OSTS = 0;
-    OSCCONbits.HTS = 0;
-    OSCCONbits.LTS = 0;
-    INTCONbits.GIE = 1;
-    INTCONbits.PEIE = 1;
-    INTCONbits.RBIE = 1;
-    INTCONbits.T0IE = 1;
-    INTCONbits.INTE = 1;
-    PIE1bits.ADIE = 1;
-
-    INTCONbits.T0IF = 0;
-    INTCONbits.RBIF = 0;
-    PIR1bits.ADIF = 0;
-
-    IOCBbits.IOCB0 = 1;
-    IOCBbits.IOCB1 = 1;
-    IOCBbits.IOCB2 = 1;
+    IOCB = 0b00000011;
 
 
-    OPTION_REGbits.nRBPU = 1;
-    OPTION_REGbits.INTEDG = 0;
-    OPTION_REGbits.T0CS = 0;
-    OPTION_REGbits.T0SE = 0;
-    OPTION_REGbits.PSA = 0;
-    OPTION_REGbits.PS = 0b000;
-    TMR0 = 2;
+    OPTION_REG =0b11000110;
     ANSEL = 0;
     ANSELH = 0b00000001;
     TRISA = 0;
@@ -2796,29 +2769,59 @@ void setup(void) {
 
 
 void __attribute__((picinterrupt(("")))) ISR() {
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB0 == 0) {
-        PORTC = PORTC + 1;
+# 159 "main_LAB_2.c"
+    if (INTCONbits.RBIF == 1){
         INTCONbits.RBIF = 0;
-    }
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB1 == 0) {
-        PORTC = PORTC - 1;
-        INTCONbits.RBIF = 0;
+        (INTCONbits.GIE = 0);
+        pushs();
+        return;
     }
     if (PIR1bits.ADIF == 1) {
-
         arc = ADRESH;
         y = arc ;
         x = arc & 0x0F;
         y = ((arc & 0xF0) >> 4);
-        PORTDbits.RD3 = 1;
         PIR1bits.ADIF = 0;
+        return;
+    }
+     if (TMR0IF == 1 ){
+        toggle ();
+        TMR0IF = 0;
+        TMR0 = 173;
+        return;
+    }
+
+}
+void toggle (void){
+    if (tog == 1){
+        tog = 0;
+        return;
+    }
+    if (tog== 0){
+        tog = 1;
+        return;
     }
 }
-void toggle(void) {
-    if (tog == 0) {
-        tog = 1;
+
+void pushs (void){
+    if(PORTBbits.RB0==1){
+        AR1=1;
+        (INTCONbits.GIE = 0);
     }
-    if (tog == 1) {
-        tog = 0;
+    if(PORTBbits.RB0==0 && AR1==1){
+        AR1=0;
+        PORTC=PORTC+1;
+        (INTCONbits.GIE = 1);
+        return;
+    }
+    if(PORTBbits.RB1==1){
+        AR2=1;
+        (INTCONbits.GIE = 0);
+    }
+    if(PORTBbits.RB1==0 && AR2==1){
+        AR2=0;
+        PORTC=PORTC-1;
+        (INTCONbits.GIE = 1);
+        return;
     }
 }

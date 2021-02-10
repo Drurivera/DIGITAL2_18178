@@ -11,7 +11,7 @@
 // Importacion de librerias
 //**************************
 #include <xc.h>
-#include "oscilador.h"
+#include <stdint.h>
 #include "adc.h"
 
 //**************************
@@ -43,8 +43,11 @@
 
 char x = 0;
 char y = 0;
-char arc = 0;
+uint8_t arc = 0;
 char tog = 0;
+int leds = 0;
+char AR1=0;
+char AR2=0;
 
 uint8_t seg7[] = {
     0b00111111,
@@ -68,10 +71,10 @@ uint8_t seg7[] = {
 // Prototipos de funciones
 //**************************
 void setup(void);
-void toggle(void);
 void convertor(int );
 void __interrupt() ISR() ;
-
+void toggle (void);
+void pushs (void); 
 //**************************
 // Ciclo principal
 //**************************
@@ -84,7 +87,7 @@ void main(void) {
     // Loop principal
     //**************************
     while (1) {
-        convertor(1000);
+        convertor(8);
         ADCON0bits.ADON = 1;
         __delay_ms(15);
         ADCON0bits.GO_DONE = 1;
@@ -93,20 +96,20 @@ void main(void) {
             PORTAbits.RA0 = 1;
             PORTAbits.RA1 = 0;
             PORTD = seg7[y];
-            tog=1;
+           
         }
         if (tog == 1) {
             PORTAbits.RA0 = 0;
             PORTAbits.RA1 = 1;
             PORTD = seg7[x];
-            tog=0;
-
+            
         }
-        if (arc>=PORTD){
-            PORTBbits.RB2 =1;
+        if (arc>=leds){
+            PORTAbits.RA2 =1;
         }
-        PORTBbits.RB2 =0;
-
+       if  (arc<=leds){
+         PORTAbits.RA2 =0;
+       }
     }
 }
 //**************************
@@ -114,34 +117,13 @@ void main(void) {
 //**************************
 
 void setup(void) {
-    //Configuracion del Oscilador con libreria.
-    initosc(7);
-    OSCCONbits.OSTS = 0;
-    OSCCONbits.HTS = 0;
-    OSCCONbits.LTS = 0;
-    INTCONbits.GIE = 1;
-    INTCONbits.PEIE = 1;
-    INTCONbits.RBIE = 1;
-    INTCONbits.T0IE = 1;
-    INTCONbits.INTE = 1;
-    PIE1bits.ADIE = 1;
-    //Limpieza de FLAGS.
-    INTCONbits.T0IF = 0; //Bandera de Timer 0
-    INTCONbits.RBIF = 0; //Bandera de IOC
-    PIR1bits.ADIF = 0; //Bandera del ADC
+    INTCON  = 0b11101000; //GIE,PEIE, TMR0,RBIE ACTIVOS.
+    PIE1    = 0b01000000; //ADIE ACTIVO.
     //habilita los  bits de IOC del Puerto B en RB0 y RB1 para los PushButton.
-    IOCBbits.IOCB0 = 1;
-    IOCBbits.IOCB1 = 1;
-    IOCBbits.IOCB2 = 1;
+    IOCB    = 0b00000011;
     //Configuracion de Puertos y limpieza de los mismos.
         //timer 0 configuration bits
-    OPTION_REGbits.nRBPU = 1;
-    OPTION_REGbits.INTEDG = 0;
-    OPTION_REGbits.T0CS = 0;
-    OPTION_REGbits.T0SE = 0;
-    OPTION_REGbits.PSA = 0;
-    OPTION_REGbits.PS = 0b000; // 1:2 tmr0 rate 
-    TMR0 = 2;
+    OPTION_REG  =0b11000110;  
     ANSEL = 0;
     ANSELH = 0b00000001;
     TRISA = 0;
@@ -162,29 +144,70 @@ void setup(void) {
 //**********
 
 void __interrupt() ISR() {
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB0 == 0) {
-        PORTC = PORTC + 1;
+//    if (INTCONbits.RBIF == 1 && PORTBbits.RB0 == 0) {
+//        PORTC = PORTC + 1;
+//        leds = leds + 1;
+//        INTCONbits.RBIF = 0;
+//        return;
+//    }
+//    if (INTCONbits.RBIF == 1 && PORTBbits.RB1 == 0) {
+//        PORTC = PORTC - 1;
+//        leds = leds - 1;
+//        INTCONbits.RBIF = 0;
+//        return;
+//    }
+    if (INTCONbits.RBIF == 1){
         INTCONbits.RBIF = 0;
-    }
-    if (INTCONbits.RBIF == 1 && PORTBbits.RB1 == 0) {
-        PORTC = PORTC - 1;
-        INTCONbits.RBIF = 0;
+        di();
+        pushs();
+        return;
     }
     if (PIR1bits.ADIF == 1) {
-//        INTCONbits.RBIF = 0;
         arc = ADRESH;
         y = arc ;
         x = arc  & 0x0F;
         y = ((arc & 0xF0) >> 4);
-        PORTDbits.RD3 = 1;
-        PIR1bits.ADIF = 0;        
+        PIR1bits.ADIF = 0;
+        return;
+    }   
+     if (TMR0IF == 1 ){   // interrupcion del TIMER 0 que manda a colocar el valor del contador en el puerto A 
+        toggle ();       // y a multiplexar los displays 
+        TMR0IF = 0;
+        TMR0 = 173;
+        return;
+    }
+    //if ()
+}
+void toggle (void){
+    if (tog == 1){
+        tog = 0;
+        return;
+    }
+    if (tog== 0){
+        tog = 1;
+        return;
     }
 }
-void toggle(void) {
-    if (tog == 0) {
-        tog = 1;
+
+void pushs (void){
+    if(PORTBbits.RB0==1){
+        AR1=1;
+        di();
     }
-    if (tog == 1) {
-        tog = 0;
+    if(PORTBbits.RB0==0 && AR1==1){
+        AR1=0;
+        PORTC=PORTC+1;
+        ei();
+        return;
+    }
+    if(PORTBbits.RB1==1){
+        AR2=1;
+        di();
+    }
+    if(PORTBbits.RB1==0 && AR2==1){
+        AR2=0;
+        PORTC=PORTC-1;
+        ei();
+        return;
     }
 }
