@@ -144,18 +144,7 @@ void setup(void) {
 //**********
 
 void __interrupt() ISR() {
-//    if (INTCONbits.RBIF == 1 && PORTBbits.RB0 == 0) {
-//        PORTC = PORTC + 1;
-//        leds = leds + 1;
-//        INTCONbits.RBIF = 0;
-//        return;
-//    }
-//    if (INTCONbits.RBIF == 1 && PORTBbits.RB1 == 0) {
-//        PORTC = PORTC - 1;
-//        leds = leds - 1;
-//        INTCONbits.RBIF = 0;
-//        return;
-//    }
+
     if (INTCONbits.RBIF == 1){
         INTCONbits.RBIF = 0;
         di();

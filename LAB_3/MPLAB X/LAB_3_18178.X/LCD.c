@@ -1,104 +1,68 @@
 /*
- *File: LCD.c
- * Se tomo y se adaptaron las librerias de Ligo George
- * de la pagina www.electrosome.com
+ * Se tomo y se adaptaron las librerias 
  * Pagina: https://electrosome.com/lcd-pic-mplab-xc8/
+ * File:   LCD.c
+ * Author: Mariandree Rivera
+ *
+ * Created on 11 de febrero de 2021
  */
 
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "LCD.h"
+#include<xc.h>
+#define _XTAL_FREQ 4000000
 
-void Lcd_Port(char a) {
-    if (a & 1)
-        D0 = 1;
-    else
-        D0 = 0;
-    
-    if (a & 2)
-        D1 = 1;
-    else
-        D1 = 0;
-    
-    if (a & 4)
-        D2 = 1;
-    else
-        D2 = 0;
-    
-    if (a & 8)
-        D3 = 1;
-    else
-        D3 = 0;
-    
-    if (a & 16)
-        D4 = 1;
-    else
-        D4 = 0;
-    
-    if (a & 32)
-        D5 = 1;
-    else
-        D5 = 0;
-    
-    if (a & 64)
-        D6 = 1;
-    else
-        D6 = 0;
-    
-    if (a & 128)
-        D7 = 1;
-    else
-        D7 = 0;
-}
-
-void Lcd_Cmd(char a) {
+void LCD_cmd(unsigned char x){
+    LCD_ready();
+    LCD = x;
     RS = 0;
-    Lcd_Port (a);
+    RW = 0;
+    LCD_lat();    
+}
+
+void LCD_lat(void){
     EN = 1;
-    __delay_ms(5);
+   __delay_ms(30);
+   EN = 0;
+}
+void LCD_ready(void) {
+    LCD = 0xFF;
+    LCD &= 0x80;
+    RS = 0;
+    RW = 1;
     EN = 0;
-}
-
-void Lcd_Clear(void) {
-    Lcd_Cmd(0);
-    Lcd_Cmd(1); 
-}
-
-void Lcd_Init(void) {
-    Lcd_Port(0x00);
     __delay_ms(30);
-    Lcd_Cmd (0x30);
-    __delay_ms(6);
-    Lcd_Cmd (0x30);
-    __delay_ms(15);
-    Lcd_Cmd (0x30);
-    //////////////////////////////////////////////////////////////////////////
-    Lcd_Cmd (0x08);
-    Lcd_Cmd (0x01);
-    Lcd_Cmd (0x08);
-    Lcd_Cmd (0x06); 
-}
-void Lcd_Set_Cursor(char a, char b) {
-    char temp;
-    if (a == 1) {
-        temp = 0x80 + b - 1;
-        Lcd_Cmd (temp);
-    }else if (a == 2) {
-        temp = 0xC0 + b - 1;
-        Lcd_Cmd (temp);
-    }
-}
-
-void Lcd_Write_Char(char a){
-    char temp;
-    RS = 1;
-    Lcd_Port(temp);
     EN = 1;
-    __delay_us(40);
+    if (LCD == 0x80){
     EN = 0;
+    __delay_ms(30);
+    EN = 1;  
+    }
+    else{   
+    }    
 }
 
-void Lcd_Write_String(char *a){
-    int i;
-    for (i = 0; a[i] != '\0'; i++)
-        Lcd_Write_Char(a[i]);
+void LCD_dwr(unsigned char x){
+    LCD_ready();
+    LCD = x;
+    RS = 1;
+    RW = 0;
+    LCD_lat(); 
 }
+
+void LCD_msg(unsigned char *c){
+    while(*c != 0)
+        LCD_dwr(*c++);
+}
+
+void inicio(void){   
+    LCD_cmd(0x38);
+    LCD_cmd(0x0C);
+    LCD_cmd(0x01);
+    LCD_cmd(0x06);
+    LCD_cmd(0x80);  
+}
+
+
+
