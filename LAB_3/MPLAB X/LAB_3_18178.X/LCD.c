@@ -13,7 +13,7 @@
 #include<xc.h>
 #define _XTAL_FREQ 4000000
 
-void LCD_cmd(unsigned char x){
+void LCD_cmd(unsigned char x){ 
     LCD_ready();
     LCD = x;
     RS = 0;
@@ -26,7 +26,7 @@ void LCD_lat(void){
    __delay_ms(30);
    EN = 0;
 }
-void LCD_ready(void) {
+void LCD_ready(void) { //esta funcion es la habilitacion del ADC.
     LCD = 0xFF;
     LCD &= 0x80;
     RS = 0;
@@ -35,15 +35,13 @@ void LCD_ready(void) {
     __delay_ms(30);
     EN = 1;
     if (LCD == 0x80){
-    EN = 0;
-    __delay_ms(30);
-    EN = 1;  
+        EN = 0;
+        __delay_ms(30);
+        EN = 1;  
     }
-    else{   
-    }    
-}
 
-void LCD_dwr(unsigned char x){
+}
+void LCD_dwr(unsigned char x){ 
     LCD_ready();
     LCD = x;
     RS = 1;
@@ -51,7 +49,7 @@ void LCD_dwr(unsigned char x){
     LCD_lat(); 
 }
 
-void LCD_msg(unsigned char *c){
+void LCD_msg(unsigned char *c){  //transmision de los mensajes.
     while(*c != 0)
         LCD_dwr(*c++);
 }

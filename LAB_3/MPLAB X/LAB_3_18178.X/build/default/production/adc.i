@@ -2898,8 +2898,17 @@ void ADC(void);
 void PC (int n);
 # 21 "adc.c" 2
 
-# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
+# 1 "./eusart.h" 1
+# 25 "./eusart.h"
+uint8_t UART_INIT(const long int baudrate);
+uint8_t UART_READ(void);
+void UART_Read_Text(char *Output, unsigned int length);
+void UART_WRITE(char data);
+void UART_Write_Text(char *text);
 # 22 "adc.c" 2
+
+# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
+# 23 "adc.c" 2
 
 
 
@@ -2909,93 +2918,126 @@ void PC (int n);
 
 float voltage;
 int DC1;
-int ADC_1_A;
-int ADC_1_B;
-int ADC_A;
-char ADCA_CHARA[5];
-char ADCB_CHARB[5];
-char ADCC_CHARC[5];
+int ADC1_A;
+int ADC1_B;
+int ADCA;
+char ADCACHARA[5];
+char ADCBCHARB[5];
+char ADCCCHARC[5];
 char POINTERA[5];
 uint8_t analogic_digital_a;
 float voltageb;
 uint8_t analogic_digital_b;
 int DC2;
-int ADC_2_A;
-int ADC_2_B;
-int ADC_B;
-char ADCAA_CHARA[5];
-char ADCAB_CHARB[5];
-char ADCAC_CHARC[5];
+int ADC2_A;
+int ADC2_B;
+int ADCB;
+char ADCAACHARA[5];
+char ADCABCHARB[5];
+char ADCACCHARC[5];
 char POINTERB[5];
 int PI;
 int plc;
-char ARDUINO[5];
+char TERMINAL[5];
+int rX;
+int rXc;
 
 
 
-void PC(int n){
+
+void PC(int n) {
     plc = n;
     PI = (plc)*1;
-     itoa(ARDUINO,PI,10);
+    itoa(TERMINAL, PI, 10);
 }
 
-void ADC(void){
-    while(1){
-    ADCON0bits.ADCS = 01;
-    ADCON0bits.ADON = 1;
-    ADCON1bits.ADFM = 0;
-    ADCON1bits.VCFG0 = 0;
-    ADCON1bits.VCFG1 = 0;
-    LCD_msg("S1     S2     S3");
-    while(1){
-        _delay((unsigned long)((1)*(4000000/4000.0)));
-        ADCON0bits.CHS = 0000;
-        ADCON0bits.ADON = 1;
-        ADCON0bits.GO = 1;
-        while(ADCON0bits.GO);
-        analogic_digital_a = ADRESH;
-        voltage = (analogic_digital_a*5.0)/255.0;
-        DC1 = (voltage)*100;
-        ADC_1_A = DC1%10;
-        itoa(ADCA_CHARA,ADC_1_A,10);
-        ADC_1_B = (DC1/10)%10;
-        itoa(ADCB_CHARB,ADC_1_B,10);
-        ADC_A = (DC1/100)%10;
-        itoa(ADCC_CHARC,ADC_A,10);
-        strcat(ADCB_CHARB,ADCA_CHARA);
-        strcpy(POINTERA,".");
-        strcat(POINTERA,ADCB_CHARB);
-        strcat(ADCC_CHARC,POINTERA);
-
-
-        _delay((unsigned long)((600)*(4000000/4000000.0)));
-        ADCON0bits.CHS = 0001;
-        ADCON0bits.ADON = 1;
-        ADCON0bits.GO = 1;
-        while(ADCON0bits.GO);
-        analogic_digital_b = ADRESH;
-        voltageb = analogic_digital_b*5.0/255.0;
-        DC2 = (voltageb)*100;
-        ADC_2_A = DC2%10;
-        itoa(ADCAA_CHARA,ADC_2_A,10);
-        ADC_2_B = (DC2/10)%10;
-        itoa(ADCAB_CHARB,ADC_2_B,10);
-        ADC_B = (DC2/100)%10;
-        itoa(ADCAC_CHARC,ADC_B,10);
-        strcat(ADCAB_CHARB,ADCAA_CHARA);
-        strcpy(POINTERB,".");
-        strcat(POINTERB,ADCAB_CHARB);
-        strcat(ADCAC_CHARC,POINTERB);
-
-
-        LCD_cmd(0xC0);
-        LCD_msg(ADCC_CHARC);
-        LCD_msg("V ");
-        LCD_msg(ADCAC_CHARC);
-        LCD_msg("V ");
-        LCD_msg(ARDUINO);
-
+void __attribute__((picinterrupt(("")))) ISR(void) {
+    if (PIR1bits.RCIF == 1) {
+        PORTAbits.RA5;
+        rX = RCREG;
+        if (rX == '+') {
+            rXc = rXc + 1;
+            return;
+        }
+        if (rX == '-') {
+            rXc = rXc - 1;
+            return;
+        }
+        PIR1bits.RCIF = 0;
+        return;
     }
+
+
+}
+
+void ADC(void) {
+    PIE1bits.RCIE = 1;
+    INTCONbits.PEIE = 1;
+    INTCONbits.GIE = 1;
+    PIR1bits.RCIF = 0;
+    PIR1bits.TXIF = 0;
+    rXc = 0;
+    while (1) {
+        ADCON0bits.ADCS = 01;
+        ADCON0bits.ADON = 1;
+        ADCON1bits.ADFM = 0;
+        ADCON1bits.VCFG0 = 0;
+        ADCON1bits.VCFG1 = 0;
+        SPBRGH = 0;
+        SPBRG = 25;
+        TXSTA = 0b00100100;
+        RCSTA = 0b10010000;
+        LCD_msg("S1     S2     S3");
+        while (1) {
+            _delay((unsigned long)((1)*(4000000/4000.0)));
+            ADCON0bits.CHS = 0000;
+            ADCON0bits.ADON = 1;
+            ADCON0bits.GO = 1;
+            while (ADCON0bits.GO);
+            analogic_digital_a = ADRESH;
+            voltage = (analogic_digital_a * 5.0) / 255.0;
+            DC1 = (voltage)*100;
+            ADC1_A = DC1 % 10;
+            itoa(ADCACHARA, ADC1_A, 10);
+            ADC1_B = (DC1 / 10) % 10;
+            itoa(ADCBCHARB, ADC1_B, 10);
+            ADCA = (DC1 / 100) % 10;
+            itoa(ADCCCHARC, ADCA, 10);
+            strcat(ADCBCHARB, ADCACHARA);
+            strcpy(POINTERA, ".");
+            strcat(POINTERA, ADCBCHARB);
+            strcat(ADCCCHARC, POINTERA);
+
+
+            _delay((unsigned long)((600)*(4000000/4000000.0)));
+            ADCON0bits.CHS = 0001;
+            ADCON0bits.ADON = 1;
+            ADCON0bits.GO = 1;
+            while (ADCON0bits.GO);
+            analogic_digital_b = ADRESH;
+            voltageb = analogic_digital_b * 5.0 / 255.0;
+            DC2 = (voltageb)*100;
+            ADC2_A = DC2 % 10;
+            itoa(ADCAACHARA, ADC2_A, 10);
+            ADC2_B = (DC2 / 10) % 10;
+            itoa(ADCABCHARB, ADC2_B, 10);
+            ADCB = (DC2 / 100) % 10;
+            itoa(ADCACCHARC, ADCB, 10);
+            strcat(ADCABCHARB, ADCAACHARA);
+            strcpy(POINTERB, ".");
+            strcat(POINTERB, ADCABCHARB);
+            strcat(ADCACCHARC, POINTERB);
+            sprintf(TERMINAL, "%.1i", rXc);
+
+
+            LCD_cmd(0xC0);
+            LCD_msg(ADCCCHARC);
+            LCD_msg("V ");
+            LCD_msg(ADCACCHARC);
+            LCD_msg("V ");
+            LCD_msg(TERMINAL);
+
+        }
     }
     return;
 }

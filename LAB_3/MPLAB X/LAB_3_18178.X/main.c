@@ -14,6 +14,7 @@
 #include <stdint.h>
 #include "pic16f887.h"
 #include "LCD.h"
+#include "eusart.h"
 
 #include "adc.h"
 
@@ -48,27 +49,16 @@
 //**************************
 
 
-#define RS PORTCbits.RC3
-#define RW PORTCbits.RC4
-#define EN PORTCbits.RC5
-#define LCD PORTB
+#define RS PORTCbits.RC3   //definicion para definir si es comando o dato.
+#define RW PORTCbits.RC4   //definicion para definir si leera o escribira en la LCD.
+#define EN PORTCbits.RC5   // habilita el funcionamiento de la LCD.
+#define LCD PORTB          //habilita los puertos para el display.
 
 //**********
 // Interrupciones
 //**********
 
-void __interrupt() ISR()
-{
- //esto se activara si la interrupcion viene del receptor en el UART
-    if (PIR1bits.RCIF == 1)
-    {
-        //esto nos limpiara la interrupcion
-        PIR1bits.RCIF = 0;
-        TXREG = (RCREG + 1);
-        while (TXSTAbits.TRMT == 0);
-        
-    }
-}
+
 //**************************
 // Prototipos de funciones
 //**************************
@@ -101,7 +91,7 @@ void setup(void) {
     TRISA = 0b00000011;
     TRISB = 0b00000000; 
     TRISD = 0b00000000;
-    TRISC = 0b00000000;
+    TRISC = 0b10000000;
     TRISE = 0;
     
     PORTA = 0;
@@ -110,6 +100,16 @@ void setup(void) {
     PORTD = 0;
     PORTE = 0;
     
+    PIE1bits.RCIE = 1;
+    INTCONbits.PEIE = 1;
+    INTCONbits.GIE = 1;
+    PIR1bits.RCIF = 0;
+    PIR1bits.TXIF = 0;
+    SPBRGH = 0;
+    SPBRG = 25; //
+    TXSTA = 0b00100100;
+    RCSTA = 0b10010000;
+    BAUDCTLbits.BRG16 = 0;
     OSCCONbits.IRCF = 0b110; //8Mhz
     OSCCONbits.OSTS= 0;
     OSCCONbits.HTS = 0;

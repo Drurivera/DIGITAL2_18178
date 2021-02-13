@@ -2722,14 +2722,12 @@ void LCD_ready(void) {
     _delay((unsigned long)((30)*(4000000/4000.0)));
     PORTCbits.RC5 = 1;
     if (PORTB == 0x80){
-    PORTCbits.RC5 = 0;
-    _delay((unsigned long)((30)*(4000000/4000.0)));
-    PORTCbits.RC5 = 1;
+        PORTCbits.RC5 = 0;
+        _delay((unsigned long)((30)*(4000000/4000.0)));
+        PORTCbits.RC5 = 1;
     }
-    else{
-    }
-}
 
+}
 void LCD_dwr(unsigned char x){
     LCD_ready();
     PORTB = x;

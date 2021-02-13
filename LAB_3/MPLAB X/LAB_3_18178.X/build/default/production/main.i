@@ -2640,6 +2640,15 @@ void LCD_lat(void);
 void inicio(void);
 # 16 "main.c" 2
 
+# 1 "./eusart.h" 1
+# 25 "./eusart.h"
+uint8_t UART_INIT(const long int baudrate);
+uint8_t UART_READ(void);
+void UART_Read_Text(char *Output, unsigned int length);
+void UART_WRITE(char data);
+void UART_Write_Text(char *text);
+# 17 "main.c" 2
+
 
 # 1 "./adc.h" 1
 # 17 "./adc.h"
@@ -2877,8 +2886,8 @@ extern char * strrichr(const char *, int);
 
 void ADC(void);
 void PC (int n);
-# 18 "main.c" 2
-# 31 "main.c"
+# 19 "main.c" 2
+# 32 "main.c"
 #pragma config FOSC = INTRC_NOCLKOUT
 #pragma config WDTE = OFF
 #pragma config PWRTE = OFF
@@ -2893,22 +2902,7 @@ void PC (int n);
 
 #pragma config BOR4V = BOR40V
 #pragma config WRT = OFF
-# 60 "main.c"
-void __attribute__((picinterrupt(("")))) ISR()
-{
-
-    if (PIR1bits.RCIF == 1)
-    {
-
-        PIR1bits.RCIF = 0;
-        TXREG = (RCREG + 1);
-        while (TXSTAbits.TRMT == 0);
-
-    }
-}
-
-
-
+# 65 "main.c"
 void setup(void);
 
 
@@ -2938,7 +2932,7 @@ void setup(void) {
     TRISA = 0b00000011;
     TRISB = 0b00000000;
     TRISD = 0b00000000;
-    TRISC = 0b00000000;
+    TRISC = 0b10000000;
     TRISE = 0;
 
     PORTA = 0;
@@ -2947,6 +2941,16 @@ void setup(void) {
     PORTD = 0;
     PORTE = 0;
 
+    PIE1bits.RCIE = 1;
+    INTCONbits.PEIE = 1;
+    INTCONbits.GIE = 1;
+    PIR1bits.RCIF = 0;
+    PIR1bits.TXIF = 0;
+    SPBRGH = 0;
+    SPBRG = 25;
+    TXSTA = 0b00100100;
+    RCSTA = 0b10010000;
+    BAUDCTLbits.BRG16 = 0;
     OSCCONbits.IRCF = 0b110;
     OSCCONbits.OSTS= 0;
     OSCCONbits.HTS = 0;
