@@ -10,19 +10,15 @@
 //**************************
 // Importacion de librerias
 //**************************
+// IMPORTACION DE LIBRERIAS PROPIAS DE MPLABX.
 #include <xc.h>
 #include <stdint.h>
-#include "pic16f887.h"
-#include "LCD.h"
-#include "eusart.h"
-
-#include "adc.h"
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-/*La inicializacion de la LCD se tomo de este video: https://www.youtube.com/watch?v=ve1PcD6Cegw&feature=youtu.be*/
-
+#include <string.h> 
+// IMPORTACION DE LIBRERIAS PROPIAS DE FUNCIONES.
+#include "pic16f887.h"
+#include "adc.h"
 
 //**************************
 // Palabra de configuracion
@@ -49,20 +45,17 @@
 //**************************
 
 
-#define RS PORTCbits.RA0  //definicion para definir si es comando o dato.
-#define RW PORTCbits.RA1   //definicion para definir si leera o escribira en la LCD.
-#define EN PORTCbits.RA2   // habilita el funcionamiento de la LCD.
-#define LCD PORTD          //habilita los puertos para el display.
-
-//**********
-// Interrupciones
-//**********
-
+char SL2 = 0;
+char AR1=0;
+char AR2=0;
 
 //**************************
 // Prototipos de funciones
 //**************************
 void setup(void);
+void ADCInicio(int );
+void __interrupt() ISR() ;
+void pushs (void);
 
 //**************************
 // Ciclo principal
@@ -75,44 +68,66 @@ void main(void){
     // Loop principal
     //**************************
     while (1) {
-        inicio(); 
-        ADC();
+        PORTD = SL2;
 }
 }
-
 //**************************
 // Configuracion
 //**************************
 
 void setup(void) {
- 
-    ANSEL = 0b00000011;
-    ANSELH= 0b00000000;
-    TRISA = 0b00000011;
-    TRISB = 0b00000000; 
-    TRISD = 0b00000000;
-    TRISC = 0b10000000;
-    TRISE = 0;
-    
+    INTCON  = 0b11101000; //GIE,PEIE, TMR0,RBIE ACTIVOS.
+    PIE1    = 0b01000000; //ADIE ACTIVO.
+    //habilita los  bits de IOC del Puerto B en RB0 y RB1 para los PushButton.
+    IOCB    = 0b00000011; //Configuracion de Puertos y limpieza de los mismos.
+        //timer 0 configuration bits
+   
+    ANSEL = 0;
+    ANSELH = 0;
+    TRISA = 0;
     PORTA = 0;
+    TRISB = 0b00000011;
     PORTB = 0;
+    TRISC = 0;
     PORTC = 0;
+    TRISD = 0;
     PORTD = 0;
+    TRISE = 0;
     PORTE = 0;
     
-    PIE1bits.RCIE = 1;
-    INTCONbits.PEIE = 1;
-    INTCONbits.GIE = 1;
-    PIR1bits.RCIF = 0;
-    PIR1bits.TXIF = 0;
-    SPBRGH = 0;
-    SPBRG = 25; //
-    TXSTA = 0b00100100;
-    RCSTA = 0b10010000;
-    BAUDCTLbits.BRG16 = 0;
-    OSCCONbits.IRCF = 0b110; //8Mhz
-    OSCCONbits.OSTS= 0;
-    OSCCONbits.HTS = 0;
-    OSCCONbits.LTS = 0;
-    OSCCONbits.SCS = 1; 
+}
+//**********
+// Interrupciones
+//**********
+
+void __interrupt() ISR() {
+
+    if (INTCONbits.RBIF == 1){
+        INTCONbits.RBIF = 0;
+        di();
+        pushs();
+        return;
+    }
+}
+void pushs (void){
+    if(PORTBbits.RB0==1){
+        AR1=1;
+        di();
+    }
+    if(PORTBbits.RB0==0 && AR1==1){
+        AR1=0;
+        SL2=SL2+1;
+        ei();
+        return;
+    }
+    if(PORTBbits.RB1==1){
+        AR2=1;
+        di();
+    }
+    if(PORTBbits.RB1==0 && AR2==1){
+        AR2=0;
+        SL2=SL2-1;
+        ei();
+        return;
+    }
 }
