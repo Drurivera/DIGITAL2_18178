@@ -57,11 +57,6 @@ uint8_t ADC1SL3 = 0;
 #define EN PORTCbits.RA2   // habilita el funcionamiento de la LCD.
 #define LCD PORTD          //habilita los puertos para el display.
 
-//**********
-// Interrupciones
-//**********
-
-
 //**************************
 // Prototipos de funciones
 //**************************
@@ -120,10 +115,14 @@ void setup(void) {
     OSCCONbits.LTS = 0;
     OSCCONbits.SCS = 1; 
 }
+
+//****************************************************************************
+// Interrupciones
+//****************************************************************************
  void __interrupt() ISR(void) {
         
    if(PIR1bits.SSPIF==1 && SSb1 == 1  ){
-        z = SSPBUF;
+          z = SSPBUF;
 
           SSPSTATbits.BF= 0;
           PIR1bits.SSPIF = 0;
@@ -131,7 +130,10 @@ void setup(void) {
           return;
           
     }
-      
+uint8_t SSb1 = 0;
+uint8_t ADC1SL1 = 0;
+uint8_t SL2 = 0;
+uint8_t ADC1SL3 = 0; 
    if(PIR1bits.SSPIF==1 & BANDERA == 0  ){
         x = SSPBUF;
            PORTB = x;
