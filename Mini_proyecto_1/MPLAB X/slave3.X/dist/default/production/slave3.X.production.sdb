@@ -3,6 +3,8 @@
 [d edition pro ]
 [d chip 16F887 ]
 [d frameptr 0 ]
+"21 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave3.X\adc.c
+[v _ADCInicio ADCInicio `(v  1 e 1 0 ]
 "10 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
 "4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\Umul8_16.c
@@ -11,39 +13,35 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"64 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\main_slave2.c
+"59 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave3.X\main_slave3.c
 [v _main main `(v  1 e 1 0 ]
-"78
+"95
 [v _setup setup `(v  1 e 1 0 ]
-"103
+"114
 [v _ISR ISR `II(v  1 e 1 0 ]
-"112
-[v _pushs pushs `(v  1 e 1 0 ]
 "166 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic16f887.h
 [v _PORTA PORTA `VEuc  1 e 1 @5 ]
 "228
 [v _PORTB PORTB `VEuc  1 e 1 @6 ]
-[s S77 . 1 `uc 1 RB0 1 0 :1:0 
-`uc 1 RB1 1 0 :1:1 
-`uc 1 RB2 1 0 :1:2 
-`uc 1 RB3 1 0 :1:3 
-`uc 1 RB4 1 0 :1:4 
-`uc 1 RB5 1 0 :1:5 
-`uc 1 RB6 1 0 :1:6 
-`uc 1 RB7 1 0 :1:7 
-]
-"245
-[u S86 . 1 `S77 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES86  1 e 1 @6 ]
 "290
 [v _PORTC PORTC `VEuc  1 e 1 @7 ]
 "352
 [v _PORTD PORTD `VEuc  1 e 1 @8 ]
+[s S91 . 1 `uc 1 RD0 1 0 :1:0 
+`uc 1 RD1 1 0 :1:1 
+`uc 1 RD2 1 0 :1:2 
+`uc 1 RD3 1 0 :1:3 
+`uc 1 RD4 1 0 :1:4 
+`uc 1 RD5 1 0 :1:5 
+`uc 1 RD6 1 0 :1:6 
+`uc 1 RD7 1 0 :1:7 
+]
+"369
+[u S100 . 1 `S91 1 . 1 0 ]
+[v _PORTDbits PORTDbits `VES100  1 e 1 @8 ]
 "414
 [v _PORTE PORTE `VEuc  1 e 1 @9 ]
-"459
-[v _INTCON INTCON `VEuc  1 e 1 @11 ]
-[s S41 . 1 `uc 1 RBIF 1 0 :1:0 
+[s S188 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 RBIE 1 0 :1:3 
@@ -53,14 +51,14 @@
 `uc 1 GIE 1 0 :1:7 
 ]
 "482
-[s S50 . 1 `uc 1 . 1 0 :2:0 
+[s S197 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
-[u S55 . 1 `S41 1 . 1 0 `S50 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES55  1 e 1 @11 ]
-[s S166 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[u S202 . 1 `S188 1 . 1 0 `S197 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES202  1 e 1 @11 ]
+[s S124 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 CCP1IF 1 0 :1:2 
 `uc 1 SSPIF 1 0 :1:3 
@@ -69,17 +67,15 @@
 `uc 1 ADIF 1 0 :1:6 
 ]
 "553
-[u S174 . 1 `S166 1 . 1 0 ]
-[v _PIR1bits PIR1bits `VES174  1 e 1 @12 ]
-"1245
-[v _ADCON0 ADCON0 `VEuc  1 e 1 @31 ]
-[s S187 . 1 `uc 1 ADON 1 0 :1:0 
+[u S132 . 1 `S124 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES132  1 e 1 @12 ]
+[s S45 . 1 `uc 1 ADON 1 0 :1:0 
 `uc 1 GO_nDONE 1 0 :1:1 
 `uc 1 CHS 1 0 :4:2 
 `uc 1 ADCS 1 0 :2:6 
 ]
 "1276
-[s S192 . 1 `uc 1 . 1 0 :1:0 
+[s S50 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO 1 0 :1:1 
 `uc 1 CHS0 1 0 :1:2 
 `uc 1 CHS1 1 0 :1:3 
@@ -88,14 +84,14 @@
 `uc 1 ADCS0 1 0 :1:6 
 `uc 1 ADCS1 1 0 :1:7 
 ]
-[s S201 . 1 `uc 1 . 1 0 :1:0 
+[s S59 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 nDONE 1 0 :1:1 
 ]
-[s S204 . 1 `uc 1 . 1 0 :1:0 
+[s S62 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO_DONE 1 0 :1:1 
 ]
-[u S207 . 1 `S187 1 . 1 0 `S192 1 . 1 0 `S201 1 . 1 0 `S204 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES207  1 e 1 @31 ]
+[u S65 . 1 `S45 1 . 1 0 `S50 1 . 1 0 `S59 1 . 1 0 `S62 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES65  1 e 1 @31 ]
 "1416
 [v _TRISA TRISA `VEuc  1 e 1 @133 ]
 "1478
@@ -106,9 +102,7 @@
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
 "1664
 [v _TRISE TRISE `VEuc  1 e 1 @137 ]
-"1702
-[v _PIE1 PIE1 `VEuc  1 e 1 @140 ]
-[s S147 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[s S220 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
 `uc 1 SSPIE 1 0 :1:3 
@@ -117,39 +111,42 @@
 `uc 1 ADIE 1 0 :1:6 
 ]
 "1718
-[u S155 . 1 `S147 1 . 1 0 ]
-[v _PIE1bits PIE1bits `VES155  1 e 1 @140 ]
-"2416
-[v _IOCB IOCB `VEuc  1 e 1 @150 ]
-"2977
-[v _ADCON1 ADCON1 `VEuc  1 e 1 @159 ]
+[u S228 . 1 `S220 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES228  1 e 1 @140 ]
+"2970
+[v _ADRESL ADRESL `VEuc  1 e 1 @158 ]
+[s S30 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 VCFG0 1 0 :1:4 
+`uc 1 VCFG1 1 0 :1:5 
+`uc 1 . 1 0 :1:6 
+`uc 1 ADFM 1 0 :1:7 
+]
+"2991
+[u S36 . 1 `S30 1 . 1 0 ]
+[v _ADCON1bits ADCON1bits `VES36  1 e 1 @159 ]
 "3387
 [v _ANSEL ANSEL `VEuc  1 e 1 @392 ]
 "3449
 [v _ANSELH ANSELH `VEuc  1 e 1 @393 ]
-"48 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\main_slave2.c
-[v _SL2 SL2 `uc  1 e 1 0 ]
-"49
-[v _AUM AUM `uc  1 e 1 0 ]
-"50
-[v _DEC DEC `uc  1 e 1 0 ]
-"64
+"48 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave3.X\main_slave3.c
+[v _ADC1SL3 ADC1SL3 `uc  1 e 1 0 ]
+"59
 [v _main main `(v  1 e 1 0 ]
 {
-"73
+"89
 } 0
-"78
+"95
 [v _setup setup `(v  1 e 1 0 ]
-{
-"98
-} 0
-"103
-[v _ISR ISR `II(v  1 e 1 0 ]
 {
 "111
 } 0
-"112
-[v _pushs pushs `(v  1 e 1 0 ]
+"21 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave3.X\adc.c
+[v _ADCInicio ADCInicio `(v  1 e 1 0 ]
 {
-"133
+"33
+} 0
+"114 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave3.X\main_slave3.c
+[v _ISR ISR `II(v  1 e 1 0 ]
+{
+"120
 } 0

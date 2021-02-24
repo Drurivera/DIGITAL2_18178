@@ -5,24 +5,20 @@
  * Archivo template 
  * 
  * Created on February 15, 2021
-/*******************************************************************************
 */
+//*******************************************************************************
+
 //**************************
 // Importacion de librerias
 //**************************
-#include <xc.h>
-#include <stdint.h>
-#include "pic16f887.h"
-#include "LCD.h"
-#include "eusart.h"
-
-#include "adc.h"
-
+#include <pic16f887.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <xc.h>
+#include "adc.h"
+#include <stdint.h>
 #include <string.h>
-/*La inicializacion de la LCD se tomo de este video: https://www.youtube.com/watch?v=ve1PcD6Cegw&feature=youtu.be*/
-
+#define _XTAL_FREQ 8000000;
 
 //**************************
 // Palabra de configuracion
@@ -47,17 +43,7 @@
 //**************************
 // Variables
 //**************************
-
-
-#define RS PORTCbits.RA0  //definicion para definir si es comando o dato.
-#define RW PORTCbits.RA1   //definicion para definir si leera o escribira en la LCD.
-#define EN PORTCbits.RA2   // habilita el funcionamiento de la LCD.
-#define LCD PORTD          //habilita los puertos para el display.
-
-//**********
-// Interrupciones
-//**********
-
+uint8_t ADC1SL3 = 0 ;
 
 //**************************
 // Prototipos de funciones
@@ -69,15 +55,35 @@ void setup(void);
 //**************************
 
 void main(void){
-
     setup ();
     //**************************
     // Loop principal
     //**************************
     while (1) {
-        inicio(); 
-        ADC();
-}
+        ADCInicio();
+        ADCON1bits.ADFM = 1; //justificado a la derecha.
+        ADCON0bits.ADON = 1;
+        ADCON0bits.GO = 1;
+        while (ADCON0bits.GO);
+        if (ADC1SL3 < 51){ 
+            PORTDbits.RD0 = 0;
+            PORTDbits.RD1 = 0;
+            PORTDbits.RD2 = 1;
+
+        }
+        if (ADC1SL3 > 73){ 
+            PORTDbits.RD0 = 1;
+            PORTDbits.RD1 = 0;
+            PORTDbits.RD2 = 0;
+
+        }
+        if (ADC1SL3 >= 51 && ADC1SL3 <= 73 ){ 
+            PORTDbits.RD0 = 0;
+            PORTDbits.RD1 = 1;
+            PORTDbits.RD2 = 0;
+
+        }   
+    }
 }
 
 //**************************
@@ -86,12 +92,12 @@ void main(void){
 
 void setup(void) {
  
-    ANSEL = 0b00000011;
+    ANSEL = 0b00000001;
     ANSELH= 0b00000000;
-    TRISA = 0b00000011;
+    TRISA = 0b00000001;
     TRISB = 0b00000000; 
     TRISD = 0b00000000;
-    TRISC = 0b10000000;
+    TRISC = 0b00000000;
     TRISE = 0;
     
     PORTA = 0;
@@ -100,19 +106,13 @@ void setup(void) {
     PORTD = 0;
     PORTE = 0;
     
-    PIE1bits.RCIE = 1;
-    INTCONbits.PEIE = 1;
-    INTCONbits.GIE = 1;
-    PIR1bits.RCIF = 0;
-    PIR1bits.TXIF = 0;
-    SPBRGH = 0;
-    SPBRG = 25; //
-    TXSTA = 0b00100100;
-    RCSTA = 0b10010000;
-    BAUDCTLbits.BRG16 = 0;
-    OSCCONbits.IRCF = 0b110; //8Mhz
-    OSCCONbits.OSTS= 0;
-    OSCCONbits.HTS = 0;
-    OSCCONbits.LTS = 0;
-    OSCCONbits.SCS = 1; 
+}
+//SECUENCIA DE INTERRUPCION PARA LECTURA DE ADC.
+
+ void __interrupt() ISR(void) {
+    if (PIR1bits.ADIF == 1) {
+        ADC1SL3 = ADRESL ;
+        PIR1bits.ADIF=0;
+        return;
+    }
 }

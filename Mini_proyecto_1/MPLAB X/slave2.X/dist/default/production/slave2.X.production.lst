@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Tue Feb 23 17:25:16 2021
+                                                                                               Tue Feb 23 21:06:59 2021
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1 
      1                           	processor	16F887
@@ -335,9 +335,9 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    321                           
    322                           	psect	bssCOMMON
    323  0070                     __pbssCOMMON:	
-   324  0070                     _AR2:	
+   324  0070                     _DEC:	
    325  0070                     	ds	1
-   326  0071                     _AR1:	
+   326  0071                     _AUM:	
    327  0071                     	ds	1
    328  0072                     _SL2:	
    329  0072                     	ds	1
@@ -416,7 +416,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    402  0086  120A  118A  2048  120A  118A  	fcall	_setup
    403  008B                     l727:	
    404                           
-   405                           ;main_slave2.c: 71:         AR1=1;
+   405                           ;main_slave2.c: 71:         AUM=1;
    406  008B  0872               	movf	_SL2,w
    407  008C  1283               	bcf	3,5	;RP0=0, select bank0
    408  008D  1303               	bcf	3,6	;RP1=0, select bank0
@@ -480,7 +480,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    466  004F  0096               	movwf	22	;volatile
    467  0050                     l677:	
    468                           
-   469                           ;main_slave2.c: 85:         AR2=0;
+   469                           ;main_slave2.c: 85:         DEC=0;
    470  0050  1683               	bsf	3,5	;RP0=1, select bank3
    471  0051  1703               	bsf	3,6	;RP1=1, select bank3
    472  0052  0188               	clrf	8	;volatile
@@ -658,8 +658,8 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    644  001B  281F               	goto	i1l64
    645  001C                     u1_20:	
    646  001C                     i1l701:	
-   647  001C  01F1               	clrf	_AR1
-   648  001D  0AF1               	incf	_AR1,f
+   647  001C  01F1               	clrf	_AUM
+   648  001D  0AF1               	incf	_AUM,f
    649  001E  138B               	bcf	11,7	;volatile
    650  001F                     i1l64:	
    651  001F  1806               	btfsc	6,0	;volatile
@@ -669,7 +669,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    655  0022  2830               	goto	i1l65
    656  0023                     u2_20:	
    657  0023                     i1l703:	
-   658  0023  0371               	decf	_AR1,w
+   658  0023  0371               	decf	_AUM,w
    659  0024  1D03               	btfss	3,2
    660  0025  2827               	goto	u3_21
    661  0026  2828               	goto	u3_20
@@ -677,7 +677,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    663  0027  2830               	goto	i1l65
    664  0028                     u3_20:	
    665  0028                     i1l705:	
-   666  0028  01F1               	clrf	_AR1
+   666  0028  01F1               	clrf	_AUM
    667  0029                     i1l707:	
    668  0029  0872               	movf	_SL2,w
    669  002A  3E01               	addlw	1
@@ -695,8 +695,8 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    681  0033  2837               	goto	i1l67
    682  0034                     u4_20:	
    683  0034                     i1l713:	
-   684  0034  01F0               	clrf	_AR2
-   685  0035  0AF0               	incf	_AR2,f
+   684  0034  01F0               	clrf	_DEC
+   685  0035  0AF0               	incf	_DEC,f
    686  0036  138B               	bcf	11,7	;volatile
    687  0037                     i1l67:	
    688  0037  1886               	btfsc	6,1	;volatile
@@ -706,7 +706,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    692  003A  2847               	goto	i1l66
    693  003B                     u5_20:	
    694  003B                     i1l715:	
-   695  003B  0370               	decf	_AR2,w
+   695  003B  0370               	decf	_DEC,w
    696  003C  1D03               	btfss	3,2
    697  003D  283F               	goto	u6_21
    698  003E  2840               	goto	u6_20
@@ -714,7 +714,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    700  003F  2847               	goto	i1l66
    701  0040                     u6_20:	
    702  0040                     i1l717:	
-   703  0040  01F0               	clrf	_AR2
+   703  0040  01F0               	clrf	_DEC
    704  0041                     i1l719:	
    705  0041  0872               	movf	_SL2,w
    706  0042  3EFF               	addlw	255
@@ -851,14 +851,14 @@ DATA                 0      0       6      12        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Tue Feb 23 17:25:16 2021
+Symbol Table                                                                                   Tue Feb 23 21:06:59 2021
 
-             __CFG_CP$OFF 0000                        l55 0073                       _AR1 0071  
-                     _AR2 0070                       l725 0086                       l727 008B  
-                     l681 0054                       l691 0067                       l683 0057  
-                     l675 0048                       l693 006A                       l685 005E  
-                     l677 0050                       l695 006D                       l687 0061  
-                     l679 0053                       l697 0070                       l689 0064  
+             __CFG_CP$OFF 0000                        l55 0073                       l725 0086  
+                     _DEC 0070                       l727 008B                       l681 0054  
+                     l691 0067                       l683 0057                       l675 0048  
+                     l693 006A                       l685 005E                       l677 0050  
+                     l695 006D                       l687 0061                       l679 0053  
+                     l697 0070                       l689 0064                       _AUM 0071  
                      _SL2 0072              __CFG_CPD$OFF 0000                       _ISR 0074  
             __CFG_LVP$OFF 0000                      ?_ISR 0073                      _IOCB 0096  
                     _PIE1 008C                      i1l61 007F                      i1l64 001F  

@@ -46,8 +46,8 @@
 
 
 char SL2 = 0;
-char AR1=0;
-char AR2=0;
+char AUM=0;
+char DEC=0;
 
 //**************************
 // Prototipos de funciones
@@ -111,21 +111,21 @@ void __interrupt() ISR() {
 }
 void pushs (void){
     if(PORTBbits.RB0==1){
-        AR1=1;
+        AUM=1;
         di();
     }
-    if(PORTBbits.RB0==0 && AR1==1){
-        AR1=0;
+    if(PORTBbits.RB0==0 && AUM==1){
+        AUM=0;
         SL2=SL2+1;
         ei();
         return;
     }
     if(PORTBbits.RB1==1){
-        AR2=1;
+        DEC=1;
         di();
     }
-    if(PORTBbits.RB1==0 && AR2==1){
-        AR2=0;
+    if(PORTBbits.RB1==0 && DEC==1){
+        DEC=0;
         SL2=SL2-1;
         ei();
         return;
