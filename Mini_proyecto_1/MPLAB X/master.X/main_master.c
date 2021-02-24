@@ -47,7 +47,10 @@
 //**************************
 // Variables
 //**************************
-
+uint8_t SSb1 = 0;
+uint8_t ADC1SL1 = 0;
+uint8_t SL2 = 0;
+uint8_t ADC1SL3 = 0;
 
 #define RS PORTCbits.RA0  //definicion para definir si es comando o dato.
 #define RW PORTCbits.RA1   //definicion para definir si leera o escribira en la LCD.
@@ -71,6 +74,7 @@ void setup(void);
 void main(void){
 
     setup ();
+    SPIMaster();
     //**************************
     // Loop principal
     //**************************
@@ -115,4 +119,31 @@ void setup(void) {
     OSCCONbits.HTS = 0;
     OSCCONbits.LTS = 0;
     OSCCONbits.SCS = 1; 
+}
+ void __interrupt() ISR(void) {
+        
+   if(PIR1bits.SSPIF==1 && SSb1 == 1  ){
+        z = SSPBUF;
+
+          SSPSTATbits.BF= 0;
+          PIR1bits.SSPIF = 0;
+          
+          return;
+          
+    }
+      
+   if(PIR1bits.SSPIF==1 & BANDERA == 0  ){
+        x = SSPBUF;
+           PORTB = x;
+        BANDERA = 1;
+          SSPSTATbits.BF= 0;
+          PIR1bits.SSPIF = 0;
+          
+          return;
+          
+    }
+   
+   return;
+
+} 
 }
