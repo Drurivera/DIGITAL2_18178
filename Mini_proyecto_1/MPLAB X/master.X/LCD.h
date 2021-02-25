@@ -11,19 +11,19 @@
 #endif
 
 #ifndef RS
-#define RS PORTAbits.RA0
+#define RS PORTCbits.RC0
 #endif
 
 #ifndef RW
-#define RW PORTAbits.RA1
+#define RW PORTCbits.RC1
 #endif
 
 #ifndef EN
-#define EN PORTAbits.RA2
+#define EN PORTCbits.RC2
 #endif
 
 #ifndef LCD
-#define  LCD PORTB
+#define LCD PORTD
 #endif
 
 #include <xc.h>

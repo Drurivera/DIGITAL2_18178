@@ -11,19 +11,25 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"64 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\main_slave2.c
+"65 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\main_slave2.c
 [v _main main `(v  1 e 1 0 ]
-"78
+"80
 [v _setup setup `(v  1 e 1 0 ]
-"103
+"110
 [v _ISR ISR `II(v  1 e 1 0 ]
-"112
+"126
 [v _pushs pushs `(v  1 e 1 0 ]
+"35 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\SPI.c
+[v _SPISlave SPISlave `(v  1 e 1 0 ]
+"54
+[v _spiRead spiRead `(uc  1 e 1 0 ]
+"59
+[v _spiWrite spiWrite `(v  1 e 1 0 ]
 "166 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic16f887.h
 [v _PORTA PORTA `VEuc  1 e 1 @5 ]
 "228
 [v _PORTB PORTB `VEuc  1 e 1 @6 ]
-[s S77 . 1 `uc 1 RB0 1 0 :1:0 
+[s S129 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -33,8 +39,8 @@
 `uc 1 RB7 1 0 :1:7 
 ]
 "245
-[u S86 . 1 `S77 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES86  1 e 1 @6 ]
+[u S138 . 1 `S129 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES138  1 e 1 @6 ]
 "290
 [v _PORTC PORTC `VEuc  1 e 1 @7 ]
 "352
@@ -43,7 +49,7 @@
 [v _PORTE PORTE `VEuc  1 e 1 @9 ]
 "459
 [v _INTCON INTCON `VEuc  1 e 1 @11 ]
-[s S41 . 1 `uc 1 RBIF 1 0 :1:0 
+[s S64 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 RBIE 1 0 :1:3 
@@ -53,14 +59,14 @@
 `uc 1 GIE 1 0 :1:7 
 ]
 "482
-[s S50 . 1 `uc 1 . 1 0 :2:0 
+[s S73 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 TMR0IE 1 0 :1:5 
 ]
-[u S55 . 1 `S41 1 . 1 0 `S50 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES55  1 e 1 @11 ]
-[s S166 . 1 `uc 1 TMR1IF 1 0 :1:0 
+[u S78 . 1 `S64 1 . 1 0 `S73 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES78  1 e 1 @11 ]
+[s S96 . 1 `uc 1 TMR1IF 1 0 :1:0 
 `uc 1 TMR2IF 1 0 :1:1 
 `uc 1 CCP1IF 1 0 :1:2 
 `uc 1 SSPIF 1 0 :1:3 
@@ -69,17 +75,33 @@
 `uc 1 ADIF 1 0 :1:6 
 ]
 "553
-[u S174 . 1 `S166 1 . 1 0 ]
-[v _PIR1bits PIR1bits `VES174  1 e 1 @12 ]
+[u S104 . 1 `S96 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES104  1 e 1 @12 ]
+"843
+[v _SSPBUF SSPBUF `VEuc  1 e 1 @19 ]
+[s S378 . 1 `uc 1 SSPM 1 0 :4:0 
+`uc 1 CKP 1 0 :1:4 
+`uc 1 SSPEN 1 0 :1:5 
+`uc 1 SSPOV 1 0 :1:6 
+`uc 1 WCOL 1 0 :1:7 
+]
+"870
+[s S384 . 1 `uc 1 SSPM0 1 0 :1:0 
+`uc 1 SSPM1 1 0 :1:1 
+`uc 1 SSPM2 1 0 :1:2 
+`uc 1 SSPM3 1 0 :1:3 
+]
+[u S389 . 1 `S378 1 . 1 0 `S384 1 . 1 0 ]
+[v _SSPCONbits SSPCONbits `VES389  1 e 1 @20 ]
 "1245
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @31 ]
-[s S187 . 1 `uc 1 ADON 1 0 :1:0 
+[s S237 . 1 `uc 1 ADON 1 0 :1:0 
 `uc 1 GO_nDONE 1 0 :1:1 
 `uc 1 CHS 1 0 :4:2 
 `uc 1 ADCS 1 0 :2:6 
 ]
 "1276
-[s S192 . 1 `uc 1 . 1 0 :1:0 
+[s S242 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO 1 0 :1:1 
 `uc 1 CHS0 1 0 :1:2 
 `uc 1 CHS1 1 0 :1:3 
@@ -88,27 +110,51 @@
 `uc 1 ADCS0 1 0 :1:6 
 `uc 1 ADCS1 1 0 :1:7 
 ]
-[s S201 . 1 `uc 1 . 1 0 :1:0 
+[s S251 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 nDONE 1 0 :1:1 
 ]
-[s S204 . 1 `uc 1 . 1 0 :1:0 
+[s S254 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 GO_DONE 1 0 :1:1 
 ]
-[u S207 . 1 `S187 1 . 1 0 `S192 1 . 1 0 `S201 1 . 1 0 `S204 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES207  1 e 1 @31 ]
+[u S257 . 1 `S237 1 . 1 0 `S242 1 . 1 0 `S251 1 . 1 0 `S254 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES257  1 e 1 @31 ]
 "1416
 [v _TRISA TRISA `VEuc  1 e 1 @133 ]
+[s S465 . 1 `uc 1 TRISA0 1 0 :1:0 
+`uc 1 TRISA1 1 0 :1:1 
+`uc 1 TRISA2 1 0 :1:2 
+`uc 1 TRISA3 1 0 :1:3 
+`uc 1 TRISA4 1 0 :1:4 
+`uc 1 TRISA5 1 0 :1:5 
+`uc 1 TRISA6 1 0 :1:6 
+`uc 1 TRISA7 1 0 :1:7 
+]
+"1433
+[u S474 . 1 `S465 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES474  1 e 1 @133 ]
 "1478
 [v _TRISB TRISB `VEuc  1 e 1 @134 ]
 "1540
 [v _TRISC TRISC `VEuc  1 e 1 @135 ]
+[s S404 . 1 `uc 1 TRISC0 1 0 :1:0 
+`uc 1 TRISC1 1 0 :1:1 
+`uc 1 TRISC2 1 0 :1:2 
+`uc 1 TRISC3 1 0 :1:3 
+`uc 1 TRISC4 1 0 :1:4 
+`uc 1 TRISC5 1 0 :1:5 
+`uc 1 TRISC6 1 0 :1:6 
+`uc 1 TRISC7 1 0 :1:7 
+]
+"1557
+[u S413 . 1 `S404 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES413  1 e 1 @135 ]
 "1602
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
 "1664
 [v _TRISE TRISE `VEuc  1 e 1 @137 ]
 "1702
 [v _PIE1 PIE1 `VEuc  1 e 1 @140 ]
-[s S147 . 1 `uc 1 TMR1IE 1 0 :1:0 
+[s S45 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
 `uc 1 SSPIE 1 0 :1:3 
@@ -117,8 +163,51 @@
 `uc 1 ADIE 1 0 :1:6 
 ]
 "1718
-[u S155 . 1 `S147 1 . 1 0 ]
-[v _PIE1bits PIE1bits `VES155  1 e 1 @140 ]
+[u S53 . 1 `S45 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES53  1 e 1 @140 ]
+[s S289 . 1 `uc 1 BF 1 0 :1:0 
+`uc 1 UA 1 0 :1:1 
+`uc 1 R_nW 1 0 :1:2 
+`uc 1 S 1 0 :1:3 
+`uc 1 P 1 0 :1:4 
+`uc 1 D_nA 1 0 :1:5 
+`uc 1 CKE 1 0 :1:6 
+`uc 1 SMP 1 0 :1:7 
+]
+"2231
+[s S298 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D 1 0 :1:5 
+]
+[s S303 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 I2C_READ 1 0 :1:2 
+`uc 1 I2C_START 1 0 :1:3 
+`uc 1 I2C_STOP 1 0 :1:4 
+`uc 1 I2C_DATA 1 0 :1:5 
+]
+[s S309 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nW 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nA 1 0 :1:5 
+]
+[s S314 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nWRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nADDRESS 1 0 :1:5 
+]
+[s S319 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_W 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D_A 1 0 :1:5 
+]
+[s S324 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 READ_WRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 DATA_ADDRESS 1 0 :1:5 
+]
+[u S329 . 1 `S289 1 . 1 0 `S298 1 . 1 0 `S303 1 . 1 0 `S309 1 . 1 0 `S314 1 . 1 0 `S319 1 . 1 0 `S324 1 . 1 0 ]
+[v _SSPSTATbits SSPSTATbits `VES329  1 e 1 @148 ]
 "2416
 [v _IOCB IOCB `VEuc  1 e 1 @150 ]
 "2977
@@ -127,29 +216,49 @@
 [v _ANSEL ANSEL `VEuc  1 e 1 @392 ]
 "3449
 [v _ANSELH ANSELH `VEuc  1 e 1 @393 ]
-"48 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\main_slave2.c
+"4277
+[v _SSPIF SSPIF `VEb  1 e 0 @99 ]
+"49 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\main_slave2.c
 [v _SL2 SL2 `uc  1 e 1 0 ]
-"49
-[v _AUM AUM `uc  1 e 1 0 ]
 "50
+[v _AUM AUM `uc  1 e 1 0 ]
+"51
 [v _DEC DEC `uc  1 e 1 0 ]
-"64
+"65
 [v _main main `(v  1 e 1 0 ]
 {
-"73
+"75
 } 0
-"78
+"80
 [v _setup setup `(v  1 e 1 0 ]
 {
-"98
+"105
 } 0
-"103
+"35 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\SPI.c
+[v _SPISlave SPISlave `(v  1 e 1 0 ]
+{
+"52
+} 0
+"110 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\main_slave2.c
 [v _ISR ISR `II(v  1 e 1 0 ]
 {
-"111
+"124
 } 0
-"112
+"59 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\SPI.c
+[v _spiWrite spiWrite `(v  1 e 1 0 ]
+{
+[v spiWrite@data data `uc  1 a 1 wreg ]
+[v spiWrite@data data `uc  1 a 1 wreg ]
+[v spiWrite@data data `uc  1 a 1 0 ]
+"61
+} 0
+"54
+[v _spiRead spiRead `(uc  1 e 1 0 ]
+{
+"57
+} 0
+"126 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_1\MPLAB X\slave2.X\main_slave2.c
 [v _pushs pushs `(v  1 e 1 0 ]
 {
-"133
+"147
 } 0

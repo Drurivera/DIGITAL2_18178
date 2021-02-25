@@ -6,7 +6,7 @@
  * 
  * Created on February 15, 2021
 /*******************************************************************************
-*/
+ */
 //**************************
 // Importacion de librerias
 //**************************
@@ -19,6 +19,7 @@
 // IMPORTACION DE LIBRERIAS PROPIAS DE FUNCIONES.
 #include "pic16f887.h"
 #include "adc.h"
+#include "SPI.h"
 
 //**************************
 // Palabra de configuracion
@@ -46,55 +47,61 @@
 
 
 char SL2 = 0;
-char AUM=0;
-char DEC=0;
+char AUM = 0;
+char DEC = 0;
 
 //**************************
 // Prototipos de funciones
 //**************************
 void setup(void);
-void ADCInicio(int );
-void __interrupt() ISR() ;
-void pushs (void);
+void ADCInicio(int);
+void __interrupt() ISR();
+void pushs(void);
 
 //**************************
 // Ciclo principal
 //**************************
 
-void main(void){
+void main(void) {
 
-    setup ();
+    setup();
+    SPISlave();
     //**************************
     // Loop principal
     //**************************
     while (1) {
         PORTD = SL2;
-}
+    }
 }
 //**************************
 // Configuracion
 //**************************
 
 void setup(void) {
-    INTCON  = 0b11101000; //GIE,PEIE, TMR0,RBIE ACTIVOS.
-    PIE1    = 0b01000000; //ADIE ACTIVO.
+    INTCON = 0b11101000; //GIE,PEIE, TMR0,RBIE ACTIVOS.
+    PIE1 = 0b01000000; //ADIE ACTIVO.
     //habilita los  bits de IOC del Puerto B en RB0 y RB1 para los PushButton.
-    IOCB    = 0b00000011; //Configuracion de Puertos y limpieza de los mismos.
-        //timer 0 configuration bits
-   
+    IOCB = 0b00000011; //Configuracion de Puertos y limpieza de los mismos.
+    //timer 0 configuration bits
+
     ANSEL = 0;
     ANSELH = 0;
-    TRISA = 0;
+    TRISA = 0b00100001;
     PORTA = 0;
     TRISB = 0b00000011;
     PORTB = 0;
-    TRISC = 0;
+    TRISC = 0b00011000;
     PORTC = 0;
     TRISD = 0;
     PORTD = 0;
     TRISE = 0;
     PORTE = 0;
-    
+
+    PIE1bits.SSPIE = 1;
+    INTCONbits.PEIE = 1;
+    INTCONbits.GIE = 1;
+    PIR1bits.SSPIF = 0;
+
 }
 //**********
 // Interrupciones
@@ -102,31 +109,38 @@ void setup(void) {
 
 void __interrupt() ISR() {
 
-    if (INTCONbits.RBIF == 1){
+    if (INTCONbits.RBIF == 1) {
         INTCONbits.RBIF = 0;
         di();
         pushs();
         return;
     }
+    if (SSPIF == 1) {
+        PORTD = spiRead();
+        spiWrite(SL2);
+        SSPIF = 0;
+        return;
+    }
 }
-void pushs (void){
-    if(PORTBbits.RB0==1){
-        AUM=1;
+
+void pushs(void) {
+    if (PORTBbits.RB0 == 1) {
+        AUM = 1;
         di();
     }
-    if(PORTBbits.RB0==0 && AUM==1){
-        AUM=0;
-        SL2=SL2+1;
+    if (PORTBbits.RB0 == 0 && AUM == 1) {
+        AUM = 0;
+        SL2 = SL2 + 1;
         ei();
         return;
     }
-    if(PORTBbits.RB1==1){
-        DEC=1;
+    if (PORTBbits.RB1 == 1) {
+        DEC = 1;
         di();
     }
-    if(PORTBbits.RB1==0 && DEC==1){
-        DEC=0;
-        SL2=SL2-1;
+    if (PORTBbits.RB1 == 0 && DEC == 1) {
+        DEC = 0;
+        SL2 = SL2 - 1;
         ei();
         return;
     }

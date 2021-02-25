@@ -2827,8 +2827,12 @@ typedef uint16_t uintptr_t;
 void ADCInicio(void);
 # 18 "main_slave3.c" 2
 
+# 1 "./SPI.h" 1
+# 13 "./SPI.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
-# 19 "main_slave3.c" 2
+# 13 "./SPI.h" 2
+
+
 
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\string.h" 1 3
 # 14 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\string.h" 3
@@ -2861,8 +2865,18 @@ extern char * strchr(const char *, int);
 extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
+# 16 "./SPI.h" 2
+
+
+void SPIMaster(void);
+void SPISlave(void);
+void spiWrite(char data);
+char spiRead ();
+# 19 "main_slave3.c" 2
+
+# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
 # 20 "main_slave3.c" 2
-# 30 "main_slave3.c"
+# 29 "main_slave3.c"
 #pragma config FOSC = INTRC_NOCLKOUT
 #pragma config WDTE = OFF
 #pragma config PWRTE = OFF
@@ -2881,7 +2895,7 @@ extern char * strrichr(const char *, int);
 
 
 
-uint8_t ADC1SL3 = 0 ;
+uint8_t ADC1SL3 = 0;
 
 
 
@@ -2892,8 +2906,9 @@ void setup(void);
 
 
 
-void main(void){
-    setup ();
+void main(void) {
+    setup();
+    SPISlave();
 
 
 
@@ -2903,19 +2918,19 @@ void main(void){
         ADCON0bits.ADON = 1;
         ADCON0bits.GO = 1;
         while (ADCON0bits.GO);
-        if (ADC1SL3 < 51){
+        if (ADC1SL3 < 51) {
             PORTDbits.RD0 = 0;
             PORTDbits.RD1 = 0;
             PORTDbits.RD2 = 1;
 
         }
-        if (ADC1SL3 > 73){
+        if (ADC1SL3 > 73) {
             PORTDbits.RD0 = 1;
             PORTDbits.RD1 = 0;
             PORTDbits.RD2 = 0;
 
         }
-        if (ADC1SL3 >= 51 && ADC1SL3 <= 73 ){
+        if (ADC1SL3 >= 51 && ADC1SL3 <= 73) {
             PORTDbits.RD0 = 0;
             PORTDbits.RD1 = 1;
             PORTDbits.RD2 = 0;
@@ -2931,11 +2946,11 @@ void main(void){
 void setup(void) {
 
     ANSEL = 0b00000001;
-    ANSELH= 0b00000000;
-    TRISA = 0b00000001;
+    ANSELH = 0b00000000;
+    TRISA = 0b00100001;
     TRISB = 0b00000000;
     TRISD = 0b00000000;
-    TRISC = 0b00000000;
+    TRISC = 0b00011000;
     TRISE = 0;
 
     PORTA = 0;
@@ -2944,13 +2959,24 @@ void setup(void) {
     PORTD = 0;
     PORTE = 0;
 
+    PIE1bits.SSPIE = 1;
+    INTCONbits.PEIE = 1;
+    INTCONbits.GIE = 1;
+    PIR1bits.SSPIF = 0;
+
 }
 
 
- void __attribute__((picinterrupt(("")))) ISR(void) {
+void __attribute__((picinterrupt(("")))) ISR(void) {
     if (PIR1bits.ADIF == 1) {
-        ADC1SL3 = ADRESL ;
-        PIR1bits.ADIF=0;
+        ADC1SL3 = ADRESL;
+        PIR1bits.ADIF = 0;
+        return;
+    }
+    if (SSPIF == 1) {
+        PORTEbits.RE0 = spiRead();
+        spiWrite(ADC1SL3);
+        SSPIF = 0;
         return;
     }
 }

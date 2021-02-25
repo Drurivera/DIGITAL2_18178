@@ -1,2 +1,4 @@
 build/default/production/SPI.p1:  \
-SPI.c 
+SPI.c  \
+adc.h  \
+SPI.h 

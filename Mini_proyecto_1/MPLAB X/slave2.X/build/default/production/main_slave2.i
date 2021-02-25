@@ -2857,6 +2857,21 @@ extern char * strrichr(const char *, int);
 void ADCInicio(int channel);
 # 21 "main_slave2.c" 2
 
+# 1 "./SPI.h" 1
+# 13 "./SPI.h"
+# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
+# 13 "./SPI.h" 2
+
+
+
+
+
+void SPIMaster(void);
+void SPISlave(void);
+void spiWrite(char data);
+char spiRead ();
+# 22 "main_slave2.c" 2
+
 
 
 
@@ -2884,30 +2899,31 @@ void ADCInicio(int channel);
 
 
 char SL2 = 0;
-char AUM=0;
-char DEC=0;
+char AUM = 0;
+char DEC = 0;
 
 
 
 
 void setup(void);
-void ADCInicio(int );
-void __attribute__((picinterrupt(("")))) ISR() ;
-void pushs (void);
+void ADCInicio(int);
+void __attribute__((picinterrupt(("")))) ISR();
+void pushs(void);
 
 
 
 
 
-void main(void){
+void main(void) {
 
-    setup ();
+    setup();
+    SPISlave();
 
 
 
     while (1) {
         PORTD = SL2;
-}
+    }
 }
 
 
@@ -2922,16 +2938,21 @@ void setup(void) {
 
     ANSEL = 0;
     ANSELH = 0;
-    TRISA = 0;
+    TRISA = 0b00100001;
     PORTA = 0;
     TRISB = 0b00000011;
     PORTB = 0;
-    TRISC = 0;
+    TRISC = 0b00011000;
     PORTC = 0;
     TRISD = 0;
     PORTD = 0;
     TRISE = 0;
     PORTE = 0;
+
+    PIE1bits.SSPIE = 1;
+    INTCONbits.PEIE = 1;
+    INTCONbits.GIE = 1;
+    PIR1bits.SSPIF = 0;
 
 }
 
@@ -2940,31 +2961,38 @@ void setup(void) {
 
 void __attribute__((picinterrupt(("")))) ISR() {
 
-    if (INTCONbits.RBIF == 1){
+    if (INTCONbits.RBIF == 1) {
         INTCONbits.RBIF = 0;
         (INTCONbits.GIE = 0);
         pushs();
         return;
     }
+    if (SSPIF == 1) {
+        PORTD = spiRead();
+        spiWrite(SL2);
+        SSPIF = 0;
+        return;
+    }
 }
-void pushs (void){
-    if(PORTBbits.RB0==1){
-        AUM=1;
+
+void pushs(void) {
+    if (PORTBbits.RB0 == 1) {
+        AUM = 1;
         (INTCONbits.GIE = 0);
     }
-    if(PORTBbits.RB0==0 && AUM==1){
-        AUM=0;
-        SL2=SL2+1;
+    if (PORTBbits.RB0 == 0 && AUM == 1) {
+        AUM = 0;
+        SL2 = SL2 + 1;
         (INTCONbits.GIE = 1);
         return;
     }
-    if(PORTBbits.RB1==1){
-        DEC=1;
+    if (PORTBbits.RB1 == 1) {
+        DEC = 1;
         (INTCONbits.GIE = 0);
     }
-    if(PORTBbits.RB1==0 && DEC==1){
-        DEC=0;
-        SL2=SL2-1;
+    if (PORTBbits.RB1 == 0 && DEC == 1) {
+        DEC = 0;
+        SL2 = SL2 - 1;
         (INTCONbits.GIE = 1);
         return;
     }

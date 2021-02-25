@@ -6,7 +6,8 @@
 // This is a guard condition so that contents of this file are not included
 // more than once.  
 #ifndef	SPI_H
-#define _XTAL_FREQ 8000000;
+#define SPI_H
+#define _XTAL_FREQ 8000000
 // INCLUSION DE LAS LIBRERIAS
 #include <xc.h>   
 #include <stdint.h>
@@ -16,7 +17,9 @@
 //DEFINICION DE FUNCIONES
 void SPIMaster(void);
 void SPISlave(void);
-
+void spiWrite(char data);
+char spiRead ();
+//End Header File.
 #endif
 
 

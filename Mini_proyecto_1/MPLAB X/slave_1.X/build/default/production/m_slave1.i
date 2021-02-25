@@ -2827,8 +2827,12 @@ typedef uint16_t uintptr_t;
 void ADCInicio(void);
 # 18 "m_slave1.c" 2
 
+# 1 "./spi.h" 1
+# 13 "./spi.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
-# 19 "m_slave1.c" 2
+# 13 "./spi.h" 2
+
+
 
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\string.h" 1 3
 # 14 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\string.h" 3
@@ -2861,8 +2865,18 @@ extern char * strchr(const char *, int);
 extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
+# 16 "./spi.h" 2
+
+
+void SPIMaster(void);
+void SPISlave(void);
+void spiWrite(char data);
+char spiRead ();
+# 19 "m_slave1.c" 2
+
+# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\c90\\stdint.h" 1 3
 # 20 "m_slave1.c" 2
-# 30 "m_slave1.c"
+# 31 "m_slave1.c"
 #pragma config FOSC = INTRC_NOCLKOUT
 #pragma config WDTE = OFF
 #pragma config PWRTE = OFF
@@ -2881,7 +2895,7 @@ extern char * strrichr(const char *, int);
 
 
 
-uint8_t ADC1SL1 = 0 ;
+uint8_t ADC1SL1 = 0;
 
 
 
@@ -2892,8 +2906,9 @@ void setup(void);
 
 
 
-void main(void){
-    setup ();
+void main(void) {
+    setup();
+    SPISlave();
 
 
 
@@ -2902,7 +2917,7 @@ void main(void){
         ADCON0bits.ADON = 1;
         ADCON0bits.GO = 1;
         while (ADCON0bits.GO);
-        PORTD= ADC1SL1;
+        PORTD = ADC1SL1;
     }
 }
 
@@ -2913,11 +2928,11 @@ void main(void){
 void setup(void) {
 
     ANSEL = 0b00000001;
-    ANSELH= 0b00000000;
-    TRISA = 0b00000001;
+    ANSELH = 0b00000000;
+    TRISA = 0b00100001;
     TRISB = 0b00000000;
     TRISD = 0b00000000;
-    TRISC = 0b00000000;
+    TRISC = 0b00011000;
     TRISE = 0;
 
     PORTA = 0;
@@ -2925,14 +2940,26 @@ void setup(void) {
     PORTC = 0;
     PORTD = 0;
     PORTE = 0;
+    PIE1bits.SSPIE = 1;
+     INTCONbits.PEIE = 1;
+     INTCONbits.GIE = 1;
+     PIR1bits.SSPIF = 0;
 
 }
 
 
- void __attribute__((picinterrupt(("")))) ISR(void) {
+void __attribute__((picinterrupt(("")))) ISR(void) {
     if (PIR1bits.ADIF == 1) {
-        ADC1SL1 = ADRESH ;
-        PIR1bits.ADIF=0;
+        ADC1SL1 = ADRESH;
+        PIR1bits.ADIF = 0;
         return;
     }
+    if (SSPIF == 1) {
+        PORTD = spiRead();
+        spiWrite(ADC1SL1);
+        SSPIF = 0;
+        return;
+    }
+
+
 }

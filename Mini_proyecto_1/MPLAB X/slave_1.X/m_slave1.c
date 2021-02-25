@@ -5,7 +5,7 @@
  * Archivo template 
  * 
  * Created on February 15, 2021
-*/
+ */
 //*******************************************************************************
 
 //**************************
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <xc.h>
 #include "adc.h"
+#include "spi.h"
 #include <stdint.h>
 #include <string.h>
 #define _XTAL_FREQ 8000000;
@@ -45,7 +46,7 @@
 //**************************
 // Variables
 //**************************
-uint8_t ADC1SL1 = 0 ;
+uint8_t ADC1SL1 = 0;
 
 //**************************
 // Prototipos de funciones
@@ -56,8 +57,9 @@ void setup(void);
 // Ciclo principal
 //**************************
 
-void main(void){
-    setup ();
+void main(void) {
+    setup();
+    SPISlave();
     //**************************
     // Loop principal
     //**************************
@@ -66,7 +68,7 @@ void main(void){
         ADCON0bits.ADON = 1;
         ADCON0bits.GO = 1;
         while (ADCON0bits.GO);
-        PORTD= ADC1SL1;
+        PORTD = ADC1SL1;
     }
 }
 
@@ -75,29 +77,40 @@ void main(void){
 //**************************
 
 void setup(void) {
- 
+
     ANSEL = 0b00000001;
-    ANSELH= 0b00000000;
-    TRISA = 0b00000001;
-    TRISB = 0b00000000; 
+    ANSELH = 0b00000000;
+    TRISA = 0b00100001;
+    TRISB = 0b00000000;
     TRISD = 0b00000000;
-    TRISC = 0b00000000;
+    TRISC = 0b00011000;
     TRISE = 0;
-    
+
     PORTA = 0;
     PORTB = 0;
     PORTC = 0;
     PORTD = 0;
     PORTE = 0;
-    
+    PIE1bits.SSPIE = 1;
+     INTCONbits.PEIE = 1;
+     INTCONbits.GIE = 1;
+     PIR1bits.SSPIF = 0;
+
 }
 //SECUENCIA DE INTERRUPCION PARA LECTURA DE ADC.
 
- void __interrupt() ISR(void) {
+void __interrupt() ISR(void) {
     if (PIR1bits.ADIF == 1) {
-        ADC1SL1 = ADRESH ;
-        PIR1bits.ADIF=0;
+        ADC1SL1 = ADRESH;
+        PIR1bits.ADIF = 0;
         return;
     }
+    if (SSPIF == 1) {
+        PORTD = spiRead();
+        spiWrite(ADC1SL1);
+        SSPIF = 0;
+        return;
+    }
+
+
 }
- 
