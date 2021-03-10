@@ -13,14 +13,20 @@
 #include <xc.h>
 #include <stdint.h>
 #include "pic16f887.h"
-//#include "eusart.h"
-//#include "SPI.h"
+#include "I2C.h" 
+#include "eusart.h"
+#include "RTC.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/*La inicializacion de la LCD se tomo de este video: https://www.youtube.com/watch?v=ve1PcD6Cegw&feature=youtu.be*/
 
-
+uint8_t i;
+uint8_t second;
+uint8_t minute;
+uint8_t hour;
+uint8_t m_day;
+uint8_t month;
+uint8_t year;
 //**************************
 // Palabra de configuracion
 //**************************
@@ -51,19 +57,19 @@
 void setup(void);
 
 void main(void) {
-
     setup();
+    I2C_Master_Init(100000);
+    S_RTC(second, minute, hour, m_day, month, year);
 
     //**************************
     // Loop principal
     //**************************
-    while (1){
-        PORTDbits.RD1 =1;
-        PORTDbits.RD2 =0;
-        __delay_ms(100);
-        PORTDbits.RD1 =0;
-        PORTDbits.RD2 =1;
-        __delay_ms(100);
+    while (1) {
+        //PORTDbits.RD1  =1;
+        //PORTD = second;
+        R_RTC();
+
+
     }
 }
 
@@ -75,36 +81,35 @@ void setup(void) {
     //ARREGLAR PINOUT
     ANSEL = 0b00000000;
     ANSELH = 0b00000000;
+
     TRISA = 0b00000000;
     TRISB = 0b00000000;
     TRISD = 0b00000000;
-    TRISC = 0;
-    TRISE = 0;
-    
+    TRISC = 0b00000000;
+    TRISE = 0b00000000;
+
     PORTA = 0b00000000;
     PORTB = 0;
     PORTC = 0;
     PORTD = 0;
     PORTE = 0;
 
-    INTCONbits.PEIE = 1;
-    INTCONbits.GIE = 1;
-    PIR1bits.SSPIF = 0;
-    PIE1bits.SSPIE = 1;
-    PIR1bits.TXIF = 0;
-    SPBRGH = 0;
-    SPBRG = 25; //
-    TXSTA = 0b00100100;
-    RCSTA = 0b10010000;
-    BAUDCTLbits.BRG16 = 0;
-    OSCCONbits.IRCF = 0b110; //8Mhz
+    //    SPBRGH = 0;
+    //    SPBRG = 25; //
+    //    TXSTA = 0b00100100;
+    //    RCSTA = 0b10010000;
+    //    BAUDCTLbits.BRG16 = 0;
+
+    OSCCONbits.IRCF = 0b111; //8Mhz
     OSCCONbits.OSTS = 0;
     OSCCONbits.HTS = 0;
     OSCCONbits.LTS = 0;
     OSCCONbits.SCS = 1;
 
-
-
-
-
+    uint8_t second = 46;
+    uint8_t minute = 30;
+    uint8_t hour = 6;
+    uint8_t m_day = 23;
+    uint8_t month = 7;
+    uint8_t year = 99;
 }

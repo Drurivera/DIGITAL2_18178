@@ -23,9 +23,9 @@
 
 //**************************
 uint8_t UART_INIT(const long int baudrate);
-uint8_t UART_READ(void);
+uint8_t UART_Read(void);
 void UART_Read_Text(char *Output, unsigned int length);
-void UART_WRITE(char data);
+void UART_Write(char data);
 void UART_Write_Text(char *text);
 
 #endif	/* UART_H */

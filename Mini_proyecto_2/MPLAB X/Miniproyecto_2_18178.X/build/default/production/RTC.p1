@@ -1,67 +1,23 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[p mainexit ]
-"57 main.c
-[v _setup `(v ~T0 @X0 0 ef ]
-"29 ./I2C.h
-[; ;./I2C.h: 29: void I2C_Master_Init(const unsigned long c);
-[v _I2C_Master_Init `(v ~T0 @X0 0 ef1`Cul ]
-"27 ./RTC.h
-[; ;./RTC.h: 27: uint8_t S_RTC(uint8_t second, uint8_t minute , uint8_t hour, uint8_t m_day, uint8_t month, uint8_t year);
-[v _S_RTC `(uc ~T0 @X0 0 ef6`uc`uc`uc`uc`uc`uc ]
-"28
-[; ;./RTC.h: 28: uint8_t R_RTC();
-[v _R_RTC `(uc ~T0 @X0 0 e? ]
-"3387 C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 3387: extern volatile unsigned char ANSEL __attribute__((address(0x188)));
-[v _ANSEL `Vuc ~T0 @X0 0 e@392 ]
-"3449
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 3449: extern volatile unsigned char ANSELH __attribute__((address(0x189)));
-[v _ANSELH `Vuc ~T0 @X0 0 e@393 ]
-"1416
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1416: extern volatile unsigned char TRISA __attribute__((address(0x085)));
-[v _TRISA `Vuc ~T0 @X0 0 e@133 ]
-"1478
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1478: extern volatile unsigned char TRISB __attribute__((address(0x086)));
-[v _TRISB `Vuc ~T0 @X0 0 e@134 ]
-"1602
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1602: extern volatile unsigned char TRISD __attribute__((address(0x088)));
-[v _TRISD `Vuc ~T0 @X0 0 e@136 ]
-"1540
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1540: extern volatile unsigned char TRISC __attribute__((address(0x087)));
-[v _TRISC `Vuc ~T0 @X0 0 e@135 ]
-"1664
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1664: extern volatile unsigned char TRISE __attribute__((address(0x089)));
-[v _TRISE `Vuc ~T0 @X0 0 e@137 ]
-"166
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 166: extern volatile unsigned char PORTA __attribute__((address(0x005)));
-[v _PORTA `Vuc ~T0 @X0 0 e@5 ]
-"228
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 228: extern volatile unsigned char PORTB __attribute__((address(0x006)));
-[v _PORTB `Vuc ~T0 @X0 0 e@6 ]
-"290
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 290: extern volatile unsigned char PORTC __attribute__((address(0x007)));
-[v _PORTC `Vuc ~T0 @X0 0 e@7 ]
-"352
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 352: extern volatile unsigned char PORTD __attribute__((address(0x008)));
-[v _PORTD `Vuc ~T0 @X0 0 e@8 ]
-"414
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 414: extern volatile unsigned char PORTE __attribute__((address(0x009)));
-[v _PORTE `Vuc ~T0 @X0 0 e@9 ]
-"1868
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1868:     struct {
-[s S70 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 ]
-[n S70 . SCS LTS HTS OSTS IRCF ]
-"1875
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1875:     struct {
-[s S71 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S71 . . IRCF0 IRCF1 IRCF2 ]
-"1867
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1867: typedef union {
-[u S69 `S70 1 `S71 1 ]
-[n S69 . . . ]
-"1882
-[; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 1882: extern volatile OSCCONbits_t OSCCONbits __attribute__((address(0x08F)));
-[v _OSCCONbits `VS69 ~T0 @X0 0 e@143 ]
+"41 ./I2C.h
+[; ;./I2C.h: 41: void I2C_Master_Start(void);
+[v _I2C_Master_Start `(v ~T0 @X0 0 ef ]
+"55
+[; ;./I2C.h: 55: void I2C_Master_Write(unsigned d);
+[v _I2C_Master_Write `(v ~T0 @X0 0 ef1`ui ]
+"49
+[; ;./I2C.h: 49: void I2C_Master_Stop(void);
+[v _I2C_Master_Stop `(v ~T0 @X0 0 ef ]
+[v F1256 `(v ~T0 @X0 1 tf1`ul ]
+"92 C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\pic.h
+[v __delay `JF1256 ~T0 @X0 0 e ]
+[p i __delay ]
+"45 ./I2C.h
+[; ;./I2C.h: 45: void I2C_Master_RepeatedStart(void);
+[v _I2C_Master_RepeatedStart `(v ~T0 @X0 0 ef ]
+"60
+[; ;./I2C.h: 60: unsigned short I2C_Master_Read(unsigned short a);
+[v _I2C_Master_Read `(us ~T0 @X0 0 ef1`us ]
 "54 C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
 [; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 54: __asm("INDF equ 00h");
 [; <" INDF equ 00h ;# ">
@@ -296,160 +252,164 @@ Version 4.0 HI-TECH Software Intermediate Code
 "3546
 [; ;C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h: 3546: __asm("EECON2 equ 018Dh");
 [; <" EECON2 equ 018Dh ;# ">
-"23 main.c
-[; ;main.c: 23: uint8_t i;
-[; ;main.c: 23:     }
+"12 RTC.c
+[; ;RTC.c: 12: uint8_t i, second, minute, hour, m_day, month, year;
 [v _i `uc ~T0 @X0 1 e ]
-"24
-[; ;main.c: 24: uint8_t second;
-[; ;main.c: 24: }
 [v _second `uc ~T0 @X0 1 e ]
-"25
-[; ;main.c: 25: uint8_t minute;
 [v _minute `uc ~T0 @X0 1 e ]
-"26
-[; ;main.c: 26: uint8_t hour;
 [v _hour `uc ~T0 @X0 1 e ]
-"27
-[; ;main.c: 27: uint8_t m_day;
 [v _m_day `uc ~T0 @X0 1 e ]
-"28
-[; ;main.c: 28: uint8_t month;
 [v _month `uc ~T0 @X0 1 e ]
-"29
-[; ;main.c: 29: uint8_t year;
 [v _year `uc ~T0 @X0 1 e ]
-"35
-[p x FOSC  =  INTRC_NOCLKOUT ]
-"36
-[p x WDTE  =  OFF        ]
-"37
-[p x PWRTE  =  OFF       ]
+"15
+[; ;RTC.c: 15: uint8_t bcd_to_decimal(uint8_t number) {
+[v _bcd_to_decimal `(uc ~T0 @X0 1 ef1`uc ]
+{
+[e :U _bcd_to_decimal ]
+[v _number `uc ~T0 @X0 1 r1 ]
+[f ]
+"16
+[; ;RTC.c: 16:     return ((number >> 4) * 10 + (number & 0x0F));
+[e ) -> + * >> -> _number `i -> 4 `i -> 10 `i & -> _number `i -> 15 `i `uc ]
+[e $UE 138  ]
+"17
+[; ;RTC.c: 17: }
+[e :UE 138 ]
+}
+"21
+[; ;RTC.c: 21: uint8_t decimal_to_bcd(uint8_t number) {
+[v _decimal_to_bcd `(uc ~T0 @X0 1 ef1`uc ]
+{
+[e :U _decimal_to_bcd ]
+[v _number `uc ~T0 @X0 1 r1 ]
+[f ]
+"22
+[; ;RTC.c: 22:     return (((number / 10) << 4) + (number % 10));
+[e ) -> + << / -> _number `i -> 10 `i -> 4 `i % -> _number `i -> 10 `i `uc ]
+[e $UE 139  ]
+"23
+[; ;RTC.c: 23: }
+[e :UE 139 ]
+}
+"27
+[; ;RTC.c: 27: uint8_t S_RTC(uint8_t second, uint8_t minute , uint8_t hour, uint8_t m_day, uint8_t month, uint8_t year) {
+[v _S_RTC `(uc ~T0 @X0 1 ef6`uc`uc`uc`uc`uc`uc ]
+{
+[e :U _S_RTC ]
+[v _second `uc ~T0 @X0 1 r1 ]
+[v _minute `uc ~T0 @X0 1 r2 ]
+[v _hour `uc ~T0 @X0 1 r3 ]
+[v _m_day `uc ~T0 @X0 1 r4 ]
+[v _month `uc ~T0 @X0 1 r5 ]
+[v _year `uc ~T0 @X0 1 r6 ]
+[f ]
+"29
+[; ;RTC.c: 29:     second = decimal_to_bcd(second);
+[e = _second ( _decimal_to_bcd (1 _second ]
+"30
+[; ;RTC.c: 30:     minute = decimal_to_bcd(minute);
+[e = _minute ( _decimal_to_bcd (1 _minute ]
+"31
+[; ;RTC.c: 31:     hour = decimal_to_bcd(hour);
+[e = _hour ( _decimal_to_bcd (1 _hour ]
+"32
+[; ;RTC.c: 32:     m_day = decimal_to_bcd(m_day);
+[e = _m_day ( _decimal_to_bcd (1 _m_day ]
+"33
+[; ;RTC.c: 33:     month = decimal_to_bcd(month);
+[e = _month ( _decimal_to_bcd (1 _month ]
+"34
+[; ;RTC.c: 34:     year = decimal_to_bcd(year);
+[e = _year ( _decimal_to_bcd (1 _year ]
 "38
-[p x MCLRE  =  OFF       ]
+[; ;RTC.c: 38:     I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
 "39
-[p x CP  =  OFF          ]
+[; ;RTC.c: 39:     I2C_Master_Write(0xD0);
+[e ( _I2C_Master_Write (1 -> -> 208 `i `ui ]
 "40
-[p x CPD  =  OFF         ]
+[; ;RTC.c: 40:     I2C_Master_Write(0);
+[e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
 "41
-[p x BOREN  =  OFF       ]
+[; ;RTC.c: 41:     I2C_Master_Write(0);
+[e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
 "42
-[p x IESO  =  OFF        ]
+[; ;RTC.c: 42:     I2C_Master_Write(minute);
+[e ( _I2C_Master_Write (1 -> _minute `ui ]
 "43
-[p x FCMEN  =  OFF       ]
+[; ;RTC.c: 43:     I2C_Master_Write(hour);
+[e ( _I2C_Master_Write (1 -> _hour `ui ]
 "44
-[p x LVP  =  OFF         ]
+[; ;RTC.c: 44:     I2C_Master_Write(1);
+[e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
+"45
+[; ;RTC.c: 45:     I2C_Master_Write(m_day);
+[e ( _I2C_Master_Write (1 -> _m_day `ui ]
+"46
+[; ;RTC.c: 46:     I2C_Master_Write(month);
+[e ( _I2C_Master_Write (1 -> _month `ui ]
 "47
-[p x BOR4V  =  BOR40V    ]
+[; ;RTC.c: 47:     I2C_Master_Write(year);
+[e ( _I2C_Master_Write (1 -> _year `ui ]
 "48
-[p x WRT  =  OFF         ]
-[v $root$_main `(v ~T0 @X0 0 e ]
+[; ;RTC.c: 48:     I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"50
+[; ;RTC.c: 50:     _delay((unsigned long)((200)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"52
+[; ;RTC.c: 52: }
+[e :UE 140 ]
+}
+"56
+[; ;RTC.c: 56: uint8_t R_RTC() {
+[v _R_RTC `(uc ~T0 @X0 1 ef ]
+{
+[e :U _R_RTC ]
+[f ]
+"58
+[; ;RTC.c: 58:     I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
 "59
-[v _main `(v ~T0 @X0 1 ef ]
-{
-[e :U _main ]
-[f ]
+[; ;RTC.c: 59:     I2C_Master_Write(0xD0);
+[e ( _I2C_Master_Write (1 -> -> 208 `i `ui ]
 "60
-[e ( _setup ..  ]
+[; ;RTC.c: 60:     I2C_Master_Write(0);
+[e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
 "61
-[e ( _I2C_Master_Init (1 -> -> 100000 `l `ul ]
+[; ;RTC.c: 61:     I2C_Master_RepeatedStart();
+[e ( _I2C_Master_RepeatedStart ..  ]
 "62
-[e ( _S_RTC (4 , , , , , _second _minute _hour _m_day _month _year ]
+[; ;RTC.c: 62:     I2C_Master_Write(0xD1);
+[e ( _I2C_Master_Write (1 -> -> 209 `i `ui ]
+"63
+[; ;RTC.c: 63:     second = I2C_Master_Read(1);
+[e = _second -> ( _I2C_Master_Read (1 -> -> 1 `i `us `uc ]
+"64
+[; ;RTC.c: 64:     minute = I2C_Master_Read(1);
+[e = _minute -> ( _I2C_Master_Read (1 -> -> 1 `i `us `uc ]
+"65
+[; ;RTC.c: 65:     hour = I2C_Master_Read(1);
+[e = _hour -> ( _I2C_Master_Read (1 -> -> 1 `i `us `uc ]
+"66
+[; ;RTC.c: 66:     I2C_Master_Read(1);
+[e ( _I2C_Master_Read (1 -> -> 1 `i `us ]
 "67
-[e :U 145 ]
-{
+[; ;RTC.c: 67:     m_day = I2C_Master_Read(1);
+[e = _m_day -> ( _I2C_Master_Read (1 -> -> 1 `i `us `uc ]
+"68
+[; ;RTC.c: 68:     month = I2C_Master_Read(1);
+[e = _month -> ( _I2C_Master_Read (1 -> -> 1 `i `us `uc ]
+"69
+[; ;RTC.c: 69:     year = I2C_Master_Read(0);
+[e = _year -> ( _I2C_Master_Read (1 -> -> 0 `i `us `uc ]
 "70
-[e ( _R_RTC ..  ]
-"73
-}
-[e :U 144 ]
-[e $U 145  ]
-[e :U 146 ]
-"74
-[e :UE 143 ]
-}
-"84
-[; ;main.c: 84: void setup(void) {
-[v _setup `(v ~T0 @X0 1 ef ]
-{
-[e :U _setup ]
-[f ]
-"86
-[; ;main.c: 86:     ANSEL = 0b00000000;
-[e = _ANSEL -> -> 0 `i `uc ]
-"87
-[; ;main.c: 87:     ANSELH = 0b00000000;
-[e = _ANSELH -> -> 0 `i `uc ]
-"89
-[; ;main.c: 89:     TRISA = 0b00000000;
-[e = _TRISA -> -> 0 `i `uc ]
-"90
-[; ;main.c: 90:     TRISB = 0b00000000;
-[e = _TRISB -> -> 0 `i `uc ]
-"91
-[; ;main.c: 91:     TRISD = 0b00000000;
-[e = _TRISD -> -> 0 `i `uc ]
-"92
-[; ;main.c: 92:     TRISC = 0b00000000;
-[e = _TRISC -> -> 0 `i `uc ]
-"93
-[; ;main.c: 93:     TRISE = 0b00000000;
-[e = _TRISE -> -> 0 `i `uc ]
-"95
-[; ;main.c: 95:     PORTA = 0b00000000;
-[e = _PORTA -> -> 0 `i `uc ]
-"96
-[; ;main.c: 96:     PORTB = 0;
-[e = _PORTB -> -> 0 `i `uc ]
-"97
-[; ;main.c: 97:     PORTC = 0;
-[e = _PORTC -> -> 0 `i `uc ]
-"98
-[; ;main.c: 98:     PORTD = 0;
-[e = _PORTD -> -> 0 `i `uc ]
-"99
-[; ;main.c: 99:     PORTE = 0;
-[e = _PORTE -> -> 0 `i `uc ]
-"107
-[; ;main.c: 107:     OSCCONbits.IRCF = 0b111;
-[e = . . _OSCCONbits 0 4 -> -> 7 `i `uc ]
-"108
-[; ;main.c: 108:     OSCCONbits.OSTS = 0;
-[e = . . _OSCCONbits 0 3 -> -> 0 `i `uc ]
-"109
-[; ;main.c: 109:     OSCCONbits.HTS = 0;
-[e = . . _OSCCONbits 0 2 -> -> 0 `i `uc ]
-"110
-[; ;main.c: 110:     OSCCONbits.LTS = 0;
-[e = . . _OSCCONbits 0 1 -> -> 0 `i `uc ]
-"111
-[; ;main.c: 111:     OSCCONbits.SCS = 1;
-[e = . . _OSCCONbits 0 0 -> -> 1 `i `uc ]
-"113
-[; ;main.c: 113:     uint8_t second = 46;
-[v _second `uc ~T0 @X0 1 a ]
-[e = _second -> -> 46 `i `uc ]
-"114
-[; ;main.c: 114:     uint8_t minute = 30;
-[v _minute `uc ~T0 @X0 1 a ]
-[e = _minute -> -> 30 `i `uc ]
-"115
-[; ;main.c: 115:     uint8_t hour = 6;
-[v _hour `uc ~T0 @X0 1 a ]
-[e = _hour -> -> 6 `i `uc ]
-"116
-[; ;main.c: 116:     uint8_t m_day = 23;
-[v _m_day `uc ~T0 @X0 1 a ]
-[e = _m_day -> -> 23 `i `uc ]
-"117
-[; ;main.c: 117:     uint8_t month = 7;
-[v _month `uc ~T0 @X0 1 a ]
-[e = _month -> -> 7 `i `uc ]
-"118
-[; ;main.c: 118:     uint8_t year = 99;
-[v _year `uc ~T0 @X0 1 a ]
-[e = _year -> -> 99 `i `uc ]
-"119
-[; ;main.c: 119: }
-[e :UE 147 ]
+[; ;RTC.c: 70:     I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"71
+[; ;RTC.c: 71:     _delay((unsigned long)((50)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"72
+[; ;RTC.c: 72: }
+[e :UE 141 ]
 }
