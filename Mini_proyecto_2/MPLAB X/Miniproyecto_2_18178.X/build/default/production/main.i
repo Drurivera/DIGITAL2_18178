@@ -2679,10 +2679,10 @@ void UART_Write_Text(char *text);
 # 17 "main.c" 2
 
 # 1 "./RTC.h" 1
-# 14 "./RTC.h"
+# 12 "./RTC.h"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 1 3
-# 14 "./RTC.h" 2
-# 25 "./RTC.h"
+# 12 "./RTC.h" 2
+# 23 "./RTC.h"
 uint8_t bcd_to_decimal(uint8_t number);
 uint8_t decimal_to_bcd(uint8_t number);
 uint8_t S_RTC(uint8_t second, uint8_t minute , uint8_t hour, uint8_t m_day, uint8_t month, uint8_t year);
@@ -2914,6 +2914,8 @@ uint8_t hour;
 uint8_t m_day;
 uint8_t month;
 uint8_t year;
+uint8_t lr=0b00000000;
+
 
 
 
@@ -2955,44 +2957,54 @@ void main(void) {
 
 
         R_RTC();
+        TXREG=minute;
+        _delay((unsigned long)((40)*(4000000/4000.0)));
+        PORTD=lr;
 
 
     }
 }
-# 84 "main.c"
+
+
+
+
+
 void setup(void) {
-
-    ANSEL = 0b00000000;
-    ANSELH = 0b00000000;
-
-    TRISA = 0b00000000;
-    TRISB = 0b00000000;
     TRISD = 0b00000000;
-    TRISC = 0b00000000;
+    TRISC = 0b11011000;
     TRISE = 0b00000000;
-
     PORTA = 0b00000000;
     PORTB = 0;
     PORTC = 0;
     PORTD = 0;
     PORTE = 0;
-
-
-
-
-
-
-
-    OSCCONbits.IRCF = 0b111;
+    OSCCONbits.IRCF = 0b110;
     OSCCONbits.OSTS = 0;
     OSCCONbits.HTS = 0;
     OSCCONbits.LTS = 0;
     OSCCONbits.SCS = 1;
-
-    uint8_t second = 46;
-    uint8_t minute = 30;
-    uint8_t hour = 6;
-    uint8_t m_day = 23;
-    uint8_t month = 7;
-    uint8_t year = 99;
+    INTCONbits.GIE = 1;
+    INTCONbits.PEIE = 1;
+    PIE1bits.RCIE = 1;
+    PIR1bits.RCIF = 0;
+    BAUDCTLbits.BRG16 = 0;
+    SPBRGH = 0;
+    SPBRG = 0b00011001;
+    TXSTA = 0b00100100;
+    RCSTA = 0b10010000;
+    I2C_Master_Init(100000);
+    second = 46;
+    minute = 30;
+    hour = 6;
+    m_day = 23;
+    month = 7;
+    year = 99;
 }
+
+void __attribute__((picinterrupt(("")))) ISR(void) {
+    if(PIR1bits.RCIF==1){
+        PIR1bits.RCIF=0;
+        lr = RCREG;
+        return;
+    }
+ }

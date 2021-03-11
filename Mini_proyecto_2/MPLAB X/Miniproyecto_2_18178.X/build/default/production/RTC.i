@@ -16,7 +16,7 @@
 
 
 # 1 "./RTC.h" 1
-# 12 "./RTC.h"
+# 10 "./RTC.h"
 # 1 "C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2497,7 +2497,7 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
-# 12 "./RTC.h" 2
+# 10 "./RTC.h" 2
 
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 1 3
@@ -2633,7 +2633,7 @@ typedef int16_t intptr_t;
 
 
 typedef uint16_t uintptr_t;
-# 14 "./RTC.h" 2
+# 12 "./RTC.h" 2
 
 # 1 "./I2C.h" 1
 # 20 "./I2C.h"
@@ -2676,8 +2676,8 @@ unsigned short I2C_Master_Read(unsigned short a);
 
 
 void I2C_Slave_Init(uint8_t address);
-# 15 "./RTC.h" 2
-# 25 "./RTC.h"
+# 13 "./RTC.h" 2
+# 23 "./RTC.h"
 uint8_t bcd_to_decimal(uint8_t number);
 uint8_t decimal_to_bcd(uint8_t number);
 uint8_t S_RTC(uint8_t second, uint8_t minute , uint8_t hour, uint8_t m_day, uint8_t month, uint8_t year);
@@ -2725,6 +2725,7 @@ uint8_t S_RTC(uint8_t second, uint8_t minute , uint8_t hour, uint8_t m_day, uint
     I2C_Master_Stop();
 
     _delay((unsigned long)((200)*(8000000/4000.0)));
+    return 1;
 
 }
 
@@ -2746,4 +2747,5 @@ uint8_t R_RTC() {
     year = I2C_Master_Read(0);
     I2C_Master_Stop();
     _delay((unsigned long)((50)*(8000000/4000.0)));
+    return minute;
 }

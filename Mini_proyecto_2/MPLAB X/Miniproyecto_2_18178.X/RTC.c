@@ -48,6 +48,7 @@ uint8_t S_RTC(uint8_t second, uint8_t minute , uint8_t hour, uint8_t m_day, uint
     I2C_Master_Stop(); // stop I2C
 
     __delay_ms(200);
+    return 1;
 
 }
 
@@ -69,5 +70,6 @@ uint8_t R_RTC() {
     year = I2C_Master_Read(0); // read year from register 6
     I2C_Master_Stop(); // stop I2C
     __delay_ms(50); // wait 50 ms
+    return minute;
 }
 

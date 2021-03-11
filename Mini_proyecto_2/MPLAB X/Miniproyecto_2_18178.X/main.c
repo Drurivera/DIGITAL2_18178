@@ -27,6 +27,8 @@ uint8_t hour;
 uint8_t m_day;
 uint8_t month;
 uint8_t year;
+uint8_t lr=0b00000000;
+
 //**************************
 // Palabra de configuracion
 //**************************
@@ -46,7 +48,7 @@ uint8_t year;
 // CONFIG2
 #pragma config BOR4V = BOR40V   // Brown-out Reset Selection bit (Brown-out Reset set to 4.0V)
 #pragma config WRT = OFF        // Flash Program Memory Self Write Enable bits (Write protection off)
-#define _XTAL_FREQ 8000000
+#define _XTAL_FREQ 4000000
 
 
 
@@ -68,6 +70,9 @@ void main(void) {
         //PORTDbits.RD1  =1;
         //PORTD = second;
         R_RTC();
+        TXREG=minute;
+        __delay_ms(40);
+        PORTD=lr;
 
 
     }
@@ -78,38 +83,42 @@ void main(void) {
 //**************************
 
 void setup(void) {
-    //ARREGLAR PINOUT
-    ANSEL = 0b00000000;
-    ANSELH = 0b00000000;
-
-    TRISA = 0b00000000;
-    TRISB = 0b00000000;
     TRISD = 0b00000000;
-    TRISC = 0b00000000;
+    TRISC = 0b11011000;
     TRISE = 0b00000000;
-
     PORTA = 0b00000000;
     PORTB = 0;
     PORTC = 0;
     PORTD = 0;
     PORTE = 0;
-
-    //    SPBRGH = 0;
-    //    SPBRG = 25; //
-    //    TXSTA = 0b00100100;
-    //    RCSTA = 0b10010000;
-    //    BAUDCTLbits.BRG16 = 0;
-
-    OSCCONbits.IRCF = 0b111; //8Mhz
+    OSCCONbits.IRCF = 0b110; //4Mhz
     OSCCONbits.OSTS = 0;
     OSCCONbits.HTS = 0;
     OSCCONbits.LTS = 0;
     OSCCONbits.SCS = 1;
-
-    uint8_t second = 46;
-    uint8_t minute = 30;
-    uint8_t hour = 6;
-    uint8_t m_day = 23;
-    uint8_t month = 7;
-    uint8_t year = 99;
+    INTCONbits.GIE = 1;
+    INTCONbits.PEIE = 1;
+    PIE1bits.RCIE = 1;
+    PIR1bits.RCIF = 0;
+    BAUDCTLbits.BRG16 = 0;
+    SPBRGH = 0;
+    SPBRG = 0b00011001;
+    TXSTA = 0b00100100;
+    RCSTA = 0b10010000;
+    I2C_Master_Init(100000);
+    second = 46;
+    minute = 30;
+    hour = 6;
+    m_day = 23;
+    month = 7;
+    year = 99;
 }
+
+void __interrupt() ISR(void) {
+    if(PIR1bits.RCIF==1){
+        PIR1bits.RCIF=0;
+        lr = RCREG;
+        return;
+    }  
+ }
+
