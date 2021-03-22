@@ -70,6 +70,6 @@ uint8_t R_RTC() {
     year = I2C_Master_Read(0); // read year from register 6
     I2C_Master_Stop(); // stop I2C
     __delay_ms(50); // wait 50 ms
-    return minute;
+    return second, minute, hour, m_day, month, year;
 }
 

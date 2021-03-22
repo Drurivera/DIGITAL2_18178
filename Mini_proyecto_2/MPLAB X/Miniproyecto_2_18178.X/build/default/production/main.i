@@ -2669,15 +2669,6 @@ unsigned short I2C_Master_Read(unsigned short a);
 void I2C_Slave_Init(uint8_t address);
 # 16 "main.c" 2
 
-# 1 "./eusart.h" 1
-# 25 "./eusart.h"
-uint8_t UART_INIT(const long int baudrate);
-uint8_t UART_Read(void);
-void UART_Read_Text(char *Output, unsigned int length);
-void UART_Write(char data);
-void UART_Write_Text(char *text);
-# 17 "main.c" 2
-
 # 1 "./RTC.h" 1
 # 12 "./RTC.h"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 1 3
@@ -2687,7 +2678,7 @@ uint8_t bcd_to_decimal(uint8_t number);
 uint8_t decimal_to_bcd(uint8_t number);
 uint8_t S_RTC(uint8_t second, uint8_t minute , uint8_t hour, uint8_t m_day, uint8_t month, uint8_t year);
 uint8_t R_RTC();
-# 18 "main.c" 2
+# 17 "main.c" 2
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdio.h" 1 3
 
@@ -2786,7 +2777,7 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 #pragma printf_check(sprintf) const
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
-# 19 "main.c" 2
+# 18 "main.c" 2
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdlib.h" 1 3
 
@@ -2871,7 +2862,7 @@ extern char * ltoa(char * buf, long val, int base);
 extern char * ultoa(char * buf, unsigned long val, int base);
 
 extern char * ftoa(float f, int * status);
-# 20 "main.c" 2
+# 19 "main.c" 2
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\string.h" 1 3
 # 14 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\string.h" 3
@@ -2904,7 +2895,7 @@ extern char * strchr(const char *, int);
 extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
-# 21 "main.c" 2
+# 20 "main.c" 2
 
 
 uint8_t i;
@@ -2993,7 +2984,7 @@ void setup(void) {
     TXSTA = 0b00100100;
     RCSTA = 0b10010000;
     I2C_Master_Init(100000);
-    second = 46;
+    second = 36;
     minute = 30;
     hour = 6;
     m_day = 23;

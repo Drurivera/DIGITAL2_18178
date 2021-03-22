@@ -2747,5 +2747,5 @@ uint8_t R_RTC() {
     year = I2C_Master_Read(0);
     I2C_Master_Stop();
     _delay((unsigned long)((50)*(8000000/4000.0)));
-    return minute;
+    return second, minute, hour, m_day, month, year;
 }

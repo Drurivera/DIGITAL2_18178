@@ -14,7 +14,6 @@
 #include <stdint.h>
 #include "pic16f887.h"
 #include "I2C.h" 
-#include "eusart.h"
 #include "RTC.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -100,13 +99,13 @@ void setup(void) {
     INTCONbits.PEIE = 1;
     PIE1bits.RCIE = 1;
     PIR1bits.RCIF = 0;
-    BAUDCTLbits.BRG16 = 0;
+    BAUDCTLbits.BRG16 = 0; //9600
     SPBRGH = 0;
     SPBRG = 0b00011001;
     TXSTA = 0b00100100;
     RCSTA = 0b10010000;
     I2C_Master_Init(100000);
-    second = 46;
+    second = 36;
     minute = 30;
     hour = 6;
     m_day = 23;

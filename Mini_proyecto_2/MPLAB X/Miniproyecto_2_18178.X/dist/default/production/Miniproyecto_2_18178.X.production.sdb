@@ -33,11 +33,11 @@
 [v _I2C_Master_Write I2C_Master_Write `(v  1 e 1 0 ]
 "74
 [v _I2C_Master_Read I2C_Master_Read `(us  1 e 2 0 ]
-"61 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\main.c
+"60 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"85
+"84
 [v _setup setup `(v  1 e 1 0 ]
-"117
+"116
 [v _ISR ISR `II(v  1 e 1 0 ]
 "21 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\RTC.c
 [v _decimal_to_bcd decimal_to_bcd `(uc  1 e 1 0 ]
@@ -184,7 +184,7 @@
 [v _TRISC3 TRISC3 `VEb  1 e 0 @1083 ]
 "4460
 [v _TRISC4 TRISC4 `VEb  1 e 0 @1084 ]
-"30 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\main.c
+"29 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\main.c
 [v _lr lr `uc  1 e 1 0 ]
 "12 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\RTC.c
 [v _second second `uc  1 e 1 0 ]
@@ -193,15 +193,15 @@
 [v _m_day m_day `uc  1 e 1 0 ]
 [v _month month `uc  1 e 1 0 ]
 [v _year year `uc  1 e 1 0 ]
-"61 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\main.c
+"60 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"79
+"78
 } 0
-"85
+"84
 [v _setup setup `(v  1 e 1 0 ]
 {
-"115
+"114
 } 0
 "16 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\I2C.c
 [v _I2C_Master_Init I2C_Master_Init `(v  1 e 1 0 ]
@@ -307,8 +307,8 @@
 {
 "35
 } 0
-"117 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\main.c
+"116 C:\Users\HP\Documents\GitHub\DIGITAL2_18178\Mini_proyecto_2\MPLAB X\Miniproyecto_2_18178.X\main.c
 [v _ISR ISR `II(v  1 e 1 0 ]
 {
-"123
+"122
 } 0
