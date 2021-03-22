@@ -17,7 +17,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly: 
-  if (digitalRead(buttonPin1)==0)||(digitalRead(buttonPin2)==0){
+  if (digitalRead(buttonPin1)==0 || digitalRead(buttonPin2)==0){
     Inicio();
   }
 }
