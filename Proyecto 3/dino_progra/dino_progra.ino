@@ -16,6 +16,8 @@
 // Bitmap info for dinojuego_mono
 #include <UTFTGLUE.h>              //use GLUE class and constructor
 UTFTGLUE myGLCD(0,A2,A1,A3,A4,A0); //all dummy args
+ int pushT;
+ int pushTE = 10;
 
 // Declare which fonts we will be using
 //extern uint8_t SmallFont[];      //GLUE defines as GFXFont ref
@@ -42,14 +44,33 @@ void setup()
 // Setup the LCD
   myGLCD.InitLCD();
   myGLCD.setFont(BigFont);
+  Serial.begin(9600); 
+  pinMode(pushTE, INPUT);
+  myGLCD.fillScr(0,0,0); //coloca el fondo en negro
 }
 
-void loop()
-{
-
-// Clear the screen and draw the frame
-  myGLCD.clrScr(); //limpia pantalla
-  myGLCD.fillScr(0,0,0); //coloca el fondo en negro
+void loop(){
+   Serial.write(1);
+   pushT = Serial.read();
+   
+   Home();
+   delay (1000);
+   if (digitalRead(pushTE) == 0){
+    myGLCD.fillScr(0,0,0); //coloca el fondo en negro
+    int Action = 1;
+    while (Action == 1){
+      Juego();
+      Runner();
+      delay(250);
+      Block ();
+      delay(500);
+      myGLCD.fillScr(0,0,0); //coloca el fondo en negro
+      }
+    }
+}  
+void Home(){
+  //myGLCD.clrScr(); //limpia pantalla
+  //myGLCD.fillScr(0,0,0); //coloca el fondo en negro
   myGLCD.setColor(255,255,255); //color blanco para el cuadrado
   myGLCD.fillRoundRect(60, 80, 260,150); //parametros donde se crea el rectangulo
   myGLCD.setColor(0, 0, 0); //color de la letra
@@ -60,10 +81,10 @@ void loop()
   myGLCD.setColor(255, 255, 255); //color de la letra
   myGLCD.setBackColor(0,0,0); //fondo de la letra 
   myGLCD.print("ESTAS LISTO?", CENTER, 180);
-  
-  delay (10000);
-  
-  myGLCD.clrScr();
+}
+
+void Juego(){
+
   myGLCD.setColor(14, 95, 166); //color del rectangulo del titulo
   myGLCD.fillRect(0, 0, 319, 13); //coordenadas donde se debe imprimir el rectangulo
   myGLCD.fillRect(0, 226, 319, 239); 
@@ -83,9 +104,8 @@ void loop()
     myGLCD.setColor(102,102,255);
     myGLCD.drawPixel(2+random(316), 16+random(180));
   }
-
-  delay(10000);
-
+}
+void Gameover(){
   myGLCD.fillScr(0,0,0);
   myGLCD.setColor(255,0,0);
   myGLCD.fillRoundRect(60, 80, 260,150);
@@ -101,3 +121,17 @@ void loop()
   delay (10000);
 
 }
+
+void Runner(){
+   myGLCD.setColor(255, 255, 255);
+   myGLCD.fillRoundRect(110, 130, 120,195);
+   myGLCD.fillRoundRect(110, 185, 160,195);
+   myGLCD.fillRoundRect(100, 160, 140,170);
+   myGLCD.fillRoundRect(100, 140, 140,150);
+
+}
+
+void Block (){
+  myGLCD.setColor(0, 255, 255);
+  myGLCD.fillRoundRect(180, 160, 230,195);
+  }

@@ -104,7 +104,7 @@
 
 int tempo = 85;
 int buzzer = PF_4;
-int push = PD_1;
+int push = PF_2;
 
 int melody[] = {
 
@@ -163,33 +163,34 @@ int notes = sizeof(melody) / sizeof(melody[0]) / 2;
 int wholenote = (60000 * 4) / tempo; // calculo de la nota en  ms
 int divider = 0, noteDuration = 0;
 int HSPI = 0;
-byte SendD = 0b00000000;
+int SendD = 0;
 
 void setup() {
 
   Serial2.begin(9600);
   
   pinMode(push,INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(push),pushFunction1, RISING );
+  attachInterrupt(digitalPinToInterrupt(push),pushFunction1,FALLING);
 
 }
-  void pushFunction1 (){
-  int data=1;
-  bitWrite(SendD,1,data);
+void pushFunction1 (){
+  byte info=1;
+  bitWrite(SendD,1,info);
   delay(10);
-  if (Serial2.available()>0)
-  {
+  if (Serial2.available()>0){
     HSPI=Serial.read();
     Serial2.write(SendD);
   }
+  Serial.println(info); 
   delay(10);
-  data = 0;
-  bitWrite(SendD,1,data);
+  info = 0;
+  bitWrite(SendD,1,info);
+
   }
   
 
 void loop() {
-  for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
+    for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
     divider = melody[thisNote + 1];    // calculo de las notas
     if (divider > 0) {
       noteDuration = (wholenote) / divider;       // nota normal suena.
