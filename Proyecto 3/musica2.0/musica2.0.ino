@@ -11,7 +11,7 @@
                                               
                                               Robson Couto, 2019
 */
-#define NOTE_B0  31
+#define NOTE_B0  31                          //definicion de las notas 
 #define NOTE_C1  33 
 #define NOTE_CS1 35
 #define NOTE_D1  37
@@ -169,12 +169,12 @@ void setup() {
 
   Serial2.begin(9600);
   
-  pinMode(push,INPUT_PULLUP);
+  pinMode(push,INPUT_PULLUP);            //declaracion del push para el juego
   attachInterrupt(digitalPinToInterrupt(push),pushFunction1,FALLING);
 
 }
-void pushFunction1 (){
-  byte info=1;
+void pushFunction1 (){                   //Funcion que nos habla como se envia 
+  byte info=1;                           //la informacion en UART.
   bitWrite(SendD,1,info);
   delay(10);
   if (Serial2.available()>0){
@@ -189,7 +189,7 @@ void pushFunction1 (){
   }
   
 
-void loop() {
+void loop() {           // funcion de que envia la informacion para sonar la musica.
     for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
     divider = melody[thisNote + 1];    // calculo de las notas
     if (divider > 0) {
